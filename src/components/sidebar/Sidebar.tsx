@@ -1,17 +1,24 @@
 import {
     ArrowRightOutlined,
     BellOutlined,
-    HomeOutlined,
+    HomeOutlined, LogoutOutlined,
     MobileOutlined,
     SettingOutlined,
     UsergroupDeleteOutlined,
 } from '@ant-design/icons';
-import {Menu} from 'antd';
+import {Divider, Menu} from 'antd';
 import type {GetProp, MenuProps} from 'antd';
-
-
+import "./sidebar.css"
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
+
+const Logout : MenuItem[] = [
+    {
+        key: 'logout',
+        icon: <LogoutOutlined/>,
+        label: 'Account Logout',
+    }
+]
 
 const items: MenuItem[] = [
     {
@@ -25,7 +32,7 @@ const items: MenuItem[] = [
         label: 'Notification',
         children: [
             {
-                icon: <ArrowRightOutlined/>,
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
                 key: 'logs',
                 label: 'Logs',
             }
@@ -37,7 +44,7 @@ const items: MenuItem[] = [
         label: 'App Settings',
         children: [
             {
-                icon: <ArrowRightOutlined/>,
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
                 key: 'settings',
                 label: 'Settings',
             }
@@ -49,12 +56,12 @@ const items: MenuItem[] = [
         label: 'Membership',
         children: [
             {
-                icon: <ArrowRightOutlined/>,
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
                 key: 'corporate-employee',
                 label: 'Corporate Employee',
             },
             {
-                icon: <ArrowRightOutlined/>,
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
                 key: 'user-profile',
                 label: 'User Profile',
             }
@@ -67,12 +74,12 @@ const items: MenuItem[] = [
         label: 'Offers',
         children: [
             {
-                icon: <ArrowRightOutlined/>,
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
                 key: 'new-offers',
                 label: 'New Offers',
             },
             {
-                icon: <ArrowRightOutlined/>,
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
                 key: 'upcoming-offers',
                 label: 'Upcoming Offers',
             }
@@ -85,12 +92,12 @@ const items: MenuItem[] = [
         label: 'Admin Reports',
         children: [
             {
-                icon: <ArrowRightOutlined/>,
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
                 key: 'daily-report',
                 label: 'Daily Report',
             },
             {
-                icon: <ArrowRightOutlined/>,
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
                 key: 'monthly-report',
                 label: 'Monthly Report',
             }
@@ -103,13 +110,12 @@ const items: MenuItem[] = [
         label: 'Admin',
         children: [
             {
-                icon: <ArrowRightOutlined/>,
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
                 key: 'admin-settings',
                 label: 'Admin Settings',
             },
             {
-                icon: <ArrowRightOutlined/>,
-
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
                 key: 'edit-admin',
                 label: 'Edit',
             }
@@ -122,7 +128,7 @@ const items: MenuItem[] = [
         label: 'Customer Service',
         children: [
             {
-                icon: <ArrowRightOutlined/>,
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
                 key: 'customer-service-settings',
                 label: 'Customer Service Settings',
             }
@@ -138,11 +144,36 @@ export default function Sidebar() {
 
     return (
         <>
-            <Menu
-                style={{width: 256, height: "100vh", fontWeight: 600, boxShadow: "0 0 5px rgba(0,0,0,0.1)"}}
-                items={items}
-                mode={"inline"}
-            />
+            <div className="sidebar-wrapper">
+                <div className="sidebar-content">
+                    <div>
+                        <div className="logo-container">
+                            <img className="site-logo" src="/src/assets/site-logo.png" alt="site-logo"/>
+                        </div>
+                        <div className="user-banner">
+                            <p className="user-name">rabiussanym</p>
+                        </div>
+                    </div>
+                    <div className="menu-container">
+                        <Menu
+                            className="menu-items"
+                            items={items}
+                            mode="inline"
+                            defaultActiveFirst={true}
+                            defaultSelectedKeys={['dashboard']}
+                        />
+                    </div>
+                </div>
+                <div className="logout-section">
+                    <Divider style={{padding: 0, margin: 0}}/>
+                    <Menu
+                        className="menu-items"
+                        items={Logout}
+                        mode="inline"
+                        defaultActiveFirst={false}
+                    />
+                </div>
+            </div>
         </>
     )
 }

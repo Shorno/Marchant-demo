@@ -12,10 +12,11 @@ createRoot(document.getElementById('root')!).render(
                     Menu: {
                         activeBarHeight: 10,
                         itemBorderRadius: 0,
-                        fontSize: 16,
+                        fontSize: 14,
                         itemHeight: 60,
-                        itemSelectedBg: "#d6d6d6",
-                    }
+                        itemSelectedBg: "rgba(214,214,214,0.7)",
+                        itemMarginInline: 0,
+                    },
                 }
             }}
         >

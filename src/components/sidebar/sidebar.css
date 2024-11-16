@@ -1,0 +1,75 @@
+.sidebar-wrapper {
+    width: 256px;
+    height: 100vh;
+    position: fixed;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    clip-path: inset(0 -10px 0 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);
+}
+
+.menu-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+
+    /* For Firefox */
+    scrollbar-width: auto;
+
+    /* For Webkit browsers (Chrome, Safari) */
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+    }
+}
+
+.site-logo {
+    width: 256px;
+    object-fit: cover;
+}
+
+.user-banner {
+    height: 60px;
+    background-color: #007abc;
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+}
+
+.user-name {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.menu-items {
+    width: 256px;
+    font-weight: 600;
+}
+
+.logout-section {
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+}
+
+
+.sidebar-wrapper .ant-menu-item-selected {
+    border-left: 4px solid transparent;
+    border-image: linear-gradient(to bottom, #007abc, #a0cb52) 1;
+}
