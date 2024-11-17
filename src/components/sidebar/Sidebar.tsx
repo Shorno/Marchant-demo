@@ -1,14 +1,16 @@
 import {
     ArrowRightOutlined,
-    BellOutlined,
+    BellOutlined, CustomerServiceOutlined, FileTextOutlined,
     HomeOutlined, LogoutOutlined,
-    MobileOutlined,
+    MobileOutlined, PercentageOutlined,
     SettingOutlined,
     UsergroupDeleteOutlined,
 } from '@ant-design/icons';
-import {Divider, Menu} from 'antd';
+import {Divider, Layout, Menu} from 'antd';
 import type {GetProp, MenuProps} from 'antd';
 import "./sidebar.css"
+
+const {Sider} = Layout
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
 
@@ -70,7 +72,7 @@ const items: MenuItem[] = [
     },
     {
         key: 'offers',
-        icon: <UsergroupDeleteOutlined/>,
+        icon: <PercentageOutlined/>,
         label: 'Offers',
         children: [
             {
@@ -87,9 +89,9 @@ const items: MenuItem[] = [
 
     },
     {
-        key: 'Admin Reports',
-        icon: <UsergroupDeleteOutlined/>,
-        label: 'Admin Reports',
+        key: 'reports',
+        icon: <FileTextOutlined/>,
+        label: 'Reports',
         children: [
             {
                 icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
@@ -124,7 +126,7 @@ const items: MenuItem[] = [
     },
     {
         key: 'customer-service',
-        icon: <SettingOutlined/>,
+        icon: <CustomerServiceOutlined/>,
         label: 'Customer Service',
         children: [
             {
@@ -144,7 +146,7 @@ export default function Sidebar() {
 
     return (
         <>
-            <div className="sidebar-wrapper">
+            <Sider width={"256px"} theme={"light"} className="sidebar-wrapper">
                 <div className="sidebar-content">
                     <div>
                         <div className="logo-container">
@@ -173,7 +175,7 @@ export default function Sidebar() {
                         defaultActiveFirst={false}
                     />
                 </div>
-            </div>
+            </Sider>
         </>
     )
 }
