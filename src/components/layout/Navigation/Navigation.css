@@ -1,0 +1,8 @@
+.navigation-menu {
+  border: none;
+  background: transparent;
+}
+
+.navigation-menu.ant-menu-inline {
+  border-right: none;
+}

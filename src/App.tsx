@@ -1,19 +1,19 @@
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import RootLayout from "./layouts/RootLayout.tsx";
+import MainLayout from "./layouts/MainLayout.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
+import Settings from "./pages/Settings.tsx";
 
 function App() {
 
     return (
-        <>
-            <Router>
-                <Routes>
-                    <Route path={"/"} element={<RootLayout/>}>
-                        <Route path={"/"} element={<Dashboard/>}/>
-                    </Route>
-                </Routes>
-            </Router>
-        </>
+        <Router>
+            <Routes>
+                <Route path={"/"} element={<MainLayout/>}>
+                    <Route index element={<Dashboard/>}/>
+                    <Route path={"/settings"} element={<Settings/>}/>
+                </Route>
+            </Routes>
+        </Router>
     )
 }
 

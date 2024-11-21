@@ -54,6 +54,7 @@ const statisticsData = [
 
 export default function Dashboard() {
 
+
     const onChange = (key: string) => {
         console.log(key);
     };
@@ -74,8 +75,6 @@ export default function Dashboard() {
     ];
     return (
         <>
-            <Card title="Dashboard"/>
-
             <Row gutter={[16, 16]} style={{marginTop: "1rem"}}>
                 {statisticsData.map((stat, index) => (
                     <Col xs={24} sm={12} md={8} lg={4} key={index}>
@@ -99,26 +98,26 @@ export default function Dashboard() {
                 </div>
                 <div className={"noData"}>No data available</div>
             </Card>
-            <Row gutter={[20,20]} style={{marginTop : "2rem"}} >
-                <Col span={12}>
-                    <Card bordered title="User Registration Monthly Activity Summery" style={{height : "25rem"}}>
+            <Row gutter={[20, 20]} style={{marginTop: "2rem"}}>
+                <Col lg={12} xs={24}>
+                    <Card bordered title="User Registration Monthly Activity Summery" style={{height: "25rem"}}>
                         <div className={"noData"}>No data available</div>
                     </Card>
                 </Col>
-                <Col span={6}>
-                    <Card bordered title="Membership Type" style={{height : "25rem"}}>
+                <Col lg={6} xs={24}>
+                    <Card bordered title="Membership Type" style={{height: "25rem"}}>
                         <div className={"noData"}>No data available</div>
                     </Card>
                 </Col>
-                <Col span={6}>
-                    <Card bordered title="User based on Policy Type" style={{height : "25rem"}}>
+                <Col lg={6} xs={24}>
+                    <Card bordered title="User based on Policy Type" style={{height: "25rem"}}>
                         <div className={"noData"}>No data available</div>
                     </Card>
                 </Col>
             </Row>
-            <Row gutter={[20,40]} style={{marginTop : "2rem"}} >
+            <Row gutter={[20, 40]} style={{marginTop: "2rem"}}>
                 <Col span={24}>
-                    <Card bordered title="User Hourly Average Count" style={{height : "25rem"}}>
+                    <Card bordered title="User Hourly Average Count" style={{height: "25rem"}}>
                         <div className={"noData"}>No data available</div>
                     </Card>
                 </Col>

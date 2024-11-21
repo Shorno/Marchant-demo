@@ -1,0 +1,94 @@
+.app-sidebar {
+    height: 100vh;
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1001;
+}
+
+.app-sidebar.desktop {
+    display: block;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+
+.sidebar-content .ant-menu-title-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+.logout-menu {
+    position: fixed;
+    bottom: 0;
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    width: 256px;
+}
+
+.logout-item {
+    color: #ff4d4f !important;
+}
+
+.mobile-drawer .ant-drawer-content-wrapper {
+    box-shadow: none;
+}
+
+.restaurant-name {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;;
+}
+
+.restaurant-banner {
+    height: 60px;
+    background-color: #007abc;
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+
+}
+
+
+.sidebar-content .ant-menu-submenu-selected > .ant-menu-submenu-title,
+.sidebar-content .ant-menu-item-selected:not(.ant-menu-submenu-selected) {
+    border-left: 4px solid orange !important;
+}
+
+.sidebar-content .ant-menu-submenu-selected .ant-menu-item-selected {
+    border-left: none !important;
+}
+
+.sidebar-content .ant-menu-item-selected,
+.sidebar-content .ant-menu-submenu-selected > .ant-menu-submenu-title {
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+
+.navigation-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 210px);
+}
+
+.navigation-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+.navigation-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.navigation-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+

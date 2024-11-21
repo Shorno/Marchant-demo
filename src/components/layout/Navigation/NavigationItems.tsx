@@ -1,28 +1,15 @@
+import {GetProp, MenuProps} from "antd";
 import {
     ArrowRightOutlined,
     BellOutlined, CustomerServiceOutlined, FileTextOutlined,
-    HomeOutlined, LogoutOutlined,
-    MobileOutlined, PercentageOutlined,
-    SettingOutlined,
-    UsergroupDeleteOutlined,
-} from '@ant-design/icons';
-import {Divider, Layout, Menu} from 'antd';
-import type {GetProp, MenuProps} from 'antd';
-import "./sidebar.css"
-
-const {Sider} = Layout
+    HomeOutlined,
+    MobileOutlined, PercentageOutlined, SettingOutlined,
+    UsergroupDeleteOutlined
+} from "@ant-design/icons";
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
 
-const Logout : MenuItem[] = [
-    {
-        key: 'logout',
-        icon: <LogoutOutlined/>,
-        label: 'Account Logout',
-    }
-]
-
-const items: MenuItem[] = [
+export const navigationItems: MenuItem[] = [
     {
         key: 'dashboard',
         icon: <HomeOutlined/>,
@@ -68,7 +55,6 @@ const items: MenuItem[] = [
                 label: 'User Profile',
             }
         ]
-
     },
     {
         key: 'offers',
@@ -86,7 +72,6 @@ const items: MenuItem[] = [
                 label: 'Upcoming Offers',
             }
         ]
-
     },
     {
         key: 'reports',
@@ -104,7 +89,6 @@ const items: MenuItem[] = [
                 label: 'Monthly Report',
             }
         ]
-
     },
     {
         key: 'admin',
@@ -122,7 +106,6 @@ const items: MenuItem[] = [
                 label: 'Edit',
             }
         ]
-
     },
     {
         key: 'customer-service',
@@ -135,47 +118,5 @@ const items: MenuItem[] = [
                 label: 'Customer Service Settings',
             }
         ]
-
     },
-
 ];
-
-
-export default function Sidebar() {
-
-
-    return (
-        <>
-            <Sider width={"256px"} theme={"light"} className="sidebar-wrapper">
-                <div className="sidebar-content">
-                    <div>
-                        <div className="logo-container">
-                            <img className="site-logo" src="/src/assets/site-logo.png" alt="site-logo"/>
-                        </div>
-                        <div className="user-banner">
-                            <p className="user-name">rabiussanym</p>
-                        </div>
-                    </div>
-                    <div className="menu-container">
-                        <Menu
-                            className="menu-items"
-                            items={items}
-                            mode="inline"
-                            defaultActiveFirst={true}
-                            defaultSelectedKeys={['dashboard']}
-                        />
-                    </div>
-                </div>
-                <div className="logout-section">
-                    <Divider style={{padding: 0, margin: 0}}/>
-                    <Menu
-                        className="menu-items"
-                        items={Logout}
-                        mode="inline"
-                        defaultActiveFirst={false}
-                    />
-                </div>
-            </Sider>
-        </>
-    )
-}
