@@ -1,20 +1,19 @@
 import "./signup.css";
 import logo from "../../assets/ubaky_logo.png";
 import author from "../../assets/author-image.jpeg";
-import type { StepsProps } from "antd";
 import { Popover, Steps } from "antd";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { Input } from "antd";
 import { useState } from "react";
+import type { StepsProps } from "antd";
 
 function Signup() {
-    const customDot = (dot, { status, index }) => (
+    const customDot: StepsProps['progressDot'] = (dot, { status, index }) => (
         <Popover
             content={
                 <span>
-                    step {index} status: {status}
+                    Step {index + 1} status: {status}
                 </span>
             }
         >
