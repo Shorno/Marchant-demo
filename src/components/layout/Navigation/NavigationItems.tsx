@@ -1,11 +1,12 @@
 import {GetProp, MenuProps} from "antd";
 import {
+    AccountBookOutlined,
     ArrowRightOutlined,
-    BellOutlined, CustomerServiceOutlined, FileTextOutlined,
-    HomeOutlined,
-    MobileOutlined, PercentageOutlined, SettingOutlined,
-    UsergroupDeleteOutlined
+    FileTextOutlined,
+    HomeOutlined, KeyOutlined, MenuOutlined, StarOutlined,
+    UserOutlined, VideoCameraAddOutlined
 } from "@ant-design/icons";
+import {Link} from "react-router-dom";
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
 
@@ -13,110 +14,66 @@ export const navigationItems: MenuItem[] = [
     {
         key: 'dashboard',
         icon: <HomeOutlined/>,
-        label: 'Dashboard',
+        label: <Link to={"/"}>Dashboard</Link>
     },
     {
-        key: 'notification',
-        icon: <BellOutlined/>,
-        label: 'Notification',
+        key: 'menu&categories',
+        icon: <MenuOutlined/>,
+        label: 'Menu & Categories',
         children: [
             {
                 icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
-                key: 'logs',
-                label: 'Logs',
-            }
-        ]
-    },
-    {
-        key: 'app-settings',
-        icon: <MobileOutlined/>,
-        label: 'App Settings',
-        children: [
-            {
-                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
-                key: 'settings',
-                label: 'Settings',
-            }
-        ]
-    },
-    {
-        key: 'membership',
-        icon: <UsergroupDeleteOutlined/>,
-        label: 'Membership',
-        children: [
-            {
-                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
-                key: 'corporate-employee',
-                label: 'Corporate Employee',
+                key: 'menu',
+                label: <Link to={"/menu"}>Menu</Link>
             },
             {
                 icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
-                key: 'user-profile',
-                label: 'User Profile',
-            }
-        ]
-    },
-    {
-        key: 'offers',
-        icon: <PercentageOutlined/>,
-        label: 'Offers',
-        children: [
-            {
-                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
-                key: 'new-offers',
-                label: 'New Offers',
+                key: 'special-menu',
+                label: <Link to={"/special-menu"}>Special Menu</Link>
+
             },
             {
                 icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
-                key: 'upcoming-offers',
-                label: 'Upcoming Offers',
+                key: 'discount-menu',
+                label: <Link to={"/discount-menu"}>Discount Menu</Link>
+            },
+            {
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
+                key: 'buffet-menu',
+                label: <Link to={"/buffet-menu"}>Buffet Menu</Link>
             }
         ]
     },
     {
-        key: 'reports',
+        key: 'hall-recognition',
+        icon: <KeyOutlined/>,
+        label: <Link to={"/hall-recognition"}>Hall Recognition</Link>
+    },
+    {
+        key: 'reviews',
+        icon: <StarOutlined/>,
+        label: <Link to={"/reviews"}>Reviews</Link>
+    },
+    {
+        key: 'video',
+        icon: <VideoCameraAddOutlined/>,
+        label: <Link to={"/video"}>Video</Link>
+
+    },
+    {
+        key: 'accounts',
+        icon: <AccountBookOutlined/>,
+        label: <Link to={"/accounts"}>Accounts</Link>
+    },
+    {
+        key: 'information',
         icon: <FileTextOutlined/>,
-        label: 'Reports',
-        children: [
-            {
-                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
-                key: 'daily-report',
-                label: 'Daily Report',
-            },
-            {
-                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
-                key: 'monthly-report',
-                label: 'Monthly Report',
-            }
-        ]
+        label: <Link to={"/information"}>Information</Link>
     },
     {
-        key: 'admin',
-        icon: <SettingOutlined/>,
-        label: 'Admin',
-        children: [
-            {
-                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
-                key: 'admin-settings',
-                label: 'Admin Settings',
-            },
-            {
-                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
-                key: 'edit-admin',
-                label: 'Edit',
-            }
-        ]
-    },
-    {
-        key: 'customer-service',
-        icon: <CustomerServiceOutlined/>,
-        label: 'Customer Service',
-        children: [
-            {
-                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
-                key: 'customer-service-settings',
-                label: 'Customer Service Settings',
-            }
-        ]
+        key: 'my-profile',
+        icon: <UserOutlined/>,
+        label: <Link to={"/profile"}>My Profile</Link>
     },
 ];
+

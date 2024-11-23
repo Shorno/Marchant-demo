@@ -10,8 +10,18 @@ const logoutItem = {
     className: 'logout-item',
 };
 
+interface SidebarContentProps {
+    onClose: () => void;
+}
 
-export default function SidebarContent() {
+
+export default function SidebarContent({onClose}: SidebarContentProps) {
+
+
+    const handleLogoutClick = () => {
+        onClose();
+    }
+
     return (
         <>
             <div className="sidebar-content">
@@ -20,13 +30,14 @@ export default function SidebarContent() {
                     <p className={"restaurant-name"}>X Restaurant</p>
                 </div>
                 <div className={"navigation-container"}>
-                    <Navigation/>
+                    <Navigation onClose={onClose}/>
                 </div>
                 <Menu
                     defaultActiveFirst={false}
                     mode="inline"
                     className="logout-menu"
                     items={[logoutItem]}
+                    onClick={handleLogoutClick}
                 />
             </div>
         </>

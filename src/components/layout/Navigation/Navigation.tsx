@@ -6,10 +6,16 @@ import "./Navigation.css"
 
 interface NavigationProps {
     className?: string;
+    onClose: () => void;
 }
 
 
-export const Navigation = ({className}: NavigationProps) => {
+export const Navigation = ({className, onClose}: NavigationProps) => {
+
+    const handleMenuItemClick = () => {
+        onClose();
+    }
+
     return (
         <Menu
             mode="inline"
@@ -17,6 +23,8 @@ export const Navigation = ({className}: NavigationProps) => {
             items={navigationItems}
             className={`navigation-menu ${className}`}
             theme="light"
+            onClick={handleMenuItemClick}
+
         />
     );
 };

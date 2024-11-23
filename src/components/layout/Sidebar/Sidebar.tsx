@@ -15,6 +15,7 @@ interface SidebarProps {
 export const Sidebar = ({isOpen, isMobile, onClose}: SidebarProps) => {
 
 
+
     if (isMobile) {
         return (
             <Drawer
@@ -29,7 +30,7 @@ export const Sidebar = ({isOpen, isMobile, onClose}: SidebarProps) => {
                     body: {padding: 0},
                 }}
             >
-                <SidebarContent/>
+                <SidebarContent onClose={onClose}/>
             </Drawer>
         );
     }
@@ -40,7 +41,7 @@ export const Sidebar = ({isOpen, isMobile, onClose}: SidebarProps) => {
             className="app-sidebar desktop"
             width={256}
         >
-            <SidebarContent/>
+            <SidebarContent onClose={onClose}/>
         </Sider>
 
     );
