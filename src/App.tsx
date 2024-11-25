@@ -2,6 +2,8 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import MainLayout from "./layouts/MainLayout.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Signup from "./pages/Registration/Signup.tsx";
+import BookingLayout from "./layouts/RestaurantBookingLayout/BookingLayout.tsx";
+import RestaurantInfoForm from "./pages/RestaurantBookingInfo/RestaurantInfoForm.tsx";
 import Menu from "./pages/Menu&Category/Menu/Menu.tsx";
 import SpecialMenu from "./pages/Menu&Category/SpecialMenu/SpecialMenu.tsx";
 import DiscountMenu from "./pages/Menu&Category/DiscountMenu/DiscountMenu.tsx";
@@ -14,7 +16,7 @@ import MyProfile from "./pages/Profile/MyProfile.tsx";
 import Video from "./pages/Video/Video.tsx";
 
 function App() {
-
+  
     return (
         <Router>
             <Routes>
@@ -32,6 +34,10 @@ function App() {
                     <Route path={"/profile"} element={<MyProfile/>}/>
                 </Route>
                 <Route path={"/registration"} element={<Signup></Signup>}/>
+
+                <Route path={"/restaurant-profile"} element ={<BookingLayout/>}>
+                <Route index element={<RestaurantInfoForm/>}/>
+                </Route>
             </Routes>
         </Router>
     )

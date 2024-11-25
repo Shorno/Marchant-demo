@@ -10,6 +10,7 @@ body {
 .signup-container {
     display: flex;
     flex-direction: row; 
+    
 }
 
 /* Left Section Styling */
@@ -34,8 +35,8 @@ body {
 /* Title */
 .left-title {
     color: #ffffff;
-    font-size: 3rem; /* Scalable unit */
-    line-height: 1.2;
+    font-size: 40px; /* Scalable unit */
+    line-height: 55px;
     font-weight: 500;
     margin-bottom: 10px;
 }
@@ -58,7 +59,7 @@ body {
     background-color: #fe802b;
     padding: 20px;
     border-radius: 8px;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .quote {
@@ -154,6 +155,7 @@ body {
 
     .testimonial {
         padding: 15px;
+        margin-top: 0px;
     }
 
     .quote {
@@ -225,6 +227,15 @@ body {
 
 
 /* Right side code  */
+
+
+
+.error-message {
+    color: red;
+    font-size: 10px;
+    margin-top: -10px;
+}       
+
 .form-item {
     flex: 1; 
     display: flex;
@@ -233,7 +244,8 @@ body {
   }
 
 .right-section {
-    padding: 45px 50px 0px 50px;
+    padding: 35px 50px 0px 50px;
+    margin: auto;
 }
 
 .progress-bar {
@@ -241,7 +253,7 @@ body {
 }
 
 .signup-info {
-    padding: 30px 100px 45px 100px;
+    padding: 20px 100px 0px 100px;
 }
 
 .signup-title {
@@ -353,20 +365,20 @@ select{
 /* ///////// */
 
 .custom-password-input {
-    margin-bottom: 16px; /* Add spacing if needed */
+    margin-bottom: 16px; 
   }
   
   .custom-password-input .ant-input {
-    padding: 12px; /* Adjust padding for the input box */
-    font-size: 16px; /* Ensure placeholder and text size match */
-    line-height: 1.5; /* Maintain good readability */
+    padding: 12px; 
+    font-size: 16px;
+    line-height: 1.5;
   }
   
   .custom-password-input .ant-input-password-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #333; /* Adjust icon color */
+    color: #333;
   }
 
   .password-design{
@@ -375,58 +387,57 @@ select{
   }
 
 /* General Responsiveness for 1024px screens */
-@media (max-width: 1024px) {
+@media (max-width: 1024px) and (min-width: 768px) {
     .signup-container {
         display: flex;
-        flex-direction: column; 
-        gap: 20px; 
+        flex-direction: row; 
+        gap: 20px;
+        height: 100vh;
     }
 
-    .left-section,
-    .right-section {
-        width: 100%; 
-        padding: 20px; 
+    .left-section {
+        width: 40%; 
+        height: 110vh;
     }
 
     .right-section {
-        padding: 30px 40px; 
+        width: 70%;
+        padding: 20px;
     }
 
     .progress-bar {
-        width: 80%; 
-        margin: 0 auto; 
+        width: 100%; 
+        /* margin: 0 auto; */
     }
 
     .signup-info {
-        padding: 20px 30px;
+        padding: 20px;
     }
 
     .signup-form {
-        padding: 0; 
+        padding: 0;
     }
 
     .signup-title {
-        font-size: 28px; 
+        font-size: 28px;
         line-height: 42px;
     }
 
     .signup-form .form-row {
-        flex-direction: column; 
-        gap: 10px; 
+        flex-direction: row; /* Keep input fields inline on larger screens */
+        gap: 20px;
     }
 
     .phone-input-container {
-        width: 100%; 
+        width: 100%;
     }
 
     .phone-input-field {
-        padding: 8px; 
+        padding: 8px;
     }
 }
 
-
-
-/* General Responsiveness */
+/* General Responsiveness for screens under 768px */
 @media (max-width: 768px) {
     .signup-container {
         flex-direction: column;
@@ -441,10 +452,6 @@ select{
         padding: 20px;
     }
 
-    /* .progress-bar {
-        width: 100%; 
-    } */
-
     .signup-info {
         padding: 20px;
     }
@@ -454,21 +461,19 @@ select{
     }
 
     .signup-form .form-row {
-        flex-direction: column; 
-        gap: 0; 
+        flex-direction: column;
+        gap: 0;
     }
 }
 
-@media (max-width: 480px){
+@media (max-width: 480px) {
     .progress-bar {
-        /* width: 250px;  */
-        display: hidden;
-        
-      }
+        display: none;
+    }
 
-    .signup-title{
-        font-size: 32px;
+    .signup-title {
+        font-size: 28px;
         font-weight: 500;
-        font-family: Poppins
+        font-family: Poppins;
     }
 }

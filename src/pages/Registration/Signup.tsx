@@ -7,9 +7,25 @@ import "react-phone-input-2/lib/style.css";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { useState } from "react";
 import type { StepsProps } from "antd";
+import { Controller, useForm } from "react-hook-form";
+import { ArrowRightOutlined } from '@ant-design/icons';
+
 
 function Signup() {
-    const customDot: StepsProps['progressDot'] = (dot, { status, index }) => (
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        control,
+        watch
+    } = useForm();
+
+    const onSubmit = (data) => {
+        console.log("Form Data:", data);
+    };
+
+    const password = watch("password")
+    const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
         <Popover
             content={
                 <span>
@@ -65,10 +81,7 @@ function Signup() {
                 </div>
             </div>
 
-           
-
             {/* Right side */}
-
             <div className="right-section">
                 <div className="progress-bar">
                     <Steps
@@ -83,7 +96,10 @@ function Signup() {
                 <div className="signup-info">
                     <h1 className="signup-title">Let’s get stated</h1>
 
-                    <form className="signup-form">
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="signup-form"
+                    >
                         <div className="form-row">
                             <div className="form-item">
                                 <label
@@ -96,7 +112,15 @@ function Signup() {
                                     id="first-name"
                                     type="text"
                                     placeholder="First name"
+                                    {...register("first_name", {
+                                        required: true,
+                                    })}
                                 />
+                                {errors.first_name && (
+                                    <span className="error-message">
+                                        First Name is required
+                                    </span>
+                                )}
                             </div>
                             <div className="form-item">
                                 <label
@@ -109,7 +133,15 @@ function Signup() {
                                     id="last-name"
                                     type="text"
                                     placeholder="Last name"
+                                    {...register("last_name", {
+                                        required: true,
+                                    })}
                                 />
+                                {errors.last_name && (
+                                    <span className="error-message">
+                                        Last Name is required
+                                    </span>
+                                )}
                             </div>
                         </div>
                         <div className="form-item">
@@ -120,9 +152,16 @@ function Signup() {
                                 id="email"
                                 type="email"
                                 placeholder="Email"
+                                {...register("email", { required: true })}
                             />
+                            {errors.email && (
+                                <span className="error-message">
+                                    Email field is required
+                                </span>
+                            )}
                         </div>
                         <div className="form-row">
+                            {/* Country Field */}
                             <div className="form-item">
                                 <label
                                     className="label-title"
@@ -130,19 +169,50 @@ function Signup() {
                                 >
                                     Country
                                 </label>
-                                <select id="country">
-                                    <option>Country</option>
+                                <select
+                                    id="country"
+                                    {...register("country", {
+                                        required: "Country is required",
+                                    })}
+                                >
+                                    <option value="">Select Country</option>
+                                    <option value="USA">USA</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="UK">UK</option>
                                 </select>
+                                {errors.country && (
+                                    <span className="error-message">
+                                        Please select a Country
+                                    </span>
+                                )}
                             </div>
+
+                            {/* City Field */}
                             <div className="form-item">
                                 <label className="label-title" htmlFor="city">
                                     City
                                 </label>
-                                <select id="city">
-                                    <option>City</option>
+                                <select
+                                    id="city"
+                                    {...register("city", {
+                                        required: "City is required",
+                                    })}
+                                >
+                                    <option value="">Select City</option>
+                                    <option value="New York">New York</option>
+                                    <option value="Toronto">Toronto</option>
+                                    <option value="London">London</option>
                                 </select>
+                                {errors.city && (
+                                    <p className="error-message">
+                                        {/* {errors.city.message} */}
+                                        Please select a City
+                                    </p>
+                                )}
                             </div>
                         </div>
+
+                        {/* Phone */}
                         <div>
                             <label
                                 className="label-title"
@@ -151,17 +221,37 @@ function Signup() {
                             >
                                 Phone
                             </label>
-                            <PhoneInput
-                                country={"us"}
-                                inputProps={{
-                                    name: "phone",
-                                    required: true,
-                                    autoFocus: true,
+                            <Controller
+                                name="phone"
+                                control={control}
+                                rules={{
+                                    required: "Phone number is required",
+                                    validate: (value) =>
+                                        value.length >= 10 ||
+                                        "Enter a valid phone number",
                                 }}
-                                containerClass="phone-input-container"
-                                inputClass="phone-input-field"
+                                render={({ field }) => (
+                                    <PhoneInput
+                                        {...field}
+                                        country={"us"}
+                                        inputProps={{
+                                            name: "phone",
+                                            required: true,
+                                            autoFocus: true,
+                                        }}
+                                        containerClass="phone-input-container"
+                                        inputClass="phone-input-field"
+                                    />
+                                )}
                             />
+                            {errors.phone && (
+                                <p className="error-message">
+                                    Enter a valid phone number
+                                </p>
+                            )}
                         </div>
+                        
+                        {/* Password */}
                         <div>
                             <label className="label-title" htmlFor="password">
                                 Password
@@ -172,7 +262,14 @@ function Signup() {
                                     id="password"
                                     className="password-design"
                                     placeholder="Password"
-                                   
+                                    {...register("password", {
+                                        required: "Password is required",
+                                        pattern: {
+                                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                            message:
+                                                "Password must include 1 uppercase, 1 lowercase, 1 number, 1 symbol, and at least 8 characters",
+                                        },
+                                    })}
                                 />
                                 <span
                                     className="toggle-password-button"
@@ -185,10 +282,21 @@ function Signup() {
                                     )}
                                 </span>
                             </div>
+                            {errors.password && (
+                                <p className="error-message">
+                                    Password must include one
+                                    uppercase,lowercase,number,symbol, and at
+                                    least 8 characters
+                                </p>
+                            )}
                         </div>
 
+                        {/* Confirm Password */}
                         <div>
-                            <label className="label-title" htmlFor="password">
+                            <label
+                                className="label-title"
+                                htmlFor="confirm-password"
+                            >
                                 Confirm Password
                             </label>
                             <div className="password-input">
@@ -197,6 +305,13 @@ function Signup() {
                                     id="confirm-password"
                                     className="password-design"
                                     placeholder="Confirm Password"
+                                    {...register("confirmPassword", {
+                                        required:
+                                            "Confirm Password is required",
+                                        validate: (value) =>
+                                            value === password ||
+                                            "Passwords do not match",
+                                    })}
                                 />
                                 <span
                                     className="toggle-password-button"
@@ -209,10 +324,15 @@ function Signup() {
                                     )}
                                 </span>
                             </div>
+                            {errors.confirmPassword && (
+                                <p className="error-message">
+                                    {errors.confirmPassword.message}
+                                </p>
+                            )}
                         </div>
 
                         <button className="submit" type="submit">
-                            GET STARTED →
+                            GET STARTED <ArrowRightOutlined />
                         </button>
                     </form>
                 </div>
