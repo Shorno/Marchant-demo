@@ -17,7 +17,7 @@ export const Header = ({onToggleSidebar, isMobile}: HeaderProps) => {
 
 
     return (
-        <Layout.Header className="app-header" style={{marginLeft: isMobile ? 0 : "272px"}}>
+        <Layout.Header className="app-header" style={{marginLeft: isMobile ? 0 : "270px"}}>
             {isMobile && (
                 <button onClick={onToggleSidebar} className="menu-trigger">
                     <MenuOutlined style={{fontSize: "1.1rem"}}/>
