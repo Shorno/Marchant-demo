@@ -79,8 +79,6 @@ const ProvideService = () => {
         }));
     };
 
-    /////////////Modal//////////
-
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const showModal = () => {
