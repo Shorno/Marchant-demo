@@ -1,14 +1,13 @@
 import { useState } from "react";
-// import BookingButton from "../../components/RestaurantBookingButton/BookingButton";
 import GetHelp from "../GetHelp/GetHelp";
 import "./gallery.css";
 import { ArrowRightOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Image, Upload, UploadFile } from "antd";
+import { Button, Upload, UploadFile } from "antd";
 import { Link } from "react-router-dom";
 
 const Gallery: React.FC = () => {
-    const [previewOpen, setPreviewOpen] = useState<boolean>(false);
-    const [previewImage, setPreviewImage] = useState<string>("");
+    // const [previewOpen, setPreviewOpen] = useState<boolean>(false);
+    // const [previewImage, setPreviewImage] = useState<string>("");
     const [fileList, setFileList] = useState<UploadFile[]>([
         {
             uid: "-1",
@@ -36,18 +35,18 @@ const Gallery: React.FC = () => {
         },
     ]);
 
-    const handlePreview = async (file: UploadFile) => {
-        if (!file.url && !file.preview) {
-            file.preview = await new Promise<string>((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file.originFileObj as Blob);
-                reader.onload = () => resolve(reader.result as string);
-                reader.onerror = (error) => reject(error);
-            });
-        }
-        setPreviewImage(file.url || file.preview || "");
-        setPreviewOpen(true);
-    };
+    // const handlePreview = async (file: UploadFile) => {
+    //     if (!file.url && !file.preview) {
+    //         file.preview = await new Promise<string>((resolve, reject) => {
+    //             const reader = new FileReader();
+    //             reader.readAsDataURL(file.originFileObj as Blob);
+    //             reader.onload = () => resolve(reader.result as string);
+    //             reader.onerror = (error) => reject(error);
+    //         });
+    //     }
+    //     setPreviewImage(file.url || file.preview || "");
+    //     setPreviewOpen(true);
+    // };
 
     const handleChange = ({ fileList }: { fileList: UploadFile[] }) => {
         // Remove files with "uploading" or "error" status
@@ -83,20 +82,20 @@ const Gallery: React.FC = () => {
                 </Upload>
 
                 {/* Render images */}
-                {fileList.map((file) => (
-                    <div key={file.uid} className="gallery-item">
-                        <Image
-                            src={file.url}
-                            preview={{
-                                visible: previewOpen,
-                                onVisibleChange: (visible) =>
-                                    setPreviewOpen(visible),
-                            }}
-                            alt={file.name}
-                            onClick={() => handlePreview(file)}
-                        />
-                    </div>
-                ))}
+                {/*{fileList.map((file) => (*/}
+                {/*    <div key={file.uid} className="gallery-item">*/}
+                {/*        <Image*/}
+                {/*            src={file.url}*/}
+                {/*            preview={{*/}
+                {/*                visible: previewOpen,*/}
+                {/*                onVisibleChange: (visible) =>*/}
+                {/*                    setPreviewOpen(visible),*/}
+                {/*            }}*/}
+                {/*            alt={file.name}*/}
+                {/*            onClick={() => handlePreview(file)}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*))}*/}
             </div>
 
             {/* <BookingButton /> */}
