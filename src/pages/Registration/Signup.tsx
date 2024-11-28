@@ -1,15 +1,30 @@
 import "./signup.css";
 import logo from "../../assets/ubaky_logo.png";
 import author from "../../assets/author-image.jpeg";
-import { Popover, Steps } from "antd";
+import {  Popover, Steps } from "antd";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import {
+    EyeInvisibleOutlined,
+    EyeTwoTone,
+    ArrowRightOutlined,
+} from "@ant-design/icons";
 import { useState } from "react";
-import type { StepsProps } from "antd";
 import { Controller, useForm } from "react-hook-form";
-import { ArrowRightOutlined } from '@ant-design/icons';
+import type { StepsProps } from "antd";
 
+
+// Define Form Data Type
+interface FormData {
+    first_name: string;
+    last_name: string;
+    email: string;
+    country: string;
+    city: string;
+    phone: string;
+    password: string;
+    confirmPassword: string;
+}
 
 function Signup() {
     const {
@@ -17,14 +32,15 @@ function Signup() {
         handleSubmit,
         formState: { errors },
         control,
-        watch
-    } = useForm();
+        watch,
+    } = useForm<FormData>(); // Define generic type for useForm
 
-    const onSubmit = (data) => {
+    const onSubmit = (data: FormData) => {
         console.log("Form Data:", data);
     };
 
-    const password = watch("password")
+    const password = watch("password");
+
     const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
         <Popover
             content={
@@ -38,6 +54,7 @@ function Signup() {
     );
 
     const [visible, setVisible] = useState(false);
+    const [confirmVisible, setConfirmVisible] = useState(false);
 
     return (
         <div className="signup-container">
@@ -48,9 +65,9 @@ function Signup() {
                         Let’s Setup your Restaurant Portal
                     </h1>
                     <p className="left-paragraph">
-                        All-in-one solution to for your business in the state.
-                        Form a new company from scratch or onboard your existing
-                        US company.
+                        All-in-one solution for your business in the state. Form
+                        a new company from scratch or onboard your existing US
+                        company.
                     </p>
                 </div>
                 <div className="testimonial">
@@ -66,10 +83,10 @@ function Signup() {
                                 <img
                                     className="author-image"
                                     src={author}
-                                    alt=""
+                                    alt="Author"
                                 />
                             </span>
-                            <span className="author-name">Catherine Johns</span>
+                            <span className="author-name">Khorshed Alom</span>
                         </div>
                         <span className="star">★ ★ ★ ★ ★</span>
                     </div>
@@ -85,7 +102,6 @@ function Signup() {
             <div className="right-section">
                 <div className="progress-bar">
                     <Steps
-                        className=""
                         current={1}
                         direction="horizontal"
                         labelPlacement="horizontal"
@@ -94,7 +110,7 @@ function Signup() {
                     />
                 </div>
                 <div className="signup-info">
-                    <h1 className="signup-title">Let’s get stated</h1>
+                    <h1 className="signup-title">Let’s get started</h1>
 
                     <form
                         onSubmit={handleSubmit(onSubmit)}
@@ -103,7 +119,7 @@ function Signup() {
                         <div className="form-row">
                             <div className="form-item">
                                 <label
-                                    className="label-title "
+                                    className="label-title"
                                     htmlFor="first-name"
                                 >
                                     First Name
@@ -113,12 +129,12 @@ function Signup() {
                                     type="text"
                                     placeholder="First name"
                                     {...register("first_name", {
-                                        required: true,
+                                        required: "First Name is required",
                                     })}
                                 />
                                 {errors.first_name && (
                                     <span className="error-message">
-                                        First Name is required
+                                        {errors.first_name.message}
                                     </span>
                                 )}
                             </div>
@@ -134,12 +150,12 @@ function Signup() {
                                     type="text"
                                     placeholder="Last name"
                                     {...register("last_name", {
-                                        required: true,
+                                        required: "Last Name is required",
                                     })}
                                 />
                                 {errors.last_name && (
                                     <span className="error-message">
-                                        Last Name is required
+                                        {errors.last_name.message}
                                     </span>
                                 )}
                             </div>
@@ -152,11 +168,13 @@ function Signup() {
                                 id="email"
                                 type="email"
                                 placeholder="Email"
-                                {...register("email", { required: true })}
+                                {...register("email", {
+                                    required: "Email field is required",
+                                })}
                             />
                             {errors.email && (
                                 <span className="error-message">
-                                    Email field is required
+                                    {errors.email.message}
                                 </span>
                             )}
                         </div>
@@ -182,12 +200,11 @@ function Signup() {
                                 </select>
                                 {errors.country && (
                                     <span className="error-message">
-                                        Please select a Country
+                                        {errors.country.message}
                                     </span>
                                 )}
                             </div>
 
-                            {/* City Field */}
                             <div className="form-item">
                                 <label className="label-title" htmlFor="city">
                                     City
@@ -205,14 +222,12 @@ function Signup() {
                                 </select>
                                 {errors.city && (
                                     <p className="error-message">
-                                        {/* {errors.city.message} */}
-                                        Please select a City
+                                        {errors.city.message}
                                     </p>
                                 )}
                             </div>
                         </div>
 
-                        {/* Phone */}
                         <div>
                             <label
                                 className="label-title"
@@ -226,7 +241,7 @@ function Signup() {
                                 control={control}
                                 rules={{
                                     required: "Phone number is required",
-                                    validate: (value) =>
+                                    validate: (value: string) =>
                                         value.length >= 10 ||
                                         "Enter a valid phone number",
                                 }}
@@ -246,12 +261,11 @@ function Signup() {
                             />
                             {errors.phone && (
                                 <p className="error-message">
-                                    Enter a valid phone number
+                                    {errors.phone.message}
                                 </p>
                             )}
                         </div>
-                        
-                        {/* Password */}
+
                         <div>
                             <label className="label-title" htmlFor="password">
                                 Password
@@ -284,9 +298,7 @@ function Signup() {
                             </div>
                             {errors.password && (
                                 <p className="error-message">
-                                    Password must include one
-                                    uppercase,lowercase,number,symbol, and at
-                                    least 8 characters
+                                    {errors.password.message}
                                 </p>
                             )}
                         </div>
@@ -301,23 +313,23 @@ function Signup() {
                             </label>
                             <div className="password-input">
                                 <input
-                                    type={visible ? "text" : "password"}
+                                    type={confirmVisible ? "text" : "password"}
                                     id="confirm-password"
                                     className="password-design"
                                     placeholder="Confirm Password"
                                     {...register("confirmPassword", {
                                         required:
                                             "Confirm Password is required",
-                                        validate: (value) =>
+                                        validate: (value: string) =>
                                             value === password ||
                                             "Passwords do not match",
                                     })}
                                 />
                                 <span
                                     className="toggle-password-button"
-                                    onClick={() => setVisible(!visible)}
+                                    onClick={() => setConfirmVisible(!confirmVisible)}
                                 >
-                                    {visible ? (
+                                    {confirmVisible ? (
                                         <EyeTwoTone />
                                     ) : (
                                         <EyeInvisibleOutlined />
@@ -334,6 +346,19 @@ function Signup() {
                         <button className="submit" type="submit">
                             GET STARTED <ArrowRightOutlined />
                         </button>
+
+                        {/* <div className="form-footer">
+                            <a href="#" className="previous">
+                                Previous Step
+                            </a>
+                            <Button
+                                className="button-details"
+                                htmlType="submit"
+                                href="/restaurant-profile"
+                            >
+                                Next <ArrowRightOutlined />
+                            </Button>
+                        </div> */}
                     </form>
                 </div>
             </div>
