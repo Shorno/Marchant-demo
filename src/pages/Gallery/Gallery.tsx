@@ -5,6 +5,10 @@ import { ArrowRightOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Upload, UploadFile } from "antd";
 import { Link } from "react-router-dom";
 
+
+
+
+
 const Gallery: React.FC = () => {
     // const [previewOpen, setPreviewOpen] = useState<boolean>(false);
     // const [previewImage, setPreviewImage] = useState<string>("");

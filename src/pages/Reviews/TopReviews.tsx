@@ -9,13 +9,13 @@ const {useBreakpoint} = Grid
 export default function TopReviews() {
     const screens = useBreakpoint();
     const isTablet = !screens.lg;
-    const reviewContainerStyles = {width: `${isTablet ? "100%" : "80%"}`, margin: "4rem auto"}
+    const reviewContainerStyles = {width: `${isTablet ? "100%" : "80%"}`, margin: "2rem auto"}
 
 
     return (
         <>
+            <Title level={4} style={{marginTop : "4rem"}}>Top Reviews</Title>
             <div style={reviewContainerStyles}>
-                <Title level={2}>Top Reviews</Title>
                 <Flex vertical align={"end"} gap={20}>
                     <ReviewCard
                         isTablet={isTablet}

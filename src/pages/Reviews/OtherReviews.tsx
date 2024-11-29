@@ -11,7 +11,7 @@ const {useBreakpoint} = Grid
 export default function OtherReviews() {
     const screens = useBreakpoint();
     const isTablet = !screens.lg;
-    const reviewContainerStyles = {width: `${isTablet ? "100%" : "80%"}`, margin: "4rem auto"}
+    const reviewContainerStyles = {width: `${isTablet ? "100%" : "80%"}`, margin: "2rem auto"}
     const [isReplying, setIsReplying] = useState(false);
 
     const handleReplay = () => {
@@ -22,8 +22,8 @@ export default function OtherReviews() {
 
     return (
         <>
+            <Title level={4}>Yesterday</Title>
             <div style={reviewContainerStyles}>
-                <Title level={2}>Yesterday</Title>
                 <Flex vertical align={"end"} gap={20}>
                     <ReviewCard
                         isTablet={isTablet}

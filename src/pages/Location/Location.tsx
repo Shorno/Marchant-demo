@@ -45,7 +45,7 @@ const Location: React.FC = () => {
     const mapSrc = `https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=${coordinates.latitude},${coordinates.longitude}&zoom=15`;
 
     return (
-        <div>
+        <div >
             <GetHelp />
 
             <p className="restaurant-title">MAP COORDINATES</p>

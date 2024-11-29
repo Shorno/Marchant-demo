@@ -15,7 +15,7 @@
 
 .replyButton {
     position: absolute;
-    top: 24px;
+    top: 2.5rem;
     right: 16px;
     border-radius: 40px;
     background-color: #EEEEEE;
@@ -80,7 +80,7 @@
 .reply-container::after {
     content: '';
     position: absolute;
-    left: -100px;
+    left: -10px;
     top: 50%;
     width: 100px;
     height: 2px;
@@ -91,23 +91,23 @@
 
 @media screen and (max-width: 480px) {
     .reply-container::before {
+        left: -20px;
+    }
+
+    .reply-container::after {
+        left: -20px;
+        width: 20px;
+    }
+}
+
+@media screen and (min-width: 480px) {
+    .reply-container::before {
         left: -30px;
     }
 
     .reply-container::after {
         left: -30px;
         width: 30px;
-    }
-}
-
-@media screen and (min-width: 480px) {
-    .reply-container::before {
-        left: -40px;
-    }
-
-    .reply-container::after {
-        left: -40px;
-        width: 40px;
     }
 }
 
@@ -124,11 +124,11 @@
 
 @media screen and (min-width: 1600px) {
     .reply-container::before {
-        left: -100px;
+        left: -80px;
     }
 
     .reply-container::after {
-        left: -100px;
-        width: 100px;
+        left: -80px;
+        width: 80px;
     }
 }

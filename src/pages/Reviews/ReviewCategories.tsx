@@ -24,12 +24,12 @@ export default function ReviewCategories() {
     const screens = useBreakpoint();
     const isMobile = !screens.md;
     const reviewCardStyles = {
-        borderRadius: "8px", width: `${isMobile ? "100%" : "250px"}`, padding: "12px"
+        borderRadius: "8px", width: `${isMobile ? "100%" : "270px"}`, padding: "12px", marginTop: "1rem"
     }
 
     return (
         <>
-            <Title level={2}>Categories</Title>
+            <Title level={4}>Categories</Title>
             <Flex gap={10} justify={"center"} wrap>
                 {reviewsCategory.map((review) => {
                     return (

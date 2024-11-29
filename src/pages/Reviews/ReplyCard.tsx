@@ -22,7 +22,7 @@ export default function ReplyCard({
     return (
         <>
             <Card className={`${className}`}
-                  style={{width: "85%", padding: "0 8px", boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.1)"}} size={"small"}>
+                  style={{width: "90%", padding: "0 8px", boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.1)"}} size={"small"}>
                 <Flex justify="space-between" align="start">
                     <Space align="start">
                         <UserOutlined className={"avatar"}/>

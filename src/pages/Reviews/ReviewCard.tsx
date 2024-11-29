@@ -1,4 +1,4 @@
-import {Button, Card, Flex, Image, Space, Typography} from "antd";
+import {Button, Card, Flex, Image, Rate, Space, Typography} from "antd";
 import {EyeOutlined, UserOutlined} from "@ant-design/icons";
 import {IoReturnUpForwardOutline} from "react-icons/io5";
 import {useState} from "react";
@@ -41,6 +41,7 @@ export default function ReviewCard({
                         </Space>
                     </Space>
                     <Space>
+                        <Rate disabled defaultValue={4} style={{fontSize: 16}}/>
                         <Button onClick={onReply} type="default" size={`${isTablet ? "small" : "middle"}`}
                                 className={"replyButton"}>
                             <IoReturnUpForwardOutline
