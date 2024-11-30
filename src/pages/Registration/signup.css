@@ -18,7 +18,8 @@ body {
     background-color: #5e38ff;
     width: 40%; /* Adjusted for better scaling */
     min-width: 320px;
-    height: 100vh; 
+    height: 100%;
+    min-height: 100vh; 
     padding: 30px 40px;
     display: flex;
     flex-direction: column;
@@ -134,15 +135,15 @@ body {
 /* Responsive Design */
 @media (max-width: 1024px) {
     .signup-container {
-        flex-direction: column; 
+        /* flex-direction: column;  */
     }
 
-    .left-section {
+    /* .left-section {
         width: 35%;
         height: 100vh;
         padding: 20px;
         text-align: center; 
-    }
+    } */
 
     .left-title {
         font-size: 30px; 
@@ -240,16 +241,18 @@ body {
     flex: 1; 
     display: flex;
     flex-direction: column; 
-    margin-bottom: 0px;
+    margin-bottom: 15px;
   }
 
 .right-section {
-    padding: 35px 50px 0px 50px;
+    padding: 5px 50px 0px 50px;
     margin: auto;
+    width: 100%;
 }
 
 .progress-bar {
-    width: 700px;
+    width: 100%;
+    padding: 25px;
 }
 
 .signup-info {
@@ -273,19 +276,22 @@ body {
 .signup-form .form-row {
     display: flex;
     gap: 10px;
-    /* margin-bottom: 10px; */
+    margin-bottom: 0px;
 }
 
 #first-name{
     width: 100%;
 }
 
+.password-details{
+    margin-bottom: 15px;
+}
 
 .signup-form input,
 .signup-form select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 12px;
+    /* margin-bottom: 12px; */
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
@@ -340,6 +346,10 @@ body {
 
 .submit {
     margin-top: 10px;
+    font-family: Poppins;
+    font-weight: 100;
+    font-size: 14px !important;
+
 }
 
 select{
@@ -365,7 +375,7 @@ select{
 /* ///////// */
 
 .custom-password-input {
-    margin-bottom: 16px; 
+    margin-bottom: 6px; 
   }
   
   .custom-password-input .ant-input {
@@ -388,17 +398,18 @@ select{
 
 /* General Responsiveness for 1024px screens */
 @media (max-width: 1024px) and (min-width: 768px) {
-    .signup-container {
+    /* .signup-container {
         display: flex;
         flex-direction: row; 
         gap: 20px;
-        height: 100vh;
-    }
+        height: 100%;
+    } */
 
-    .left-section {
+    /* .left-section {
         width: 40%; 
-        height: 110vh;
-    }
+        height: 100%;
+        min-height: 100vh;
+    } */
 
     .right-section {
         width: 70%;
@@ -425,7 +436,8 @@ select{
 
     .signup-form .form-row {
         flex-direction: row; /* Keep input fields inline on larger screens */
-        gap: 20px;
+        gap: 10px;
+        margin-bottom: -15px !important; 
     }
 
     .phone-input-container {

@@ -1,3 +1,4 @@
+/* Base Styles */
 .restaurant-title {
     font-size: 24px;
     font-weight: 400;
@@ -5,7 +6,6 @@
     margin-top: 20px;
     margin-bottom: 10px;
     color: #262626;
-    /* text-align: center; */
 }
 
 .restaurant-paragraph {
@@ -13,20 +13,50 @@
     font-family: Poppins;
     margin-bottom: 20px;
     color: #595959;
-    /* text-align: center; */
+}
+
+.button-details {
+    background-color: #FE802B;
+    color: white;
+    padding: 5px 20px;
+}
+
+.button-details:hover {
+    background-color: #9f7b63;
+}
+
+.previous {
+    color: #BFBFBF;
+    font-family: Poppins;
+    font-size: 14px;        
+    text-decoration: none;
+}
+
+.main-location {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .form-container {
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     margin-bottom: 20px;
 }
 
 .form-container div {
-    flex: 1 1 calc(50% - 20px); 
-    min-width: 200px; 
+    flex: 1 1 calc(50% - 20px);
+    min-width: 200px;
 }
 
 .form-container label {
@@ -70,20 +100,56 @@
 }
 
 iframe {
-    width: 100%; /* Full width on small screens */
-    max-width: 820px; /* Limits the size on larger screens */
+    width: 100%;
+    max-width: 820px;
     height: 400px;
     border: none;
     border-radius: 5px;
-    margin: 0 auto; /* Center the iframe */
+    margin: 0 auto;
     display: block;
     margin-bottom: 50px;
 }
 
 /* Responsive Media Queries */
-@media (max-width: 768px) {
+
+/* Large screens (e.g., 2560px) */
+@media (min-width: 1920px) {
     .restaurant-title {
-        font-size: 20px;
+        font-size: 32px;
+    }
+
+    .restaurant-paragraph {
+        font-size: 18px;
+    }
+
+    .form-container {
+        gap: 40px;
+        
+    }
+
+    .form-container div {
+        flex: 1 1 calc(40% - 20px);
+    }
+
+    iframe {
+        max-width: 1000px;
+        height: 500px;
+    }
+
+    .detect-button {
+        font-size: 18px;
+        padding: 12px;
+    }
+
+    .main-location{
+        height: 100vh;
+    }
+}
+
+/* Medium screens (e.g., tablets and small desktops) */
+@media (max-width: 1024px) {
+    .restaurant-title {
+        font-size: 22px;
     }
 
     .restaurant-paragraph {
@@ -91,7 +157,7 @@ iframe {
     }
 
     .form-container div {
-        flex: 1 1 100%; /* Inputs take full width on small screens */
+        flex: 1 1 100%;
     }
 
     .detect-button {
@@ -100,10 +166,31 @@ iframe {
     }
 
     iframe {
+        height: 300px;
+    }
+}
+
+/* Small screens (e.g., smartphones) */
+@media (max-width: 768px) {
+    .restaurant-title {
+        font-size: 20px;
+    }
+
+    .restaurant-paragraph {
+        font-size: 12px;
+    }
+
+    .detect-button {
+        font-size: 13px;
+        padding: 6px;
+    }
+
+    iframe {
         height: 250px;
     }
 }
 
+/* Extra-small screens (e.g., very small smartphones) */
 @media (max-width: 480px) {
     .restaurant-title {
         font-size: 18px;
@@ -115,8 +202,8 @@ iframe {
     }
 
     .detect-button {
-        font-size: 13px;
-        padding: 6px;
+        font-size: 12px;
+        padding: 5px;
     }
 
     iframe {

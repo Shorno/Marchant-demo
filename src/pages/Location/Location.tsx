@@ -45,7 +45,7 @@ const Location: React.FC = () => {
     const mapSrc = `https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=${coordinates.latitude},${coordinates.longitude}&zoom=15`;
 
     return (
-        <div >
+        <div className="main-location">
             <GetHelp />
 
             <p className="restaurant-title">MAP COORDINATES</p>
@@ -115,10 +115,13 @@ const Location: React.FC = () => {
             </div>
             {/* <BookingButton /> */}
             <div className="form-footer">
-                <a href="#" className="previous">
+                <a href="#" className="previous">   
                     Previous Step
                 </a>
-                <Button className="button-details" htmlType="submit" href="/restaurant-profile/gallery">
+                <Button className="button-details"
+                 htmlType="submit"
+                //   href="/restaurant-profile/gallery"
+                  >
                     Next <ArrowRightOutlined />
                 </Button>
             </div>

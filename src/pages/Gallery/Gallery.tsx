@@ -107,15 +107,15 @@ const Gallery: React.FC = () => {
                 <Link to="#" className="previous">
                     Previous Step
                 </Link>
-                <Link to="/restaurant-profile/agreement">
+               
                     <Button
                         className="button-details"
                         htmlType="submit"
-                        href="/restaurant-profile/agreement"
+                        // href="/restaurant-profile/agreement"
                     >
                         Next <ArrowRightOutlined />
                     </Button>
-                </Link>
+               
             </div>
         </div>
     );

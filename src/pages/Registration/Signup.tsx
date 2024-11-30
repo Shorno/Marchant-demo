@@ -88,7 +88,7 @@ function Signup() {
                             </span>
                             <span className="author-name">Khorshed Alom</span>
                         </div>
-                        <span className="star">★ ★ ★ ★ ★</span>
+                        <span className="star1">★ ★ ★ ★ ★</span>
                     </div>
                 </div>
                 <div className="page-dots">
@@ -266,7 +266,7 @@ function Signup() {
                             )}
                         </div>
 
-                        <div>
+                        <div className="password-details">
                             <label className="label-title" htmlFor="password">
                                 Password
                             </label>
@@ -304,7 +304,7 @@ function Signup() {
                         </div>
 
                         {/* Confirm Password */}
-                        <div>
+                        <div className="password-details">
                             <label
                                 className="label-title"
                                 htmlFor="confirm-password"

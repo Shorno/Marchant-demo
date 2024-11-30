@@ -18,7 +18,7 @@
 .meal-time-container {
     /* padding: 20px; */
     max-width: 850px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
   }
   
   .meal-section {
@@ -177,7 +177,7 @@
 
   .form-group label {
     font-size: 0.85rem; 
-
+  }
   input {
     font-size: 0.95rem; 
   }
