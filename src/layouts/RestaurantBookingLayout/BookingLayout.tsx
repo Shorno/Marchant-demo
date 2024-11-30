@@ -15,7 +15,7 @@ const BookingLayout = () => {
                         <Steps
                             className="custom-steps"
                             direction="vertical"
-                            current={2}
+                            current={4}
                             items={[
                                 {
                                     title: "Owner Portfolio",

@@ -1,8 +1,18 @@
+<<<<<<< HEAD
+import React, { useState } from "react";
+import { Layout, Steps } from "antd";
+import "./SignupLayout.css";
+const { Content, Sider } = Layout;
+const { Step } = Steps;
+import img from "../../assets/ubaky_logo.png";
+import bottomImg from "../../assets/bottom-img.png";
+=======
 import React, { useState } from 'react';
 import { Layout, Steps } from 'antd';
 import "./SignupLayout.css"
 const { Content, Sider } = Layout;
 const { Step } = Steps;
+>>>>>>> b06db9076487c8637728a81c39e5863cbc769ea0
 
 interface SignupLayoutProps {
     steps: { title: string; content: React.ComponentType<StepProps> }[];
@@ -37,32 +47,37 @@ const SignupLayout: React.FC<SignupLayoutProps> = ({ steps, onFinish }) => {
     const CurrentStepComponent = steps[currentStep].content;
 
     return (
-        <Layout className="signup-layout">
-            <Sider width={250} className="signup-sider">
-                <div className="logo">
-                    <div className="logo-icon"></div>
-                    <span className="logo-text">Ubaky</span>
+        <Layout className=" restarurant-container">
+            <aside className="left-side">
+                <div className="left-side-content">
+                    <img src={img} alt="" />
+                    <div>
+                        <Steps
+                            className={"custom-steps"}
+                            direction="vertical"
+                            current={currentStep}
+                        >
+                            {steps.map((item, index) => (
+                                <Step key={index} title={item.title} />
+                            ))}
+                        </Steps>
+                    </div>
                 </div>
-                <Steps className={"custom-steps"} direction="vertical" current={currentStep}>
-                    {steps.map((item, index) => (
-                        <Step key={index} title={item.title} />
-                    ))}
-                </Steps>
-            </Sider>
-            <Content className="signup-content">
-                <div className="signup-form-container">
-                    <CurrentStepComponent
-                        onNext={handleNext}
-                        onPrevious={handlePrevious}
-                        isFirstStep={currentStep === 0}
-                        isLastStep={currentStep === steps.length - 1}
-                        stepData={formData}
-                    />
+                <div className="bottom-img">
+                    <img src={bottomImg} alt="" />
                 </div>
+            </aside>
+            <Content className="outlet-details">
+                <CurrentStepComponent
+                    onNext={handleNext}
+                    onPrevious={handlePrevious}
+                    isFirstStep={currentStep === 0}
+                    isLastStep={currentStep === steps.length - 1}
+                    stepData={formData}
+                />
             </Content>
         </Layout>
     );
 };
 
 export default SignupLayout;
-

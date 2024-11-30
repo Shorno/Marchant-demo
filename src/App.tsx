@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Signup from "./pages/Registration/Signup.tsx";
@@ -36,25 +36,25 @@ function App() {
                     <Route path={"/buffet-menu"} element={<BuffetMenu/>}/>
                     <Route
                         path={"/hall-recognition"}
-                        element={<HallRecognition/>}
+                        element={<HallRecognition />}
                     />
-                    <Route path={"/reviews"} element={<Reviews/>}/>
-                    <Route path={"/video"} element={<Video/>}/>
-                    <Route path={"/accounts"} element={<Accounts/>}/>
-                    <Route path={"/information"} element={<Information/>}/>
-                    <Route path={"/profile"} element={<MyProfile/>}/>
+                    <Route path={"/reviews"} element={<Reviews />} />
+                    <Route path={"/video"} element={<Video />} />
+                    <Route path={"/accounts"} element={<Accounts />} />
+                    <Route path={"/information"} element={<Information />} />
+                    <Route path={"/profile"} element={<MyProfile />} />
                 </Route>
-                <Route path={"/registration"} element={<Signup></Signup>}/>
+                <Route path={"/registration"} element={<Signup></Signup>} />
 
-                <Route path={"/restaurant-profile"} element={<BookingLayout/>}>
-                    <Route index element={<RestaurantInfoForm/>}/>
+                <Route path={"/restaurant-profile"} element={<BookingLayout />}>
+                    <Route index element={<RestaurantInfoForm />} />
                     <Route
                         path={"provide-service"}
-                        element={<ProvideService/>}
+                        element={<ProvideService />}
                     />
-                    <Route path={"gallery"} element={<Gallery/>}/>
-                    <Route path={"location"} element={<Location/>}/>
-                    <Route path={"agreement"} element={<Agreement/>}/>
+                    <Route path={"gallery"} element={<Gallery />} />
+                    <Route path={"location"} element={<Location />} />
+                    <Route path={"agreement"} element={<Agreement />} />
                 </Route>
             </Routes>
         </Router>
