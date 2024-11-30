@@ -1,18 +1,11 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 import { Layout, Steps } from "antd";
 import "./SignupLayout.css";
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 const { Step } = Steps;
 import img from "../../assets/ubaky_logo.png";
 import bottomImg from "../../assets/bottom-img.png";
-=======
-import React, { useState } from 'react';
-import { Layout, Steps } from 'antd';
-import "./SignupLayout.css"
-const { Content, Sider } = Layout;
-const { Step } = Steps;
->>>>>>> b06db9076487c8637728a81c39e5863cbc769ea0
+
 
 interface SignupLayoutProps {
     steps: { title: string; content: React.ComponentType<StepProps> }[];
@@ -30,6 +23,7 @@ interface StepProps {
 const SignupLayout: React.FC<SignupLayoutProps> = ({ steps, onFinish }) => {
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState({});
+    console.log(123)
 
     const handleNext = (stepData: any) => {
         setFormData({ ...formData, ...stepData });
@@ -67,7 +61,7 @@ const SignupLayout: React.FC<SignupLayoutProps> = ({ steps, onFinish }) => {
                     <img src={bottomImg} alt="" />
                 </div>
             </aside>
-            <Content className="outlet-details">
+            <Content className="outlet-details ">
                 <CurrentStepComponent
                     onNext={handleNext}
                     onPrevious={handlePrevious}
