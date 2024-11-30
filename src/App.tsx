@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import MainLayout from "./layouts/MainLayout.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Signup from "./pages/Registration/Signup.tsx";
@@ -18,39 +18,41 @@ import ProvideService from "./pages/ProvideService/ProvideService.tsx";
 import Gallery from "./pages/Gallery/Gallery.tsx";
 import Location from "./pages/Location/Location.tsx";
 import Agreement from "./pages/Agreement/Agreement.tsx";
+import Login from "./pages/login/Login.tsx";
 
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path={"/"} element={<MainLayout />}>
-                    <Route index element={<Dashboard />} />
-                    <Route path={"/menu"} element={<Menu />} />
-                    <Route path={"/special-menu"} element={<SpecialMenu />} />
-                    <Route path={"/discount-menu"} element={<DiscountMenu />} />
-                    <Route path={"/buffet-menu"} element={<BuffetMenu />} />
+                <Route path={"/"} element={<MainLayout/>}>
+                    <Route index element={<Dashboard/>}/>
+                    <Route path={"/menu"} element={<Menu/>}/>
+                    <Route path={"/special-menu"} element={<SpecialMenu/>}/>
+                    <Route path={"/discount-menu"} element={<DiscountMenu/>}/>
+                    <Route path={"/buffet-menu"} element={<BuffetMenu/>}/>
                     <Route
                         path={"/hall-recognition"}
-                        element={<HallRecognition />}
+                        element={<HallRecognition/>}
                     />
-                    <Route path={"/reviews"} element={<Reviews />} />
-                    <Route path={"/video"} element={<Video />} />
-                    <Route path={"/accounts"} element={<Accounts />} />
-                    <Route path={"/information"} element={<Information />} />
-                    <Route path={"/profile"} element={<MyProfile />} />
+                    <Route path={"/reviews"} element={<Reviews/>}/>
+                    <Route path={"/video"} element={<Video/>}/>
+                    <Route path={"/accounts"} element={<Accounts/>}/>
+                    <Route path={"/information"} element={<Information/>}/>
+                    <Route path={"/profile"} element={<MyProfile/>}/>
                 </Route>
-                <Route path={"/registration"} element={<Signup></Signup>} />
+                <Route path={"/registration"} element={<Signup></Signup>}/>
 
-                <Route path={"/restaurant-profile"} element={<BookingLayout />}>
-                    <Route index element={<RestaurantInfoForm />} />
+                <Route path={"/restaurant-profile"} element={<BookingLayout/>}>
+                    <Route index element={<RestaurantInfoForm/>}/>
                     <Route
                         path={"provide-service"}
-                        element={<ProvideService />}
+                        element={<ProvideService/>}
                     />
-                    <Route path={"gallery"} element ={<Gallery />} />
-                    <Route path={"location"} element ={<Location />} />
-                    <Route path={"agreement"} element ={<Agreement />} />
+                    <Route path={"gallery"} element={<Gallery/>}/>
+                    <Route path={"location"} element={<Location/>}/>
+                    <Route path={"agreement"} element={<Agreement/>}/>
                 </Route>
+                <Route path={"/login"} element={<Login/>}></Route>
             </Routes>
         </Router>
     );
