@@ -19,11 +19,15 @@ import Gallery from "./pages/Gallery/Gallery.tsx";
 import Location from "./pages/Location/Location.tsx";
 import Agreement from "./pages/Agreement/Agreement.tsx";
 import Login from "./pages/login/Login.tsx";
+import RestaurantForm from "./pages/signup/RestaurantForm.tsx";
 
 function App() {
     return (
         <Router>
             <Routes>
+                <Route path={"/login"} element={<Login/>}></Route>
+                <Route path={"/signup"} element={<RestaurantForm/>}></Route>
+
                 <Route path={"/"} element={<MainLayout/>}>
                     <Route index element={<Dashboard/>}/>
                     <Route path={"/menu"} element={<Menu/>}/>
@@ -52,7 +56,6 @@ function App() {
                     <Route path={"location"} element={<Location/>}/>
                     <Route path={"agreement"} element={<Agreement/>}/>
                 </Route>
-                <Route path={"/login"} element={<Login/>}></Route>
             </Routes>
         </Router>
     );

@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Input, Select, Upload, Row, Col, message, Button } from "antd";
 import { ArrowRightOutlined, LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import GetHelp from "../GetHelp/GetHelp";
-import "./restaurantbookingform.css";
+// import "./restaurantbookingform.css";
 import { UploadChangeParam } from "antd/es/upload";
 
 const { Option } = Select;
