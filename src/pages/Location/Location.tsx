@@ -16,7 +16,7 @@ interface FormInputs {
     longitude: string;
 }
 
-const Location: React.FC = () => {
+const Location: React.FC<{ onNext: () => void }> = ({onNext}) => {
     const {
         register,
         handleSubmit,
@@ -120,6 +120,7 @@ const Location: React.FC = () => {
                 </a>
                 <Button className="button-details"
                  htmlType="submit"
+                 onClick={onNext}
                 //   href="/restaurant-profile/gallery"
                   >
                     Next <ArrowRightOutlined />

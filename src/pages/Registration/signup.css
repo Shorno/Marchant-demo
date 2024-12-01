@@ -229,12 +229,14 @@ body {
 
 /* Right side code  */
 
-
+.input-bottom{
+    margin-bottom: 15px;
+}
 
 .error-message {
     color: red;
     font-size: 10px;
-    margin-top: -10px;
+    /* margin-top: -10px; */
 }       
 
 .form-item {

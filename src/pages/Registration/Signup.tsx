@@ -119,12 +119,13 @@ function Signup() {
                         <div className="form-row">
                             <div className="form-item">
                                 <label
-                                    className="label-title"
+                                  
                                     htmlFor="first-name"
                                 >
                                     First Name
                                 </label>
                                 <input
+                              
                                     id="first-name"
                                     type="text"
                                     placeholder="First name"
@@ -146,6 +147,7 @@ function Signup() {
                                     Last Name
                                 </label>
                                 <input
+                               
                                     id="last-name"
                                     type="text"
                                     placeholder="Last name"
@@ -165,6 +167,7 @@ function Signup() {
                                 Email
                             </label>
                             <input
+                           
                                 id="email"
                                 type="email"
                                 placeholder="Email"

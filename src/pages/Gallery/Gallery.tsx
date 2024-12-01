@@ -7,9 +7,7 @@ import { Link } from "react-router-dom";
 
 
 
-
-
-const Gallery: React.FC = () => {
+const Gallery: React.FC<{ onNext: () => void }> = ({onNext}) => {
     // const [previewOpen, setPreviewOpen] = useState<boolean>(false);
     // const [previewImage, setPreviewImage] = useState<string>("");
     const [fileList, setFileList] = useState<UploadFile[]>([
@@ -112,6 +110,7 @@ const Gallery: React.FC = () => {
                         className="button-details"
                         htmlType="submit"
                         // href="/restaurant-profile/agreement"
+                        onClick={onNext}
                     >
                         Next <ArrowRightOutlined />
                     </Button>

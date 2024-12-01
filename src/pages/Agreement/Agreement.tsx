@@ -4,7 +4,7 @@ import GetHelp from "../GetHelp/GetHelp";
 import "./agreement.css";
 import { ArrowRightOutlined } from "@ant-design/icons";
 
-const Agreement = () => {
+const Agreement: React.FC<{ onNext: () => void }> = ({onNext}) => {
     return (
         <div>
             <GetHelp></GetHelp>
@@ -79,7 +79,7 @@ const Agreement = () => {
             <a href="#" className="previous">
                 Previous Step
             </a>
-            <Button className="button-details" htmlType="submit">
+            <Button className="button-details" htmlType="submit" onClick={onNext}>
                 Finish <ArrowRightOutlined />
             </Button>
         </div>

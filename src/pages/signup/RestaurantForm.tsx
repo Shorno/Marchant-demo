@@ -7,7 +7,7 @@ import Agreement from "../Agreement/Agreement.tsx";
 import RestaurantInfoForm from "../RestaurantBookingInfo/RestaurantInfoForm.tsx";
 
 const steps = [
-    {title: "Owner Portfolio"},
+    {title: "Owner Portfolio",},
     {title: "Restaurant Profile", content: RestaurantInfoForm},
     {title: "Provide Service", content: ProvideService},
     {title: "Location", content: Location},
@@ -15,7 +15,7 @@ const steps = [
     {title: "Agreement", content: Agreement},
 ];
 
-export default function RestaurantForm() {
+export default function RestaurantForm() { 
     const onFinish = (values: any) => {
         console.log('Form values:', values);
         message.success('Form submitted successfully!');

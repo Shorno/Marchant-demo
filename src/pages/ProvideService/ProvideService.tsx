@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import GetHelp from "../GetHelp/GetHelp";
 import "./provideservice.css";
 import { Button, Divider, Input, Modal } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 // import BookingButton from "../../components/RestaurantBookingButton/BookingButton";
 
-const ProvideService = () => {
+const ProvideService:React.FC<{ onNext: () => void }>  = ({onNext}) => {
     const { TextArea } = Input;
 
     interface TimeSlot {
@@ -89,6 +89,9 @@ const ProvideService = () => {
         setTimeout(() => {
             setOpen(false);
             setConfirmLoading(false);
+            if (onNext) {
+                onNext(); // Trigger the next action
+            }
         }, 2000);
     };
     const handleCancel = () => {
@@ -287,7 +290,7 @@ const ProvideService = () => {
                         Previous Step
                     </a>
 
-                    <Button className="button-details" onClick={showModal}>
+                    <Button className="button-details" onClick={showModal} >
                         Next <ArrowRightOutlined />
                     </Button>
                     <Modal
