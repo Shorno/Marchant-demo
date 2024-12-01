@@ -23,7 +23,6 @@ interface StepProps {
 const SignupLayout: React.FC<SignupLayoutProps> = ({ steps, onFinish }) => {
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState({});
-    console.log(123)
 
     const handleNext = (stepData: any) => {
         setFormData({ ...formData, ...stepData });
@@ -61,7 +60,7 @@ const SignupLayout: React.FC<SignupLayoutProps> = ({ steps, onFinish }) => {
                     <img src={bottomImg} alt="" />
                 </div>
             </aside>
-            <Content className="outlet-details ">
+            <Content className="outlet-details">
                 <CurrentStepComponent
                     onNext={handleNext}
                     onPrevious={handlePrevious}
