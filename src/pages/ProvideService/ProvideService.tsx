@@ -3,7 +3,6 @@ import GetHelp from "../GetHelp/GetHelp";
 import "./provideservice.css";
 import { Button, Divider, Input, Modal } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
-// import BookingButton from "../../components/RestaurantBookingButton/BookingButton";
 
 const ProvideService:React.FC<{ onNext: () => void }>  = ({onNext}) => {
     const { TextArea } = Input;

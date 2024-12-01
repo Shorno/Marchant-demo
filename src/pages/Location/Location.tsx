@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import BookingButton from "../../components/RestaurantBookingButton/BookingButton";
 import GetHelp from "../GetHelp/GetHelp";
 import "./location.css";
 import { useForm, SubmitHandler } from "react-hook-form";

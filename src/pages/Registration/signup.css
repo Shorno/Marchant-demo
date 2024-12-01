@@ -9,8 +9,8 @@ body {
 
 .signup-container {
     display: flex;
-    flex-direction: row; 
-    
+    flex-direction: row;
+
 }
 
 /* Left Section Styling */
@@ -19,11 +19,11 @@ body {
     width: 40%; /* Adjusted for better scaling */
     min-width: 320px;
     height: 100%;
-    min-height: 100vh; 
+    min-height: 100vh;
     padding: 30px 40px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between;
 }
 
 /* Logo */
@@ -142,16 +142,16 @@ body {
         width: 35%;
         height: 100vh;
         padding: 20px;
-        text-align: center; 
+        text-align: center;
     } */
 
     .left-title {
-        font-size: 30px; 
+        font-size: 30px;
         /* line-height: 55;  */
     }
 
     .info {
-        margin-bottom: 30px; 
+        margin-bottom: 30px;
     }
 
     .testimonial {
@@ -177,7 +177,7 @@ body {
         width: 30%;
         height: auto;
         padding: 20px;
-        text-align: center; 
+        text-align: center;
     }
 
     .left-title {
@@ -237,12 +237,12 @@ body {
     color: red;
     font-size: 10px;
     /* margin-top: -10px; */
-}       
+}
 
 .form-item {
-    flex: 1; 
+    flex: 1;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     margin-bottom: 15px;
   }
 
@@ -316,21 +316,21 @@ body {
     width: 100%;
     margin-bottom: 15px;
   }
-  
+
   .phone-input-field {
-    width: 100% !important; 
-    padding: 10px; 
-    border: 1px solid #ccc; 
-    border-radius: 5px; 
+    width: 100% !important;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
   }
-  
+
   /* Optional: Style for the flag dropdown */
   .phone-input-container .flag-dropdown {
     border: none;
   }
-  
-  
-  
+
+
+
 /*  */
 
 .signup-form button:hover {
@@ -357,7 +357,7 @@ body {
 select{
     color: #949494;
 }
-  
+
 
 .password-title{
     margin-bottom: 5px;
@@ -377,15 +377,15 @@ select{
 /* ///////// */
 
 .custom-password-input {
-    margin-bottom: 6px; 
+    margin-bottom: 6px;
   }
-  
+
   .custom-password-input .ant-input {
-    padding: 12px; 
+    padding: 12px;
     font-size: 16px;
     line-height: 1.5;
   }
-  
+
   .custom-password-input .ant-input-password-icon {
     display: flex;
     align-items: center;
@@ -402,13 +402,13 @@ select{
 @media (max-width: 1024px) and (min-width: 768px) {
     /* .signup-container {
         display: flex;
-        flex-direction: row; 
+        flex-direction: row;
         gap: 20px;
         height: 100%;
     } */
 
     /* .left-section {
-        width: 40%; 
+        width: 40%;
         height: 100%;
         min-height: 100vh;
     } */
@@ -419,7 +419,7 @@ select{
     }
 
     .progress-bar {
-        width: 100%; 
+        width: 100%;
         /* margin: 0 auto; */
     }
 
@@ -439,7 +439,7 @@ select{
     .signup-form .form-row {
         flex-direction: row; /* Keep input fields inline on larger screens */
         gap: 10px;
-        margin-bottom: -15px !important; 
+        margin-bottom: -15px !important;
     }
 
     .phone-input-container {
@@ -471,7 +471,7 @@ select{
     }
 
     .signup-form {
-        flex-direction: column; 
+        flex-direction: column;
     }
 
     .signup-form .form-row {
