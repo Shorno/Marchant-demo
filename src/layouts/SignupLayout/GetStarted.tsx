@@ -5,13 +5,16 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import {ArrowRightOutlined} from "@ant-design/icons";
 import "../../pages/Registration/signup.css"
+import {useAppDispatch} from "../../hooks/useAppDispatch.ts";
+import {updateFormData} from "../../store/signupFromSlice.ts";
+import {useAppSelector} from "../../hooks/useAppSelector.ts";
 
 interface GetStartedFormFields {
     first_name: string;
     last_name: string;
     email: string;
-    country: string [];
-    city: string [];
+    country: string;
+    city: string;
     phone: string;
     password: string;
     confirmPassword: string;
@@ -21,20 +24,19 @@ interface GetStartedFormFields {
 const {useBreakpoint} = Grid
 
 interface GetStartedProps {
-    onNext: (values: any) => void;
+    onNext: (values: GetStartedFormFields) => void;
 }
 
 export default function GetStarted({onNext}: GetStartedProps) {
     const [form] = Form.useForm<GetStartedFormFields>();
     const screens = useBreakpoint();
     const isMobile = !screens.md;
+    const dispatch = useAppDispatch();
+    const signUpFromData = useAppSelector(state => state.signupFrom)
 
-    // const onFinish = (values: GetStartedFormFields) => {
-    //     console.log("Form Data:", values);
-    // };
 
     const handleSubmit = (values: GetStartedFormFields) => {
-        console.log("Form Data:", values);
+        dispatch(updateFormData(values));
         onNext(values);
     };
 
@@ -84,7 +86,7 @@ export default function GetStarted({onNext}: GetStartedProps) {
             <div className="right-section">
                 <div className="progress-bar">
                     <Steps
-                        current={1}
+                        current={0}
                         direction="horizontal"
                         labelPlacement="horizontal"
                         items={[{}, {}, {}, {}]}
@@ -100,6 +102,7 @@ export default function GetStarted({onNext}: GetStartedProps) {
                         className="signup-form"
                         layout="vertical"
                         onFinish={handleSubmit}
+                        initialValues={signUpFromData}
                     >
                         <div className="form-row">
                             <Form.Item

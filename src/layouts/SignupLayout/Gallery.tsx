@@ -3,13 +3,15 @@ import {Button, Upload, UploadFile, Form} from "antd";
 import {ArrowRightOutlined, PlusOutlined, LoadingOutlined} from "@ant-design/icons";
 import GetHelp from "../../pages/GetHelp/GetHelp.tsx";
 import "../../pages/Gallery/gallery.css"
+import {useAppDispatch} from "../../hooks/useAppDispatch.ts";
+import {useAppSelector} from "../../hooks/useAppSelector.ts";
+import {updateFormData} from "../../store/signupFromSlice.ts";
 
 
 interface GalleryProps {
     onNext: (values: UploadFile[]) => void;
     onPrevious: () => void;
 }
-
 
 
 export default function Gallery({onNext, onPrevious}: GalleryProps) {
@@ -28,6 +30,8 @@ export default function Gallery({onNext, onPrevious}: GalleryProps) {
             url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
         },
     ]);
+    const dispatch = useAppDispatch();
+    const signUpFromData = useAppSelector(state => state.signupFrom)
 
     const handleChange = (info: { fileList: UploadFile[] }) => {
         let newFileList = [...info.fileList];
@@ -41,9 +45,10 @@ export default function Gallery({onNext, onPrevious}: GalleryProps) {
         setFileList(newFileList);
     };
 
-    const handleSubmit = (values: UploadFile[]) => {
-        console.log("Gallery values:", values);
-        onNext(values);
+    const handleSubmit = (values: { restaurantGallery: UploadFile[] }) => {
+        const {restaurantGallery} = values;
+        dispatch(updateFormData(values));
+        onNext(restaurantGallery);
     };
 
     const uploadButton = (loading: boolean) => (
@@ -71,7 +76,7 @@ export default function Gallery({onNext, onPrevious}: GalleryProps) {
                 Upload up to 8 images of your restaurant
             </p>
 
-            <Form form={form} onFinish={handleSubmit}>
+            <Form form={form} onFinish={handleSubmit} initialValues={signUpFromData}>
                 <Form.Item
                     name="restaurantGallery"
                     rules={[{

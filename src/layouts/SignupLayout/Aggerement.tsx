@@ -3,6 +3,9 @@ import {ArrowRightOutlined} from "@ant-design/icons";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import GetHelp from "../../pages/GetHelp/GetHelp.tsx";
 import "../../pages/Agreement/agreement.css";
+import {useAppSelector} from "../../hooks/useAppSelector.ts";
+import {useAppDispatch} from "../../hooks/useAppDispatch.ts";
+import {updateFormData} from "../../store/signupFromSlice.ts";
 
 interface AgreementProps {
     onNext: (values: AgreementFormFields) => void;
@@ -17,11 +20,14 @@ export default function Agreement({onNext, onPrevious}: AgreementProps) {
     const [form] = Form.useForm<AgreementFormFields>();
     const screens = useBreakpoint();
     const isMobile = !screens.md;
+    const signUpFromData = useAppSelector(state => state.signupFrom)
+    const dispatch = useAppDispatch();
+
 
     const handleSubmit = (values: AgreementFormFields) => {
         const isAgreed = form.getFieldValue('agreement');
         if (isAgreed) {
-            console.log("Agreement values:", values);
+            dispatch(updateFormData(values));
             onNext(values);
         } else {
             form.setFields([{
@@ -46,6 +52,7 @@ export default function Agreement({onNext, onPrevious}: AgreementProps) {
                 className="agreement-form"
                 layout="vertical"
                 onFinish={handleSubmit}
+                initialValues={signUpFromData}
             >
                 <div className="terms-container">
                     <ul className="terms-list">

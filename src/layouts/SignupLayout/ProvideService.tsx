@@ -4,6 +4,9 @@ import {ArrowRightOutlined} from "@ant-design/icons";
 import GetHelp from "../../pages/GetHelp/GetHelp";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import "../../pages/ProvideService/provideservice.css"
+import {useAppSelector} from "../../hooks/useAppSelector.ts";
+import {useAppDispatch} from "../../hooks/useAppDispatch.ts";
+import {updateFormData} from "../../store/signupFromSlice.ts";
 const {TextArea} = Input;
 
 interface ProvideServiceProps {
@@ -33,6 +36,9 @@ export default function ProvideService({onNext, onPrevious}: ProvideServiceProps
     const [form] = Form.useForm<ServiceFormFields>();
     const screens = useBreakpoint();
     const isMobile = !screens.md;
+    const signUpFromData = useAppSelector(state => state.signupFrom)
+    const dispatch = useAppDispatch();
+
 
     const initialBreakfastTimes: TimeSlot[] = [
         {time: "05:00", selected: false},
@@ -84,14 +90,13 @@ export default function ProvideService({onNext, onPrevious}: ProvideServiceProps
             .filter(slot => slot.selected)
             .map(slot => slot.time);
 
-        const completeValues = {
+        const updatedValues = {
             ...values,
             breakfastTimes: selectedBreakfastTimes,
             lunchTimes: selectedLunchTimes,
             dinnerTimes: selectedDinnerTimes
         };
-
-        console.log(completeValues);
+        dispatch(updateFormData(updatedValues));
         setIsModalVisible(true);
     };
 
@@ -144,6 +149,7 @@ export default function ProvideService({onNext, onPrevious}: ProvideServiceProps
                     className="restaurant-form"
                     layout="vertical"
                     onFinish={handleSubmit}
+                    initialValues={signUpFromData}
                 >
                     <div className="meal-time-container">
                         {renderTimeSlots(breakfastTimes, setBreakfastTimes, "Breakfast Time")}

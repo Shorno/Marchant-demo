@@ -4,6 +4,9 @@ import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {ArrowRightOutlined, LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import {ReactNode} from "react";
 import "../../pages/RestaurantBookingInfo/restaurantbookingform.css"
+import {useAppDispatch} from "../../hooks/useAppDispatch.ts";
+import {updateFormData} from "../../store/signupFromSlice.ts";
+import {useAppSelector} from "../../hooks/useAppSelector.ts";
 
 
 interface RestaurantProfileProps {
@@ -36,11 +39,15 @@ export default function RestaurantProfile({onNext, onPrevious}: RestaurantProfil
     const [form] = Form.useForm<RestaurantInfoFormFields>();
     const screens = useBreakpoint();
     const isMobile = !screens.md;
+    const dispatch = useAppDispatch();
+    const signUpFromData = useAppSelector(state => state.signupFrom)
+
+
 
     const handleSubmit = async (values: RestaurantInfoFormFields) => {
         try {
             const updatedValues = {...values};
-            console.log(updatedValues);
+            dispatch(updateFormData(updatedValues));
             onNext(updatedValues);
         } catch (error) {
             console.error('Error processing files:', error);
@@ -80,6 +87,7 @@ export default function RestaurantProfile({onNext, onPrevious}: RestaurantProfil
                     className="restaurant-form"
                     layout="vertical"
                     onFinish={handleSubmit}
+                    initialValues={signUpFromData}
                 >
                     <div className="form-row">
                         <Form.Item

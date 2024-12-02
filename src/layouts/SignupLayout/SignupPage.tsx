@@ -7,10 +7,14 @@ import Location from "./Location.tsx";
 import Gallery from "./Gallery.tsx";
 import Agreement from "./Aggerement.tsx";
 import "../../pages/Registration/signup.css"
+import {useAppSelector} from "../../hooks/useAppSelector.ts";
 
 
 export const SignupPage = () => {
     const [currentStep, setCurrentStep] = useState(0);
+    const signUpFromData = useAppSelector(state => state.signupFrom)
+    console.log("signUpFromData", signUpFromData)
+
 
     const handleNext = async () => {
         setCurrentStep(prev => prev + 1);

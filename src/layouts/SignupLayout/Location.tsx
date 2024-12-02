@@ -3,6 +3,9 @@ import {Form, Input, Button} from "antd";
 import {ArrowRightOutlined} from "@ant-design/icons";
 import GetHelp from "../../pages/GetHelp/GetHelp";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
+import {useAppSelector} from "../../hooks/useAppSelector.ts";
+import {useAppDispatch} from "../../hooks/useAppDispatch.ts";
+import {updateFormData} from "../../store/signupFromSlice.ts";
 
 interface LocationProps {
     onNext: (values: LocationFormFields) => void;
@@ -18,6 +21,10 @@ export default function Location({onNext, onPrevious}: LocationProps) {
     const [form] = Form.useForm<LocationFormFields>();
     const screens = useBreakpoint();
     const isMobile = !screens.md;
+    const signUpFromData = useAppSelector(state => state.signupFrom);
+    const dispatch = useAppDispatch();
+
+
 
     const [coordinates, setCoordinates] = useState({
         latitude: 24.8742508,
@@ -33,7 +40,7 @@ export default function Location({onNext, onPrevious}: LocationProps) {
                 latitude: lat,
                 longitude: lng,
             });
-            console.log("Coordinates updated:", values);
+            dispatch(updateFormData(values));
             onNext(values)
         } else {
             console.error("Invalid coordinates entered.");
@@ -59,6 +66,7 @@ export default function Location({onNext, onPrevious}: LocationProps) {
                     className="restaurant-form"
                     layout="vertical"
                     onFinish={handleSubmit}
+                    initialValues={signUpFromData}
                 >
                     <div className="form-row">
                         <Form.Item
