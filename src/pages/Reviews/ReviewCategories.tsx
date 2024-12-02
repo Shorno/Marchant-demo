@@ -1,8 +1,8 @@
-import {reviewsCategory} from "./ReviewData.tsx";
-import {Card, Flex, Rate, Typography} from "antd";
+import { reviewsCategory } from "./ReviewData.tsx";
+import { Card, Flex, Rate, Typography } from "antd";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
-const {Meta} = Card;
+const { Meta } = Card;
 
 const metaStyles = {
     display: "flex",
@@ -12,12 +12,12 @@ const metaStyles = {
 }
 
 const reviewCardTitle = (title: string, rating: string) =>
-    <div style={{display: "flex", justifyContent: "space-between"}}>
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
         <p>{title}</p>
         <p>{rating}</p>
     </div>
 
-const {Title} = Typography;
+const { Title } = Typography;
 
 
 export default function ReviewCategories() {
@@ -43,14 +43,14 @@ export default function ReviewCategories() {
                                 avatar={review.icon}
                                 title={reviewCardTitle(`${review.reviewCategoryName}`, `${review.rating}/5`)}
                                 description=
-                                    {
-                                        <Rate
-                                            disabled
-                                            allowHalf
-                                            defaultValue={review.rating}
-                                            style={{fontSize: 16}}
-                                        />
-                                    }
+                                {
+                                    <Rate
+                                        disabled
+                                        allowHalf
+                                        defaultValue={review.rating}
+                                        style={{ fontSize: 16 }}
+                                    />
+                                }
                             />
                         </Card>
                     )

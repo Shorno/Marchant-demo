@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Input, Select, Upload, Row, Col, message, Button } from "antd";
+import { Input, Select, Upload, Row, Col, message } from "antd";
 import {
-    ArrowRightOutlined,
     LoadingOutlined,
     PlusOutlined,
 } from "@ant-design/icons";
-import GetHelp from "../GetHelp/GetHelp";
 // import "./restaurantbookingform.css";
 import { UploadChangeParam } from "antd/es/upload";
+import GetHelp from "../GetHelp/GetHelp";
 
 const { Option } = Select;
 
@@ -50,7 +49,7 @@ const beforeUpload = (file: File) => {
 };
 
 
-const RestaurantInfoForm: React.FC<{ onNext: () => void }>= ({onNext}) => {
+const RestaurantInfoForm = () => {
     const fields = [
         {
             label: "Restaurant Name",
@@ -61,12 +60,6 @@ const RestaurantInfoForm: React.FC<{ onNext: () => void }>= ({onNext}) => {
         {
             label: "Restaurant Email",
             name: "restaurantEmail",
-            type: "input",
-            required: true,
-        },
-        {
-            label: "Restaurant Website",
-            name: "restaurantWebsite",
             type: "input",
             required: true,
         },
@@ -136,18 +129,18 @@ const RestaurantInfoForm: React.FC<{ onNext: () => void }>= ({onNext}) => {
 
     const handleChange =
         (setImage: React.Dispatch<React.SetStateAction<string | undefined>>) =>
-        (info: UploadChangeParam) => {
-            if (info.file.status === "uploading") {
-                setLoading(true);
-                return;
-            }
-            if (info.file.status === "done") {
-                getBase64(info.file.originFileObj as File, (url) => {
-                    setLoading(false);
-                    setImage(url as string);
-                });
-            }
-        };
+            (info: UploadChangeParam) => {
+                if (info.file.status === "uploading") {
+                    setLoading(true);
+                    return;
+                }
+                if (info.file.status === "done") {
+                    getBase64(info.file.originFileObj as File, (url) => {
+                        setLoading(false);
+                        setImage(url as string);
+                    });
+                }
+            };
 
     const onSubmit = (data: FormData) => {
         console.log("Form Submitted:", data);
@@ -214,6 +207,7 @@ const RestaurantInfoForm: React.FC<{ onNext: () => void }>= ({onNext}) => {
                                                 />
                                             ) : (
                                                 <Select
+                                                    size="large"
                                                     {...controllerField}
                                                     placeholder={`Select ${field.label.toLowerCase()}`}
                                                     status={
@@ -224,7 +218,6 @@ const RestaurantInfoForm: React.FC<{ onNext: () => void }>= ({onNext}) => {
                                                             : ""
                                                     }
                                                     className="custom-select"
-                                                    style={{ backgroundColor: "#F5F5F5" }} 
                                                 >
                                                     {field.options?.map(
                                                         (option, idx) => (
@@ -308,17 +301,6 @@ const RestaurantInfoForm: React.FC<{ onNext: () => void }>= ({onNext}) => {
                             </div>
                         </Col>
                     </Row>
-
-                    <div className="form-footer">
-                        <a href="#" className="previous">
-                            Previous Step
-                        </a>
-                        <Button onClick={onNext} className="button-details" htmlType="submit">
-                            Next <ArrowRightOutlined />
-                        </Button>
-
-                        
-                    </div>
                 </form>
             </div>
         </div>

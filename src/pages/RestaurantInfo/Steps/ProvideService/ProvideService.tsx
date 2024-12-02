@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import GetHelp from "../GetHelp/GetHelp";
 import "./provideservice.css";
+import { Divider, Input, } from "antd";
+
 import { Button, Divider, Input, Modal } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 
-const ProvideService:React.FC<{ onNext: () => void }>  = ({onNext}) => {
+const ProvideService = () => {
     const { TextArea } = Input;
 
     interface TimeSlot {
@@ -78,24 +80,6 @@ const ProvideService:React.FC<{ onNext: () => void }>  = ({onNext}) => {
         }));
     };
 
-    const [open, setOpen] = useState(false);
-    const [confirmLoading, setConfirmLoading] = useState(false);
-    const showModal = () => {
-        setOpen(true);
-    };
-    const handleOk = () => {
-        setConfirmLoading(true);
-        setTimeout(() => {
-            setOpen(false);
-            setConfirmLoading(false);
-            if (onNext) {
-                onNext(); // Trigger the next action
-            }
-        }, 2000);
-    };
-    const handleCancel = () => {
-        setOpen(false);
-    };
 
     return (
         <div>
@@ -114,9 +98,8 @@ const ProvideService:React.FC<{ onNext: () => void }>  = ({onNext}) => {
                         {breakfastTimes.map((slot, index) => (
                             <button
                                 key={index}
-                                className={`time-slot ${
-                                    slot.selected ? "selected" : ""
-                                }`}
+                                className={`time-slot ${slot.selected ? "selected" : ""
+                                    }`}
                                 onClick={() =>
                                     toggleTimeSlot(
                                         index,
@@ -139,9 +122,8 @@ const ProvideService:React.FC<{ onNext: () => void }>  = ({onNext}) => {
                         {lunchTimes.map((slot, index) => (
                             <button
                                 key={index}
-                                className={`time-slot ${
-                                    slot.selected ? "selected" : ""
-                                }`}
+                                className={`time-slot ${slot.selected ? "selected" : ""
+                                    }`}
                                 onClick={() =>
                                     toggleTimeSlot(
                                         index,
@@ -164,9 +146,8 @@ const ProvideService:React.FC<{ onNext: () => void }>  = ({onNext}) => {
                         {dinnerTimes.map((slot, index) => (
                             <button
                                 key={index}
-                                className={`time-slot ${
-                                    slot.selected ? "selected" : ""
-                                }`}
+                                className={`time-slot ${slot.selected ? "selected" : ""
+                                    }`}
                                 onClick={() =>
                                     toggleTimeSlot(
                                         index,
@@ -283,26 +264,6 @@ const ProvideService:React.FC<{ onNext: () => void }>  = ({onNext}) => {
                         </label>
                     </div>
                 </div>
-
-                <div className="form-footer">
-                    <a href="#" className="previous">
-                        Previous Step
-                    </a>
-
-                    <Button className="button-details" onClick={showModal} >
-                        Next <ArrowRightOutlined />
-                    </Button>
-                    <Modal
-                        title="Are You sure!!"
-                        open={open}
-                        onOk={handleOk}
-                        confirmLoading={confirmLoading}
-                        onCancel={handleCancel}
-                    >
-                        <p>All info is ok?</p>
-                    </Modal>
-                </div>
-                
             </form>
         </div>
     );

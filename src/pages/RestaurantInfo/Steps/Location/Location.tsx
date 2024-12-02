@@ -2,8 +2,6 @@ import { useState } from "react";
 import GetHelp from "../GetHelp/GetHelp";
 import "./location.css";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Button } from "antd";
-import { ArrowRightOutlined } from "@ant-design/icons";
 
 interface Coordinates {
     latitude: number;
@@ -15,7 +13,7 @@ interface FormInputs {
     longitude: string;
 }
 
-const Location: React.FC<{ onNext: () => void }> = ({onNext}) => {
+const Location = () => {
     const {
         register,
         handleSubmit,
@@ -41,7 +39,7 @@ const Location: React.FC<{ onNext: () => void }> = ({onNext}) => {
         }
     };
 
-    const mapSrc = `https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=${coordinates.latitude},${coordinates.longitude}&zoom=15`;
+    const mapSrc = `https://www.google.com/maps/embed/v1/view?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}&center=${coordinates.latitude ?? 0},${coordinates.longitude ?? 0}&zoom=15`;
 
     return (
         <div className="main-location">
@@ -95,10 +93,13 @@ const Location: React.FC<{ onNext: () => void }> = ({onNext}) => {
                             </p>
                         )}
                     </div>
+                    <div>
+                        <button className="detect-button" type="submit">
+                            Search Location
+                        </button>
+                    </div>
                 </div>
-                <button className="detect-button" type="submit">
-                    Search Location
-                </button>
+
             </form>
 
             <div>
@@ -111,19 +112,6 @@ const Location: React.FC<{ onNext: () => void }> = ({onNext}) => {
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
-            </div>
-            {/* <BookingButton /> */}
-            <div className="form-footer">
-                <a href="#" className="previous">   
-                    Previous Step
-                </a>
-                <Button className="button-details"
-                 htmlType="submit"
-                 onClick={onNext}
-                //   href="/restaurant-profile/gallery"
-                  >
-                    Next <ArrowRightOutlined />
-                </Button>
             </div>
         </div>
     );

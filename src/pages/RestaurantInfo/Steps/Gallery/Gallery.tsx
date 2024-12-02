@@ -1,13 +1,13 @@
 import { useState } from "react";
 import GetHelp from "../GetHelp/GetHelp";
 import "./gallery.css";
-import { ArrowRightOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Upload, UploadFile } from "antd";
-import { Link } from "react-router-dom";
+import { PlusOutlined } from "@ant-design/icons";
+import { Upload, UploadFile } from "antd";
 
 
 
-const Gallery: React.FC<{ onNext: () => void }> = ({onNext}) => {
+
+const Gallery = () => {
     // const [previewOpen, setPreviewOpen] = useState<boolean>(false);
     // const [previewImage, setPreviewImage] = useState<string>("");
     const [fileList, setFileList] = useState<UploadFile[]>([
@@ -100,22 +100,6 @@ const Gallery: React.FC<{ onNext: () => void }> = ({onNext}) => {
                 {/*))}*/}
             </div>
 
-            {/* <BookingButton /> */}
-            <div className="form-footer">
-                <Link to="#" className="previous">
-                    Previous Step
-                </Link>
-               
-                    <Button
-                        className="button-details"
-                        htmlType="submit"
-                        // href="/restaurant-profile/agreement"
-                        onClick={onNext}
-                    >
-                        Next <ArrowRightOutlined />
-                    </Button>
-               
-            </div>
         </div>
     );
 };

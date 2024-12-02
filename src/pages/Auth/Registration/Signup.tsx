@@ -1,6 +1,6 @@
 import "./signup.css";
-import logo from "../../assets/ubaky_logo.png";
-import author from "../../assets/author-image.jpeg";
+import logo from "../../../assets/ubaky_logo.png";
+import author from "../../../assets/author-image.jpeg";
 import {  Popover, Steps } from "antd";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { StepsProps } from "antd";
+import { useNavigate } from "react-router-dom";
 
 
 // Define Form Data Type
@@ -27,6 +28,8 @@ interface FormData {
 }
 
 function Signup() {
+    const navigate = useNavigate();
+
     const {
         register,
         handleSubmit,
@@ -37,6 +40,8 @@ function Signup() {
 
     const onSubmit = (data: FormData) => {
         console.log("Form Data:", data);
+
+        navigate('/restaurant-info');
     };
 
     const password = watch("password");

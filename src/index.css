@@ -7,4 +7,10 @@
 }
 body {
     -webkit-tap-highlight-color: transparent;
+} 
+
+
+:root {
+    --primary-color: #f3b94e; /* Primary color */
+    --secondary-color: #e3bd76; /* Secondary color */
 }

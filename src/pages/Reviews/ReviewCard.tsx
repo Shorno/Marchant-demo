@@ -1,11 +1,11 @@
-import {Button, Card, Flex, Image, Rate, Space, Typography} from "antd";
-import {EyeOutlined, UserOutlined} from "@ant-design/icons";
-import {IoReturnUpForwardOutline} from "react-icons/io5";
-import {useState} from "react";
+import { Button, Card, Flex, Image, Rate, Space, Typography } from "antd";
+import { EyeOutlined, UserOutlined } from "@ant-design/icons";
+import { IoReturnUpForwardOutline } from "react-icons/io5";
+import { useState } from "react";
 import ReplyCard from "./ReplyCard.tsx";
-import {fallbackImage} from "./ReviewData.tsx";
+import { fallbackImage } from "./ReviewData.tsx";
 
-const {Title, Text} = Typography;
+const { Title, Text } = Typography;
 
 interface ReviewCardProps {
     author: string;
@@ -18,12 +18,12 @@ interface ReviewCardProps {
 
 
 export default function ReviewCard({
-                                       author,
-                                       dateTime,
-                                       reviewText,
-                                       isTablet,
-                                       onReply,
-                                   }: ReviewCardProps) {
+    author,
+    dateTime,
+    reviewText,
+    isTablet,
+    onReply,
+}: ReviewCardProps) {
     const [reply] = useState(true);
 
     return (
@@ -31,19 +31,19 @@ export default function ReviewCard({
             <Card className={"card-container"} size={"small"}>
                 <Flex justify="space-between" align="start">
                     <Space align="start">
-                        <UserOutlined className={"avatar"}/>
+                        <UserOutlined className={"avatar"} />
                         <Space
                             direction={isTablet ? "vertical" : "horizontal"}
                             className={"authorInfo"}
                         >
-                            <Title level={5} style={{margin: 0}}>{author}</Title>
+                            <Title level={5} style={{ margin: 0 }}>{author}</Title>
                             <Text type="secondary">{dateTime}</Text>
                         </Space>
                     </Space>
                     <Space>
-                        <Rate disabled defaultValue={4} style={{fontSize: 16}}/>
+                        <Rate disabled defaultValue={4} style={{ fontSize: 16 }} />
                         <Button onClick={onReply} type="default" size={`${isTablet ? "small" : "middle"}`}
-                                className={"replyButton"}>
+                            className={"replyButton"}>
                             <IoReturnUpForwardOutline
                                 size={20}
                                 className={"replyIcon"}
@@ -63,13 +63,13 @@ export default function ReviewCard({
                             width={50}
                             height={50}
                             preview={{
-                                mask: <EyeOutlined style={{fontSize : "1.2rem"}}/>
+                                mask: <EyeOutlined style={{ fontSize: "1.2rem" }} />
                             }}
                             fallback={fallbackImage}
                         />
                         <Image
                             preview={{
-                                mask: <EyeOutlined style={{fontSize : "1.2rem"}}/>
+                                mask: <EyeOutlined style={{ fontSize: "1.2rem" }} />
                             }}
                             width={50}
                             height={50}

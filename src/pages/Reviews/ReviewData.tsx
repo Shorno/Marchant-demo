@@ -1,4 +1,4 @@
-import {ReactNode} from "react";
+import { ReactNode } from "react";
 import KitchenIcon from "../../components/shared/KitchenIcon.tsx";
 import ServiceIcon from "../../components/shared/ServiceIcon.tsx";
 import EnvironmentIcon from "../../components/shared/EnvironmentIcon.tsx";
@@ -17,27 +17,27 @@ export const reviewsCategory: ReviewCategories = [
     {
         reviewCategoryName: "Kitchen",
         rating: 4.5,
-        icon: <KitchenIcon/>
+        icon: <KitchenIcon />
     },
     {
         reviewCategoryName: "Service",
         rating: 4.5,
-        icon: <ServiceIcon/>
+        icon: <ServiceIcon />
     },
     {
         reviewCategoryName: "Environment",
         rating: 5,
-        icon: <EnvironmentIcon/>
+        icon: <EnvironmentIcon />
     },
     {
         reviewCategoryName: "Quality",
         rating: 4,
-        icon: <QualityIcon/>
+        icon: <QualityIcon />
     },
     {
         reviewCategoryName: "Waiting Time",
         rating: 4,
-        icon: <ClockIcon/>
+        icon: <ClockIcon />
     },
 ]
 

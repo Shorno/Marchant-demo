@@ -7,9 +7,9 @@ export default function ReviewsPageContent() {
 
     return (
         <>
-            <ReviewCategories/>
-            <TopReviews/>
-            <OtherReviews/>
+            <ReviewCategories />
+            <TopReviews />
+            <OtherReviews />
         </>
     )
 }

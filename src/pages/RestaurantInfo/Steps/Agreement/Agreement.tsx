@@ -1,10 +1,7 @@
-import { Button } from "antd";
-// import BookingButton from "../../components/RestaurantBookingButton/BookingButton";
 import GetHelp from "../GetHelp/GetHelp";
 import "./agreement.css";
-import { ArrowRightOutlined } from "@ant-design/icons";
 
-const Agreement: React.FC<{ onNext: () => void }> = ({onNext}) => {
+const Agreement = () => {
     return (
         <div>
             <GetHelp></GetHelp>
@@ -74,15 +71,6 @@ const Agreement: React.FC<{ onNext: () => void }> = ({onNext}) => {
                     these terms and conditions.
                 </label>
             </div>
-
-            <div className="form-footer">
-            <a href="#" className="previous">
-                Previous Step
-            </a>
-            <Button className="button-details" htmlType="submit" onClick={onNext}>
-                Finish <ArrowRightOutlined />
-            </Button>
-        </div>
         </div>
     );
 };

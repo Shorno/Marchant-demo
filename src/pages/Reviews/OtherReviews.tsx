@@ -1,17 +1,17 @@
-import {Typography, Grid, Flex} from "antd";
+import { Typography, Grid, Flex } from "antd";
 import './Reviews.css';
 import ReviewCard from "./ReviewCard.tsx";
-import {useState} from "react";
+import { useState } from "react";
 import ReplyingCard from "./ReplyingCard.tsx";
 
 
-const {Title} = Typography;
-const {useBreakpoint} = Grid
+const { Title } = Typography;
+const { useBreakpoint } = Grid
 
 export default function OtherReviews() {
     const screens = useBreakpoint();
     const isTablet = !screens.lg;
-    const reviewContainerStyles = {width: `${isTablet ? "100%" : "80%"}`, margin: "2rem auto"}
+    const reviewContainerStyles = { width: `${isTablet ? "100%" : "80%"}`, margin: "2rem auto" }
     const [isReplying, setIsReplying] = useState(false);
 
     const handleReplay = () => {
@@ -35,8 +35,8 @@ export default function OtherReviews() {
                 </Flex>
                 {
                     isReplying && (
-                        <Flex vertical align={"end"} style={{marginTop: "1.5rem"}}>
-                            <ReplyingCard author={"X Restaurant"} onClose={handleReplay}/>
+                        <Flex vertical align={"end"} style={{ marginTop: "1.5rem" }}>
+                            <ReplyingCard author={"X Restaurant"} onClose={handleReplay} />
                         </Flex>
 
                     )

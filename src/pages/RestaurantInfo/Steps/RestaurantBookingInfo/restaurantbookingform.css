@@ -51,6 +51,13 @@
     background-color: #F5F5F5 !important;
   }
 
+  :where(.css-dev-only-do-not-override-1x0dypw).ant-select-single.ant-select-lg .ant-select-selector .ant-select-selection-search {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    background-color: #F5F5F5 !important;
+}
+
 .star{
   color: red;
 }
