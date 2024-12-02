@@ -1,8 +1,8 @@
-import {Breadcrumb, Layout, theme} from "antd";
-import {Link} from "react-router-dom";
+import { Breadcrumb, Layout, theme } from "antd";
+import { Link } from "react-router-dom";
 import ReviewsPageContent from "./ReviewsPageContent.tsx";
 
-const {Content} = Layout;
+const { Content } = Layout;
 
 const breadcrumbItems = [
     {
@@ -16,7 +16,7 @@ const breadcrumbItems = [
 
 export default function Reviews() {
     const {
-        token: {colorBgContainer, borderRadiusLG},
+        token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
     const containerStyles = {
@@ -33,13 +33,13 @@ export default function Reviews() {
             <Layout>
                 <Content>
                     <Breadcrumb
-                        style={{margin: '16px 0'}}
+                        style={{ margin: '16px 0' }}
                         items={breadcrumbItems}
                     />
                     <div
                         style={containerStyles}
                     >
-                        <ReviewsPageContent/>
+                        <ReviewsPageContent />
                     </div>
                 </Content>
             </Layout>
