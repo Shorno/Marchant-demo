@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {Layout, Grid} from 'antd';
-import {Header} from '../components/layout/Header/Header.tsx';
-import {Sidebar} from '../components/layout/Sidebar/Sidebar.tsx';
+import {Header} from '../../components/layout/Header/Header.tsx';
+import {Sidebar} from '../../components/layout/Sidebar/Sidebar.tsx';
 import './MainLayout.css';
 import {Outlet} from "react-router-dom";
 

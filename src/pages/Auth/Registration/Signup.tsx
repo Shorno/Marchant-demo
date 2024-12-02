@@ -354,19 +354,6 @@ function Signup() {
                         <button className="submit" type="submit">
                             GET STARTED <ArrowRightOutlined />
                         </button>
-
-                        {/* <div className="form-footer">
-                            <a href="#" className="previous">
-                                Previous Step
-                            </a>
-                            <Button
-                                className="button-details"
-                                htmlType="submit"
-                                href="/restaurant-profile"
-                            >
-                                Next <ArrowRightOutlined />
-                            </Button>
-                        </div> */}
                     </form>
                 </div>
             </div>

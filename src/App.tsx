@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Signup from "./pages/Auth/Registration/Signup.tsx";
 import Menu from "./pages/Menu&Category/Menu/Menu.tsx";
@@ -14,6 +13,7 @@ import MyProfile from "./pages/Profile/MyProfile.tsx";
 import Video from "./pages/Video/Video.tsx";
 import Login from "./pages/Auth/login/Login.tsx";
 import RestaurantInfo from "./pages/RestaurantInfo/Steps/RestaurantInfo.tsx";
+import MainLayout from "./layouts/Main/MainLayout.tsx";
 
 function App() {
     return (
