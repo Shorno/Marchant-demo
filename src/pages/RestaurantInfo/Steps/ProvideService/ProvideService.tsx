@@ -3,9 +3,6 @@ import GetHelp from "../GetHelp/GetHelp";
 import "./provideservice.css";
 import { Divider, Input, } from "antd";
 
-import { Button, Divider, Input, Modal } from "antd";
-import { ArrowRightOutlined } from "@ant-design/icons";
-
 const ProvideService = () => {
     const { TextArea } = Input;
 
