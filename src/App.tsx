@@ -26,24 +26,25 @@ function App() {
                 {/* Redirect the root route to /login */}
                 <Route path="/" element={<Navigate to="/login"/>}/>
 
-                <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-                <Route path="/registration" element={<PublicRoute><Signup /></PublicRoute>} />
+                <Route path="/login" element={<PublicRoute><Login/></PublicRoute>}/>
+                <Route path="/registration" element={<PublicRoute><Signup/></PublicRoute>}/>
 
                 {/* Private Routes */}
-                <Route path="/" element={<PrivateRoute><RestaurantInfo /></PrivateRoute>} />
-                <Route path="/" element={<PrivateRoute><MainLayout /></PrivateRoute>}>
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/menu" element={<Menu />} />
-                    <Route path="/special-menu" element={<SpecialMenu />} />
-                    <Route path="/discount-menu" element={<DiscountMenu />} />
-                    <Route path="/buffet-menu" element={<BuffetMenu />} />
-                    <Route path="/hall-recognition" element={<HallRecognition />} />
-                    <Route path="/reviews" element={<Reviews />} />
-                    <Route path="/video" element={<Video />} />
-                    <Route path="/accounts" element={<Accounts />} />
-                    <Route path="/information" element={<Information />} />
-                    <Route path="/settings" element={<Settings/>} />
-                    <Route path="/profile" element={<MyProfile />} />
+                <Route path="/" element={<PrivateRoute><RestaurantInfo/></PrivateRoute>}/>
+                <Route path="/" element={<PrivateRoute><MainLayout/></PrivateRoute>}>
+                    <Route path="/dashboard" element={<Dashboard/>}/>
+                    <Route path="/table-reservation" element={<Reservation/>}/>
+                    <Route path="/menu" element={<Menu/>}/>
+                    <Route path="/special-menu" element={<SpecialMenu/>}/>
+                    <Route path="/discount-menu" element={<DiscountMenu/>}/>
+                    <Route path="/buffet-menu" element={<BuffetMenu/>}/>
+                    <Route path="/hall-recognition" element={<HallRecognition/>}/>
+                    <Route path="/reviews" element={<Reviews/>}/>
+                    <Route path="/video" element={<Video/>}/>
+                    <Route path="/accounts" element={<Accounts/>}/>
+                    <Route path="/information" element={<Information/>}/>
+                    <Route path="/settings" element={<Settings/>}/>
+                    <Route path="/profile" element={<MyProfile/>}/>
                 </Route>
             </Routes>
         </Router>
