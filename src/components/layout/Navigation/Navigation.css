@@ -1,8 +1,4 @@
-.navigation-menu {
-  border: none;
-  background: transparent;
-}
-
-.navigation-menu.ant-menu-inline {
-  border-right: none;
+.ant-menu-item:not(:last-child),
+.ant-menu-submenu-title:not(:last-child) {
+  margin-bottom: 18px;
 }
