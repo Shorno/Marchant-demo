@@ -20,9 +20,16 @@
   align-items: center;
   justify-content: center;
   color: #001529;
-  transition: color 0.3s;
+  transition: color 0.3s, transform 0.2s ease;
 }
 
 .menu-trigger:hover {
-  color: #1890ff;
+  color: rgb(255, 181, 44);
+  transform: scale(1.1);
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #001529;
 }

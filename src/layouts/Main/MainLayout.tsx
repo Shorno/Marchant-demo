@@ -12,7 +12,7 @@ const {useBreakpoint} = Grid;
 export default function MainLayout() {
     const [drawerVisible, setDrawerVisible] = useState(false);
     const screens = useBreakpoint();
-    const isMobile = !screens.md;
+    const isMobile = !screens.lg;
 
     const toggleDrawer = () => {
         setDrawerVisible(!drawerVisible);
