@@ -4,6 +4,7 @@ import {
     ArrowRightOutlined,
     FileTextOutlined,
     HomeOutlined, KeyOutlined, MenuOutlined, StarOutlined,
+    ToolOutlined,
     UserOutlined, VideoCameraAddOutlined
 } from "@ant-design/icons";
 import {Link} from "react-router-dom";
@@ -93,6 +94,11 @@ export const navigationItems: MenuItem[] = [
         key: 'information',
         icon: <FileTextOutlined/>,
         label: <Link to={"/information"}>Information</Link>
+    },
+    {
+        key: 'information',
+        icon: <ToolOutlined/>,
+        label: <Link to={"/settings"}>Settings</Link>
     },
     {
         key: 'my-profile',
