@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { Button, Card, Input, Modal } from "antd";
+import  { useState } from "react";
+import { Input, Modal, Select } from "antd";
 import "./menu.css";
+
+const { TextArea } = Input;
 
 export default function Menu() {
     const [open, setOpen] = useState(false);
+    const [value, setValue] = useState("");
 
     const showModal = () => {
         setOpen(true);
@@ -20,11 +23,12 @@ export default function Menu() {
     const handleCancel = () => {
         setOpen(false);
     };
+
     return (
         <div>
-            <Button className="add-menu-button " onClick={showModal}>
+            <button className="modal-button " onClick={showModal}>
                 Add new menu
-            </Button>
+            </button>
             <Modal
                 open={open}
                 title="Add new menu"
@@ -33,16 +37,41 @@ export default function Menu() {
                 footer={null}
                 className="custom-modal"
                 closeIcon={<span className="">×</span>}
+                
             >
-                <h4>Description</h4>
-                <Card style={{ width: "100%" }}>
+                <form>
                     <div>
-                        <label className="label">Menu Name</label>
-                        <Input placeholder="" />
+                        <label className="label">Menu Name:</label>
+                        <Input
+                            className="menu-input"
+                            placeholder="e.g Drinks"
+                        />
                     </div>
-                    <p>Card content</p>
-                    <p>Card content</p>
-                </Card>
+                    <div>
+                        <label className="label">Menu Notes:</label>
+                        <TextArea
+                            value={value}
+                            className="menu-input"
+                            onChange={(e) => setValue(e.target.value)}
+                            placeholder="menu Notes"
+                            autoSize={{ minRows: 3, maxRows: 5 }}
+                        />
+                    </div>
+                    <div>
+                        <label className="label">Slot:</label>
+                        <Select
+                            placeholder="Outlined"
+                            style={{ flex: 1 }}
+                            options={[
+                                { value: "all", label: "All" },
+                                { value: "morning", label: "Morning" },
+                                { value: "lunch", label: "Lunch" },
+                                { value: "Dinner", label: "Dinner" },
+                            ]}
+                        />
+                    </div>
+                </form>
+
                 <button className="add-menu-button">Add Product</button>
             </Modal>
         </div>

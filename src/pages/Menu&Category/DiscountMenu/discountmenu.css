@@ -1,0 +1,181 @@
+.add-menu-button{
+    background-color: #FE802B;
+    color: white;
+    font-size: 14px;
+    font-weight: 300;
+    text-decoration: none;
+    border: none;
+    padding: 8px;
+    border-radius: 10px;
+    margin-top: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.modal-button{
+    background-color: #FE802B;
+    color: white;
+    font-size: 14px;
+    font-weight: 300;
+    text-decoration: none;
+    border: none;
+    padding: 10px;
+    border-radius: 10
+}
+
+.modal-button:hover{
+    background-color: #FE802B;
+    color: white;
+    font-size: 14px;
+    font-weight: 300;
+    text-decoration: none;
+    border: none;
+    padding: 10px;
+    border-radius: 10
+}
+
+.special-menu-input {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+/* text editor */
+.editor-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px;
+    border-bottom: 1px solid #d9d9d9;
+    background: #fff;
+    border-radius: 8px 8px 0 0;
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 4px;
+}
+
+.toolbar-group:not(:last-child) {
+    border-right: 1px solid #d9d9d9;
+}
+
+.format-select {
+    width: 120px;
+}
+
+.font-size-select {
+    width: 80px;
+}
+
+/* Make buttons more touch-friendly on mobile */
+.ant-btn {
+    min-width: 32px;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #FFA500;
+}
+
+.editor-content {
+    min-height: 300px;
+    padding: 20px;
+    outline: none;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Hover effects */
+.ant-btn:hover {
+    background-color: #FFA500;
+    color: black;
+}
+
+/* Focus styles for better accessibility */
+.ant-btn:focus,
+.ant-select:focus {
+    outline: 2px solid #1890ff;
+    outline-offset: 2px;
+}
+
+/* Custom scrollbar for editor content */
+.editor-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.editor-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.editor-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.editor-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .editor-container {
+        margin: 10px;
+    }
+
+    .toolbar {
+        gap: 4px;
+        padding: 4px;
+    }
+
+    .toolbar-group {
+        padding: 0 2px;
+    }
+
+    .toolbar-group:not(:last-child) {
+        border-right: none;
+    }
+
+    .format-select {
+        width: 100px;
+    }
+
+    .font-size-select {
+        width: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .special-menu-input {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .toolbar {
+        justify-content: center;
+    }
+
+    .format-select,
+    .font-size-select {
+        width: auto;
+        min-width: 60px;
+    }
+
+    .toolbar-group {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
