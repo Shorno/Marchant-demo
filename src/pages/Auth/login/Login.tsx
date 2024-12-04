@@ -27,14 +27,13 @@ export default function Login() {
             const res = await userLogin(value).unwrap();
             if (res?.access) {
                 storeUserInfo({ access: res?.access, refresh: res?.refresh });
-                navigate("/dashboard");
+                navigate("/dashboard", { replace: true });
                 message.success('Login successfully ');
               }
         } catch (err: any) {
             message.error(err?.message)
             console.log(err.message)
         }
-        // navigate('/dashboard');
     };
 
     return (

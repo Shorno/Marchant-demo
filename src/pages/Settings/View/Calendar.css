@@ -1,0 +1,159 @@
+/* CalendarPage.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #fff8e6;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+  }
+  
+  .navigation {
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .icon {
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .current-month {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 0 10px;
+  }
+  
+  .today-button {
+    font-size: 14px;
+    font-weight: bold;
+    color: #007bff;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s;
+  }
+  
+  .today-button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    width: 100%;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .day {
+    padding: 10px 0;
+  }
+  
+  .date-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    width: 100%;
+    padding: 10px 0;
+  }
+  
+  .date-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .date-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .date-circle.today {
+    background-color: #581845;
+    color: white;
+  }
+  
+  .date-circle.selected {
+    background-color: black;
+    color: white;
+  }
+  
+  .date-circle.full-day-off {
+    background-color: #FF5733;
+    color: white;
+  }
+  
+  .date-circle.other-month {
+    color: gray;
+  }
+  
+  .legend-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .legend-circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  
+  .legend-circle.current-day {
+    background-color: #581845;
+  }
+  
+  .legend-circle.full-day-off {
+    background-color: #ff5733; 
+  }
+  
+  .legend-circle.time-slots-off {
+    background-color: #eec645; 
+  }
+  
+  .legend-text {
+    font-size: 0.875rem;
+    color: #4b5563; 
+  }
+  
