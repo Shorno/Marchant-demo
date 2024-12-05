@@ -24,7 +24,7 @@
 }
 
 .modal-button:hover {
-    background-color: orange;
+    background-color: red;
     color: white;
 }
 
@@ -233,6 +233,8 @@
     border-radius: 4px;
     font-weight: 500;
 }
+
+
 
 @media (max-width: 1024px) {
     .custom-modal .ant-modal {

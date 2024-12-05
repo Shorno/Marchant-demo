@@ -27,11 +27,11 @@ export default function Menu() {
     return (
         <div>
             <button className="modal-button " onClick={showModal}>
-                Add new menu
+                Add new Category
             </button>
             <Modal
                 open={open}
-                title="Add new menu"
+                title="Add Menu Category"
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={null}
@@ -60,7 +60,7 @@ export default function Menu() {
                     <div>
                         <label className="label">Slot:</label>
                         <Select
-                            placeholder="Outlined"
+                            placeholder=""
                             style={{ flex: 1 }}
                             options={[
                                 { value: "all", label: "All" },

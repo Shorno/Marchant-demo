@@ -1,94 +1,17 @@
 import { useState } from "react";
-import { Button, Card, Input, Modal, Tooltip, DatePicker, Select } from "antd";
-import type { DatePickerProps } from "antd";
-import {
-    BoldOutlined,
-    ItalicOutlined,
-    UnderlineOutlined,
-    AlignLeftOutlined,
-    AlignCenterOutlined,
-    AlignRightOutlined,
-    OrderedListOutlined,
-    UnorderedListOutlined,
-    //   FontSizeOutlined,
-    LinkOutlined,
-    PictureOutlined,
-    UndoOutlined,
-    RedoOutlined,
-} from "@ant-design/icons";
-
+import { Card, Input, Modal, Select, Checkbox, Upload, Image } from "antd";
+import type { CheckboxProps } from "antd";
+import type { GetProp, UploadFile, UploadProps } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.bubble.css";
 import "./discountmenu.css";
-
-interface NumericInputProps {
-    style?: React.CSSProperties;
-    value: string;
-    onChange: (value: string) => void;
-    className?: string;
-}
-
-const formatNumber = (value: number) => new Intl.NumberFormat().format(value);
-
-const NumericInput = (props: NumericInputProps) => {
-    const { value, onChange, className } = props;
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value: inputValue } = e.target;
-        const reg = /^-?\d*(\.\d*)?$/;
-        if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
-            onChange(inputValue);
-        }
-    };
-
-    const handleBlur = () => {
-        let valueTemp = value;
-        if (value.charAt(value.length - 1) === "." || value === "-") {
-            valueTemp = value.slice(0, -1);
-        }
-        onChange(valueTemp.replace(/0*(\d+)/, "$1"));
-    };
-
-    const title = value ? (
-        <span className="numeric-input-title">
-            {value !== "-" ? formatNumber(Number(value)) : "-"}
-        </span>
-    ) : (
-        "Input a number"
-    );
-
-    return (
-        <Tooltip
-            trigger={["focus"]}
-            title={title}
-            placement="topLeft"
-            overlayClassName="numeric-input"
-        >
-            <Input
-                value={value}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Input a price"
-                maxLength={16}
-                className={className}
-            />
-        </Tooltip>
-    );
-};
 
 const DiscountMenu: React.FC = () => {
     const [open, setOpen] = useState(false);
-    const [price, setPrice] = useState<string>(""); // State for price input
-    const [fontSize, setFontSize] = useState<string>("16px");
-
-    const fontSizes = [
-        "12px",
-        "14px",
-        "16px",
-        "18px",
-        "20px",
-        "24px",
-        "28px",
-        "32px",
-    ];
+    const [editorHtml, setEditorHtml] = useState("");
+    // const [theme, setTheme] = useState<"snow" | "bubble">("snow"); // Restrict theme to 'snow' or 'bubble'
 
     const showModal = () => {
         setOpen(true);
@@ -104,35 +27,95 @@ const DiscountMenu: React.FC = () => {
         setOpen(false);
     };
 
-    const onDateChange: DatePickerProps["onChange"] = (date, dateString) => {
-        if (typeof dateString === "string") {
-            console.log("Selected Date:", dateString);
-        } else {
-            console.error("Unexpected value for dateString:", dateString);
-        }
+    // text editor
+    const handleEditorChange = (html: string) => {
+        setEditorHtml(html);
     };
 
-    // Handle text formatting
-    const handleCommand = (command: string, value?: string) => {
-        document.execCommand(command, false, value);
+    /// checkbox
+
+    const onChange: CheckboxProps["onChange"] = (e) => {
+        console.log(`checked = ${e.target.checked}`);
     };
 
-    // Set the font size for the selected text
-    const handleFontSizeChange = (size: string) => {
-        setFontSize(size);
-        // Apply font size to the selected text
-        document.execCommand("fontSize", false, "7"); // "7" is the largest available size
-        const element = document.querySelector("font[size='7']") as HTMLElement;
-        if (element) {
-            element.style.fontSize = size;
+    // Image upload
+
+    type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
+
+    const getBase64 = (file: FileType): Promise<string> =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = (error) => reject(error);
+        });
+
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState("");
+    const [fileList, setFileList] = useState<UploadFile[]>([
+        {
+            uid: "-1",
+            name: "image.png",
+            status: "done",
+            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        },
+        {
+            uid: "-2",
+            name: "image.png",
+            status: "done",
+            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        },
+        {
+            uid: "-3",
+            name: "image.png",
+            status: "done",
+            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        },
+        {
+            uid: "-4",
+            name: "image.png",
+            status: "done",
+            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        },
+
+        {
+            uid: "-5",
+            name: "image.png",
+            status: "error",
+        },
+    ]);
+
+    const handlePreview = async (file: UploadFile) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj as FileType);
         }
+
+        setPreviewImage(file.url || (file.preview as string));
+        setPreviewOpen(true);
+    };
+
+    const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+        setFileList(newFileList);
+
+    const uploadButton = (
+        <button style={{ border: 0, background: "none" }} type="button">
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Upload</div>
+        </button>
+    );
+
+    // varient
+    const [variants, setVariants] = useState<string[]>([""]);
+
+    const addVariant = () => {
+        setVariants([...variants, ""]);
     };
 
     return (
         <div>
-            <Button className="modal-button" onClick={showModal}>
+            <button className="modal-button" onClick={showModal}>
                 Discount menu
-            </Button>
+            </button>
             <Modal
                 open={open}
                 title="Discount menu"
@@ -141,246 +124,266 @@ const DiscountMenu: React.FC = () => {
                 footer={null}
                 className="custom-modal"
                 closeIcon={<span>×</span>}
+                width={900}
             >
-                <p className="title1">Description</p>
-                <Card style={{ width: "100%" }}>
-                    <div className="special-menu-input">
-                        <div>
+                <div className="main-content">
+                    {/* Left side content */}
+                    <div>
+                        {/* //Description  */}
+                        <p className="title">Description</p>
+                        <Card style={{ width: "100%", marginBottom: "10px" }}>
                             <label className="label">Menu Name</label>
                             <Input
-                                className="menu-input"
-                                placeholder="Enter menu name"
+                                className="normal-input"
+                                placeholder="Basic usage"
                             />
-                        </div>
-                        <div>
-                            <label className="label">Price</label>
-                            <NumericInput
-                                className="menu-input"
-                                value={price}
-                                onChange={setPrice}
-                            />
-                        </div>
-                        <div>
-                            <label className="label">Select Days</label>
-                            <DatePicker
-                                onChange={onDateChange}
-                                className="menu-input"
-                                placeholder="Select a date"
-                            />
+                            <label className="label">Menu Description</label>
+                            <div>
+                                {/* ReactQuill editor inside the blank div */}
+                                <ReactQuill
+                                    // theme={theme}
+                                    onChange={handleEditorChange}
+                                    value={editorHtml}
+                                    modules={Editor.modules}
+                                    formats={Editor.formats}
+                                    bounds={".app"}
+                                    placeholder="Enter menu description"
+                                    className="normal-input"
+                                />
+                            </div>
+                        </Card>
+
+                        {/* Category */}
+                        <p className="title">Category</p>
+                        <Card style={{ width: "100%", marginBottom: "10px" }}>
+                            <div>
+                                <label className="label">Menu Type</label>
+                                <Select
+                                    placeholder="Select menu type"
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? "")
+                                            .toLowerCase()
+                                            .includes(input.toLowerCase())
+                                    }
+                                    options={[
+                                        { value: "1", label: "Jack" },
+                                        { value: "2", label: "Lucy" },
+                                        { value: "3", label: "Tom" },
+                                    ]}
+                                    style={{ width: "100%" }}
+                                    className="custom-select normal-input"
+                                />
+                            </div>
+                            <div>
+                                <label className="label">Menu Category</label>
+                                <Select
+                                    placeholder="Select menu category"
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? "")
+                                            .toLowerCase()
+                                            .includes(input.toLowerCase())
+                                    }
+                                    options={[
+                                        { value: "1", label: "Jack" },
+                                        { value: "2", label: "Lucy" },
+                                        { value: "3", label: "Tom" },
+                                    ]}
+                                    style={{ width: "100%" }}
+                                    className="custom-select normal-input"
+                                />
+                            </div>
+                        </Card>
+
+                        {/* Selling type */}
+                        <p className="title">Selling Type</p>
+                        <Card style={{ width: "100%", marginBottom: "10px" }}>
+                            <div>
+                                <Checkbox onChange={onChange}>
+                                    Dine-in selling only
+                                </Checkbox>
+                            </div>
+                            <div>
+                                <Checkbox
+                                    onChange={onChange}
+                                    style={{
+                                        marginTop: "5px",
+                                        marginBottom: "5px",
+                                    }}
+                                >
+                                    Online selling only
+                                </Checkbox>
+                            </div>
+                            <div>
+                                <Checkbox onChange={onChange}>
+                                    Available for both dine-in and online
+                                </Checkbox>
+                            </div>
+                        </Card>
+
+                        {/* Additional Variant */}
+
+                        <p className="title">Additional Variant</p>
+                        <div className="menu-variants-container">
+                            <label className="menu-variants-label">
+                                Menu variants
+                            </label>
+                            <div className="menu-variants-input-container">
+                                <input
+                                    type="text"
+                                    className="menu-variants-input"
+                                    placeholder="Enter variant name"
+                                    value={variants[variants.length - 1]}
+                                    onChange={(e) => {
+                                        const newVariants = [...variants];
+                                        newVariants[newVariants.length - 1] =
+                                            e.target.value;
+                                        setVariants(newVariants);
+                                    }}
+                                />
+                                <button
+                                    onClick={addVariant}
+                                    className="menu-variants-add-button"
+                                    type="button"
+                                >
+                                    + Add Variants
+                                </button>
+                            </div>
+                            {variants.slice(0, -1).map((variant, index) => (
+                                <input
+                                    key={index}
+                                    type="text"
+                                    className="menu-variants-input"
+                                    placeholder="Enter variant name"
+                                    value={variant}
+                                    onChange={(e) => {
+                                        const newVariants = [...variants];
+                                        newVariants[index] = e.target.value;
+                                        setVariants(newVariants);
+                                    }}
+                                />
+                            ))}
                         </div>
                     </div>
-                    <div className="editor-container">
-                        <div className="toolbar">
-                            {/* Undo and Redo */}
-                            <div className="toolbar-group">
-                                <Tooltip title="Undo">
-                                    <Button
-                                        type="text"
-                                        icon={<UndoOutlined />}
-                                        onClick={() => handleCommand("undo")}
-                                    />
-                                </Tooltip>
-                                <Tooltip title="Redo">
-                                    <Button
-                                        type="text"
-                                        icon={<RedoOutlined />}
-                                        onClick={() => handleCommand("redo")}
-                                    />
-                                </Tooltip>
+
+                    {/* Right side content */}
+                    <div>
+                        <p className="title">Menu Images</p>
+                        <Card style={{ width: "100%", marginBottom: "10px" }}>
+                            <Upload
+                                action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+                                listType="picture-card"
+                                fileList={fileList}
+                                onPreview={handlePreview}
+                                onChange={handleChange}
+                            >
+                                {fileList.length >= 8 ? null : uploadButton}
+                            </Upload>
+                            {previewImage && (
+                                <Image
+                                    wrapperStyle={{ display: "none" }}
+                                    preview={{
+                                        visible: previewOpen,
+                                        onVisibleChange: (visible) =>
+                                            setPreviewOpen(visible),
+                                        afterOpenChange: (visible) =>
+                                            !visible && setPreviewImage(""),
+                                    }}
+                                    src={previewImage}
+                                />
+                            )}
+                        </Card>
+
+                        <p className="title">Pricing</p>
+                        <Card
+                            className="price-card"
+                            style={{ width: "100%", marginBottom: "10px" }}
+                        >
+                            <div className="price-input-group">
+                                <div className="price-input-wrapper">
+                                    <label className="label">Price</label>
+                                    <div className="price-input-container">
+                                        <Input
+                                            prefix="$"
+                                            placeholder=""
+                                            className="price-input"
+                                            type="number"
+                                            min={0}
+                                            step={0.01}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="price-input-wrapper">
+                                    <label className="label">
+                                        Compare at Price
+                                    </label>
+                                    <div className="price-input-container">
+                                        <Input
+                                            prefix="$"
+                                            placeholder=""
+                                            className="price-input"
+                                            type="number"
+                                            min={0}
+                                            step={0.01}
+                                        />
+                                    </div>
+                                </div>
                             </div>
+                        </Card>
 
-                            {/* Text formatting: Normal, Headings, Font Size */}
-                            <div className="toolbar-group">
-                                <Select
-                                    defaultValue="Normal"
-                                    className="format-select"
-                                    dropdownMatchSelectWidth={false}
-                                >
-                                    <Select.Option
-                                        value="normal"
-                                        onClick={() =>
-                                            handleCommand("formatBlock", "p")
-                                        }
-                                    >
-                                        Normal
-                                    </Select.Option>
-                                    <Select.Option
-                                        value="h1"
-                                        onClick={() =>
-                                            handleCommand("formatBlock", "h1")
-                                        }
-                                    >
-                                        Heading 1
-                                    </Select.Option>
-                                    <Select.Option
-                                        value="h2"
-                                        onClick={() =>
-                                            handleCommand("formatBlock", "h2")
-                                        }
-                                    >
-                                        Heading 2
-                                    </Select.Option>
-                                    <Select.Option
-                                        value="h3"
-                                        onClick={() =>
-                                            handleCommand("formatBlock", "h3")
-                                        }
-                                    >
-                                        Heading 3
-                                    </Select.Option>
-                                </Select>
-
-                                <Select
-                                    value={fontSize}
-                                    onChange={handleFontSizeChange}
-                                    className="font-size-select"
-                                    dropdownMatchSelectWidth={false}
-                                >
-                                    {fontSizes.map((size) => (
-                                        <Select.Option key={size} value={size}>
-                                            {size}
-                                        </Select.Option>
-                                    ))}
-                                </Select>
-                            </div>
-
-                            {/* Bold, Italic, Underline */}
-                            <div className="toolbar-group">
-                                <Tooltip title="Bold">
-                                    <Button
-                                        type="text"
-                                        icon={<BoldOutlined />}
-                                        onClick={() => handleCommand("bold")}
-                                    />
-                                </Tooltip>
-                                <Tooltip title="Italic">
-                                    <Button
-                                        type="text"
-                                        icon={<ItalicOutlined />}
-                                        onClick={() => handleCommand("italic")}
-                                    />
-                                </Tooltip>
-                                <Tooltip title="Underline">
-                                    <Button
-                                        type="text"
-                                        icon={<UnderlineOutlined />}
-                                        onClick={() =>
-                                            handleCommand("underline")
-                                        }
-                                    />
-                                </Tooltip>
-                            </div>
-
-                            {/* Alignments */}
-                            <div className="toolbar-group">
-                                <Tooltip title="Align Left">
-                                    <Button
-                                        type="text"
-                                        icon={<AlignLeftOutlined />}
-                                        onClick={() =>
-                                            handleCommand("justifyLeft")
-                                        }
-                                    />
-                                </Tooltip>
-                                <Tooltip title="Align Center">
-                                    <Button
-                                        type="text"
-                                        icon={<AlignCenterOutlined />}
-                                        onClick={() =>
-                                            handleCommand("justifyCenter")
-                                        }
-                                    />
-                                </Tooltip>
-                                <Tooltip title="Align Right">
-                                    <Button
-                                        type="text"
-                                        icon={<AlignRightOutlined />}
-                                        onClick={() =>
-                                            handleCommand("justifyRight")
-                                        }
-                                    />
-                                </Tooltip>
-                            </div>
-
-                            {/* List formatting */}
-                            <div className="toolbar-group">
-                                <Tooltip title="Ordered List">
-                                    <Button
-                                        type="text"
-                                        icon={<OrderedListOutlined />}
-                                        onClick={() =>
-                                            handleCommand("insertOrderedList")
-                                        }
-                                    />
-                                </Tooltip>
-                                <Tooltip title="Unordered List">
-                                    <Button
-                                        type="text"
-                                        icon={<UnorderedListOutlined />}
-                                        onClick={() =>
-                                            handleCommand("insertUnorderedList")
-                                        }
-                                    />
-                                </Tooltip>
-                            </div>
-
-                            {/* Insert Link and Image */}
-                            <div className="toolbar-group">
-                                <Tooltip title="Insert Link">
-                                    <Button
-                                        type="text"
-                                        icon={<LinkOutlined />}
-                                        onClick={() => {
-                                            const url = prompt("Enter URL", "");
-                                            if (url) {
-                                                handleCommand(
-                                                    "createLink",
-                                                    url
-                                                );
-                                            }
-                                        }}
-                                    />
-                                </Tooltip>
-
-                                <Tooltip title="Insert Image">
-                                    <Button
-                                        type="text"
-                                        icon={<PictureOutlined />}
-                                        onClick={() => {
-                                            const imageUrl = prompt(
-                                                "Enter Image URL",
-                                                ""
-                                            );
-                                            if (imageUrl) {
-                                                handleCommand(
-                                                    "insertImage",
-                                                    imageUrl
-                                                );
-                                            }
-                                        }}
-                                    />
-                                </Tooltip>
+                        <div className="button-container">
+                            <button className="discard-btn">Discard</button>
+                            <div className="action-buttons">
+                                <button className="schedule-btn">
+                                    Schedule
+                                </button>
+                                <button className="add-product-btn">
+                                    Add Product
+                                </button>
                             </div>
                         </div>
-
-                        {/* Editable content area */}
-                        <div
-                            className="editor-content"
-                            contentEditable="true"
-                            style={{
-                                minHeight: "150px",
-                                border: "1px solid #d9d9d9",
-                                padding: "10px",
-                                borderRadius: "4px",
-                                fontSize: fontSize,
-                            }}
-                        />
                     </div>
-                </Card>
-                <Button className="add-menu-button">Add Product</Button>
+                </div>
             </Modal>
         </div>
     );
+};
+
+// Editor component modules and formats
+const Editor = {
+    modules: {
+        toolbar: [
+            [{ header: "1" }, { header: "2" }, { font: [] }],
+            [{ size: [] }],
+            ["bold", "italic", "underline", "strike", "blockquote"],
+            [
+                { list: "ordered" },
+                { list: "bullet" },
+                { indent: "-1" },
+                { indent: "+1" },
+            ],
+            ["link", "image", "video"],
+            ["clean"],
+        ],
+        clipboard: {
+            matchVisual: false,
+        },
+    },
+    formats: [
+        "header",
+        "font",
+        "size",
+        "bold",
+        "italic",
+        "underline",
+        "strike",
+        "blockquote",
+        "list",
+        "bullet",
+        "indent",
+        "link",
+        "image",
+        "video",
+    ],
 };
 
 export default DiscountMenu;
