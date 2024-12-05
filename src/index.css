@@ -5,7 +5,6 @@
     padding: 0;
     line-height: 1.5;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 body {
     -webkit-tap-highlight-color: transparent;
@@ -13,6 +12,6 @@ body {
 
 
 :root {
-    --primary-color: #f3b94e; /* Primary color */
+    --primary-color: #ffb62f; /* Primary color */
     --secondary-color: #e3bd76; /* Secondary color */
 }
