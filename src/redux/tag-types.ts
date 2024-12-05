@@ -4,6 +4,9 @@ export enum tagTypes {
   holiday = "holiday",
   timeSlots = "timeSlots",
   CreateHoliday = "CreateHoliday",
+  reviews = "reviews",
+  replyReviews = "replyReviews",
+  reviewDetails = "reviewDetails",
 }
 
 export const tagTypesList = [
@@ -12,4 +15,7 @@ export const tagTypesList = [
   tagTypes.holiday,
   tagTypes.timeSlots,
   tagTypes.CreateHoliday,
+  tagTypes.reviews,
+  tagTypes.replyReviews,
+  tagTypes.reviewDetails,
 ];

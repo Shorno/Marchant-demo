@@ -1,0 +1,52 @@
+.review-categories {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+.review-card {
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 1rem;
+    width: 270px;
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon {
+    font-size: 24px;
+}
+
+.category{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.star span {
+    color: gold;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .review-card {
+        width: 100%;
+    }
+}
