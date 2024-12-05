@@ -33,6 +33,7 @@ const RestaurantInfo = () => {
                         <Step key={item.title} title={item.title} />
                     ))}
                 </Steps>
+                {/* //bottom image */}
             </div>
             <div className="steps-content-container">
                 <div className="steps-content">{steps[current].children}</div>
