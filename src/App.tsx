@@ -6,7 +6,6 @@ import SpecialMenu from "./pages/Menu&Category/SpecialMenu/SpecialMenu.tsx";
 import DiscountMenu from "./pages/Menu&Category/DiscountMenu/DiscountMenu.tsx";
 import BuffetMenu from "./pages/Menu&Category/BuffetMenu/BuffetMenu.tsx";
 import HallRecognition from "./pages/HallRecognition/HallRecognition.tsx";
-import Reviews from "./pages/Reviews/Reviews.tsx";
 import Accounts from "./pages/Accounts/Accounts.tsx";
 import Information from "./pages/Information/Information.tsx";
 import MyProfile from "./pages/Profile/MyProfile.tsx";
@@ -17,6 +16,7 @@ import MainLayout from "./layouts/Main/MainLayout.tsx";
 import PrivateRoute from "./route/PrivateRoute/PrivateRoute.tsx";
 import PublicRoute from "./route/PublicRoute/PublicRoute.tsx";
 import Settings from "./pages/Settings/Settings.tsx";
+import ReviewPage from "./pages/Reviews/index.tsx";
 
 function App() {
     return (
@@ -37,7 +37,7 @@ function App() {
                     <Route path="/discount-menu" element={<DiscountMenu />} />
                     <Route path="/buffet-menu" element={<BuffetMenu />} />
                     <Route path="/hall-recognition" element={<HallRecognition />} />
-                    <Route path="/reviews" element={<Reviews />} />
+                    <Route path="/reviews" element={<ReviewPage/>} />
                     <Route path="/video" element={<Video />} />
                     <Route path="/accounts" element={<Accounts />} />
                     <Route path="/information" element={<Information />} />

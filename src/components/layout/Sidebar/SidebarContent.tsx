@@ -1,4 +1,4 @@
-import {Logo} from "../../shared/Logo.tsx";
+import {Logo} from "../../Icon/Logo.tsx";
 import {Navigation} from "../Navigation/Navigation.tsx";
 import {Menu} from "antd";
 import {LogoutOutlined} from "@ant-design/icons";
