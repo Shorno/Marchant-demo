@@ -8,6 +8,7 @@ import {
     UserOutlined, VideoCameraAddOutlined
 } from "@ant-design/icons";
 import {Link} from "react-router-dom";
+import {GiPostOffice} from "react-icons/gi";
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
 
@@ -16,6 +17,29 @@ export const navigationItems: MenuItem[] = [
         key: 'dashboard',
         icon: <HomeOutlined/>,
         label: <Link to={"/"}>Dashboard</Link>
+    },
+    {
+        key: 'panel',
+        icon: <GiPostOffice/>,
+        label: 'Panel',
+        children: [
+            {
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
+                key: 'table-reservation',
+                label: <Link to={"/table-reservation"}>Table Reservation</Link>
+            },
+            {
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
+                key: 'hall-reservation',
+                label: <Link to={"/hall-reservation"}>Hall Reservation</Link>
+
+            },
+            {
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
+                key: 'food-order',
+                label: <Link to={"/food-order"}>Food Order</Link>
+            }
+        ]
     },
     {
         key: 'menu&categories',
