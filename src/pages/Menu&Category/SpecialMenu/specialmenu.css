@@ -1,4 +1,4 @@
-.add-menu-button{
+.add-menu-button {
     background-color: #FE802B;
     color: white;
     font-size: 14px;
@@ -12,7 +12,7 @@
     cursor: pointer;
 }
 
-.modal-button{
+.modal-button {
     background-color: #FE802B;
     color: white;
     font-size: 14px;
@@ -20,26 +20,18 @@
     text-decoration: none;
     border: none;
     padding: 10px;
-    border-radius: 10px
+    border-radius: 10px;
 }
 
-.modal-button:hover{
-    background-color: red   ;
+.modal-button:hover {
+    background-color: red;
     color: white;
-    font-size: 14px;
-    font-weight: 300;
-    /* text-decoration: none; */
-    border: none;
-    padding: 10px;
-    border-radius: 10
 }
-.add-menu-button:hover{
+
+.add-menu-button:hover {
     background-color: #FE802B !important;
     color: #fff;
-    text-decoration: none;
-    border: none;
 }
-
 
 .custom-modal .ant-modal-header {
     background-color: #f97316;
@@ -47,7 +39,6 @@
     padding: 16px 24px;
     border-bottom: none;
 }
-
 
 .custom-modal .ant-modal-title {
     color: white !important;
@@ -63,6 +54,8 @@
 .custom-modal .ant-modal-body {
     padding: 20px;
 }
+
+/* /////////////// */
 
 /* Left side */
 
@@ -80,4 +73,52 @@
     margin-bottom:10px;
     margin-top: 5px;
 }
+
+.menu-input,
+.ant-select,
+.ant-input {
+    width: 100%;
+    color: black;
+}
+
+
+@media (max-width: 1024px) {
+    .custom-modal .ant-modal {
+        width: 60%;
+        top: 30%;
+    }
+}
+
+@media (max-width: 768px) {
+    .custom-modal .ant-modal {
+        width: 80%;
+        top: 20%;
+        transform: translate(-50%, 0);
+    }
+
+    .custom-modal .ant-modal-body {
+        padding: 16px;
+    }
+
+    .label {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-modal .ant-modal {
+        width: 95%;
+        top: 10%;
+    }
+
+    .label {
+        font-size: 10px;
+    }
+
+    .menu-input {
+        font-size: 12px;
+    }
+}
+
+
 
