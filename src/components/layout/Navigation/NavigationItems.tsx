@@ -1,7 +1,7 @@
 import {GetProp, MenuProps} from "antd";
 import {
     AccountBookOutlined,
-    ArrowRightOutlined,
+    ArrowRightOutlined, CalendarOutlined,
     FileTextOutlined,
     HomeOutlined, KeyOutlined, MenuOutlined, StarOutlined,
     ToolOutlined,
@@ -16,6 +16,29 @@ export const navigationItems: MenuItem[] = [
         key: 'dashboard',
         icon: <HomeOutlined/>,
         label: <Link to={"/"}>Dashboard</Link>
+    },
+    {
+        key: 'panel',
+        icon: <CalendarOutlined/>,
+        label: 'Panel',
+        children: [
+            {
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
+                key: 'table-reservation',
+                label: <Link to={"/table-reservation"}>Table Reservation</Link>
+            },
+            {
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
+                key: 'hall-reservation',
+                label: <Link to={"/hall-reservation"}>Hall Reservation</Link>
+
+            },
+            {
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
+                key: 'food-order',
+                label: <Link to={"/food-order"}>Food Order</Link>
+            }
+        ]
     },
     {
         key: 'menu&categories',
