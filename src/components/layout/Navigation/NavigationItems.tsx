@@ -1,14 +1,13 @@
 import {GetProp, MenuProps} from "antd";
 import {
     AccountBookOutlined,
-    ArrowRightOutlined,
+    ArrowRightOutlined, CalendarOutlined,
     FileTextOutlined,
     HomeOutlined, KeyOutlined, MenuOutlined, StarOutlined,
     ToolOutlined,
     UserOutlined, VideoCameraAddOutlined
 } from "@ant-design/icons";
 import {Link} from "react-router-dom";
-import {GiPostOffice} from "react-icons/gi";
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
 
@@ -20,7 +19,7 @@ export const navigationItems: MenuItem[] = [
     },
     {
         key: 'panel',
-        icon: <GiPostOffice/>,
+        icon: <CalendarOutlined/>,
         label: 'Panel',
         children: [
             {

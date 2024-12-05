@@ -1,17 +1,15 @@
 import ContentLayout from "../../../components/ContentLayout.tsx";
 import {Link} from "react-router-dom";
 import {
-    Card,
     Col,
     Flex,
     Row,
     Segmented,
-    Statistic,
     Typography
 } from "antd";
-import {BiUpArrow} from "react-icons/bi";
-
 import ReservationCard from "../../../components/panel/ReservationCard.tsx";
+import BookingStatsCard, {BookingStatTrend} from "../../../components/panel/BookingStatsCard.tsx";
+
 
 const breadcrumbItems = [
     {
@@ -23,40 +21,7 @@ const breadcrumbItems = [
 ]
 const {Title, Text} = Typography
 
-const cardStats = [
-    {
-        title: "Active",
-        value: 11.28,
-        precision: 2,
-        valueStyle: {color: '#3f8600'},
-        prefix: <BiUpArrow/>,
-        suffix: "%"
-    },
-    {
-        title: "Inactive",
-        value: 5.67,
-        precision: 2,
-        valueStyle: {color: '#cf1322'},
-        prefix: <BiUpArrow/>,
-        suffix: "%"
-    },
-    {
-        title: "Pending",
-        value: 8.45,
-        precision: 2,
-        valueStyle: {color: '#d4b106'},
-        prefix: <BiUpArrow/>,
-        suffix: "%"
-    },
-    {
-        title: "Completed",
-        value: 15.89,
-        precision: 2,
-        valueStyle: {color: '#237804'},
-        prefix: <BiUpArrow/>,
-        suffix: "%"
-    }
-]
+
 const options = [
     {value: 'upcoming', label: 'Upcoming'},
     {value: 'pending', label: 'Pending'},
@@ -64,6 +29,36 @@ const options = [
     {value: 'past', label: 'Past'},
     {value: 'cancelled', label: 'Cancelled'},
 ]
+
+const bookingStats = [
+    {
+        title: "Total Booking",
+        value: 50,
+        color: "#3f8600",
+        chartData: [264, 417, 438, 887, 309, 397, 492, 467, 513],
+    },
+    {
+        title: "Confirmed Booking",
+        value: 35,
+        color: "#237804",
+        chartData: [264, 300, 350, 320, 309, 397, 250, 320, 330],
+    },
+    {
+        title: "Pending Booking",
+        value: 10,
+        color: "#d4b106",
+        chartData: [123, 456, 789, 101, 112, 131, 415, 161, 200],
+        trend: "down",
+    },
+    {
+        title: "Cancelled Booking",
+        value: 5,
+        color: "#cf1322",
+        chartData: [264, 210, 310, 240, 309, 397, 220, 210, 150],
+        trend: "down",
+    }
+];
+
 
 export default function Reservation() {
 
@@ -73,34 +68,23 @@ export default function Reservation() {
             <ContentLayout breadcrumbItems={breadcrumbItems}>
                 <Flex gap={40} vertical>
                     <Row gutter={[12, 12]}>
-                        {
-                            cardStats.map((stat, index) => {
-                                return (
-                                    <Col xs={24} sm={12} lg={6} key={index}>
-                                        <Card bordered={false}
-                                              style={{
-                                                  boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)"
-                                              }}>
-                                            <Statistic
-                                                title={stat.title}
-                                                value={stat.value}
-                                                precision={stat.precision}
-                                                valueStyle={stat.valueStyle}
-                                                prefix={stat.prefix}
-                                                suffix={stat.suffix}
-                                            />
-                                        </Card>
-                                    </Col>
-                                )
-                            })
-                        }
+                        {bookingStats?.map((stat, index) => (
+                            <BookingStatsCard
+                                key={index}
+                                title={stat.title}
+                                value={stat.value}
+                                color={stat.color}
+                                chartData={stat.chartData}
+                                trend={stat.trend as BookingStatTrend}
+                            />
+                        ))}
                     </Row>
                     <Flex vertical>
                         <Title level={4}>Reservation Table</Title>
                         <Text type="secondary">This is Reservation Table secondary text.</Text>
                     </Flex>
                     <Col xs={24} xl={12}>
-                        <Segmented options={options} size={"middle"} style={{padding: "6px"}} block/>
+                        <Segmented options={options} size={"middle"} style={{padding: "10px"}} block/>
                     </Col>
 
                     <Flex vertical gap={20}>
