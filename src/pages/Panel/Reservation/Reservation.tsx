@@ -34,7 +34,7 @@ const bookingStats = [
     {
         title: "Total Booking",
         value: 50,
-        color: "#3f8600",
+        color: "#237804",
         chartData: [264, 417, 438, 887, 309, 397, 492, 467, 513],
     },
     {
@@ -83,8 +83,8 @@ export default function Reservation() {
                         <Title level={4}>Reservation Table</Title>
                         <Text type="secondary">This is Reservation Table secondary text.</Text>
                     </Flex>
-                    <Col xs={24} xl={12}>
-                        <Segmented options={options} size={"middle"} style={{padding: "10px"}} block/>
+                    <Col xs={24} xl={12} style={{overflow:"auto"}}>
+                        <Segmented options={options} size={"middle"} style={{padding: "10px"}}/>
                     </Col>
 
                     <Flex vertical gap={20}>
