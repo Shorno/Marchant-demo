@@ -63,6 +63,7 @@ const bookingStats = [
 
 
 export default function Reservation() {
+    //vercel-preview
 
     const {data: reservationInfo, isFetching} = useGetReservationsInfoQuery({})
     console.log(reservationInfo)
