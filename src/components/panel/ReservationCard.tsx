@@ -110,16 +110,12 @@ export default function ReservationCard({
                         </Dropdown>
                         :
                         <Dropdown menu={{items}}>
-                            <Button className="reservation-edit-button">
-                                <Space>
-                                    Edit
-                                    <DownOutlined/>
-                                </Space>
+                            <Button className={"reservation-edit-button"}>
+                                Action
+                                <DownOutlined/>
                             </Button>
                         </Dropdown>
                 }
-
-
             </Flex>
         </Card>
     );
