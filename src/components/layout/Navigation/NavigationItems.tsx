@@ -14,7 +14,7 @@ type MenuItem = GetProp<MenuProps, 'items'>[number];
 export const navigationItems: MenuItem[] = [
     {
         key: 'dashboard',
-        icon: <HomeOutlined/>,
+        icon: <HomeOutlined style={{fontSize: "18px"}}/>,
         label: <Link to={"/"}>Dashboard</Link>
     },
     {
