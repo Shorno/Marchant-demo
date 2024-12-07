@@ -2,28 +2,13 @@ import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import {ConfigProvider} from "antd";
+import Providers from './lib/providers.tsx';
+
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <ConfigProvider
-            theme={{
-                components: {
-                    Menu: {
-                        activeBarHeight: 10,
-                        itemBorderRadius: 0,
-                        fontSize: 12,
-                        itemHeight: 60,
-                        itemSelectedBg: "rgba(214,214,214,0.7)",
-                        itemMarginInline: 0,
-                    },
-                },
-                token : {
-                    fontFamily: "Poppins",
-                },
-            }}
-        >
+        <Providers>
             <App/>
-        </ConfigProvider>
+        </Providers>
     </StrictMode>,
 )

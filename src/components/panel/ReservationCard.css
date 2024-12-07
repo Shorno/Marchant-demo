@@ -1,0 +1,82 @@
+.reservation-card {
+    width: 100%;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.reservation-card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reservation-date {
+    margin: 0 !important;
+}
+
+.reservation-divider {
+    border-color: #f0f0f0;
+    border-width: 2px;
+    height: auto;
+}
+
+.reservation-info {
+    display: flex;
+    gap: 30px;
+}
+
+.reservation-info-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.reservation-info-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.reservation-icon {
+    color: #9ca3af;
+}
+
+.reservation-status-completed {
+    color: #52c41a;
+}
+.reservation-status-pending {
+    color: var(--primary-color);
+}
+
+.reservation-edit-button {
+    color: white;
+    background: var(--primary-color);
+}
+
+.reservation-edit-button:hover {
+    color: white !important;
+    background: var(--primary-color) !important
+}
+
+
+
+.ubaky-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mobile-dropdown {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.mobile-dropdown:hover {
+    color: var(--primary-color);
+}

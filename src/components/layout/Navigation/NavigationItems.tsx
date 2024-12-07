@@ -1,9 +1,10 @@
 import {GetProp, MenuProps} from "antd";
 import {
     AccountBookOutlined,
-    ArrowRightOutlined,
+    ArrowRightOutlined, CalendarOutlined,
     FileTextOutlined,
     HomeOutlined, KeyOutlined, MenuOutlined, StarOutlined,
+    ToolOutlined,
     UserOutlined, VideoCameraAddOutlined
 } from "@ant-design/icons";
 import {Link} from "react-router-dom";
@@ -13,8 +14,31 @@ type MenuItem = GetProp<MenuProps, 'items'>[number];
 export const navigationItems: MenuItem[] = [
     {
         key: 'dashboard',
-        icon: <HomeOutlined/>,
+        icon: <HomeOutlined style={{fontSize: "18px"}}/>,
         label: <Link to={"/"}>Dashboard</Link>
+    },
+    {
+        key: 'panel',
+        icon: <CalendarOutlined/>,
+        label: 'Panel',
+        children: [
+            {
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
+                key: 'table-reservation',
+                label: <Link to={"/table-reservation"}>Table Reservation</Link>
+            },
+            {
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
+                key: 'hall-reservation',
+                label: <Link to={"/hall-reservation"}>Hall Reservation</Link>
+
+            },
+            {
+                icon: <ArrowRightOutlined style={{fontSize: "14px"}}/>,
+                key: 'food-order',
+                label: <Link to={"/food-order"}>Food Order</Link>
+            }
+        ]
     },
     {
         key: 'menu&categories',
@@ -69,6 +93,11 @@ export const navigationItems: MenuItem[] = [
         key: 'information',
         icon: <FileTextOutlined/>,
         label: <Link to={"/information"}>Information</Link>
+    },
+    {
+        key: 'settings',
+        icon: <ToolOutlined/>,
+        label: <Link to={"/settings"}>Settings</Link>
     },
     {
         key: 'my-profile',

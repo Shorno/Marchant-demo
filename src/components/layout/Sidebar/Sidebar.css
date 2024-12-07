@@ -14,13 +14,10 @@
 
 
 .sidebar-content .ant-menu-title-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    color: #5e5e5e;
     font-size: 14px;
     font-weight: 500;
 }
-
 
 .logout-menu {
     position: fixed;
@@ -70,6 +67,15 @@
     border-bottom: none !important;
 }
 
+.sidebar-content .ant-menu-item-selected .ant-menu-title-content,
+.sidebar-content .ant-menu-submenu-selected > .ant-menu-submenu-title .ant-menu-title-content {
+    color: black !important; 
+}
+
+.sidebar-content .ant-menu-item-selected .ant-menu-item-icon,
+.sidebar-content .ant-menu-submenu-selected > .ant-menu-submenu-title .ant-menu-item-icon {
+    color: inherit !important;
+}
 
 .navigation-container {
     flex: 1;
@@ -90,5 +96,4 @@
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 3px;
 }
-
 
