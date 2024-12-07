@@ -2,11 +2,11 @@ import {Card, Typography, Divider, Space, Button, Dropdown, Flex, Grid, MenuProp
 import {
     DownOutlined,
     ClockCircleOutlined,
-    ExclamationCircleOutlined, EditOutlined, DeleteOutlined, FolderViewOutlined
+    ExclamationCircleOutlined, EditOutlined, DeleteOutlined, FolderViewOutlined, UserOutlined, BookOutlined
 } from '@ant-design/icons';
 import './ReservationCard.css';
-import {FiUsers} from "react-icons/fi";
 import {MdOutlineTableBar} from "react-icons/md";
+import {FiUsers} from "react-icons/fi";
 
 const {Title, Text} = Typography;
 
@@ -14,12 +14,11 @@ interface ReservationCardProps {
     date: string;
     day: string;
     time: string;
-    fullDate: string;
-    tableNumber: string;
-    waiterName: string;
-    guestCount: number;
-    menuType: string;
+    full_name: string;
+    pax_number: number;
+    menu_type: string;
     status: 'Completed' | 'Pending' | 'Cancelled';
+    table_number: number;
 }
 
 const {useBreakpoint} = Grid
@@ -50,12 +49,12 @@ export default function ReservationCard({
                                             date,
                                             day,
                                             time,
-                                            fullDate,
-                                            tableNumber,
-                                            waiterName,
-                                            guestCount,
-                                            menuType,
-                                            status
+                                            full_name,
+                                            pax_number,
+                                            menu_type,
+                                            status,
+                                            table_number = 8
+
                                         }: ReservationCardProps) {
 
     const screens = useBreakpoint()
@@ -63,15 +62,15 @@ export default function ReservationCard({
 
 
     return (
-        <Card className="reservation-card" style={{position: "relative"}}>
+        <Card className="reservation-card" style={{position: "relative"}} size={isMobile ? "small" : "default"}>
             <Flex justify="space-between" align="center" className="reservation-card-content">
                 <Flex>
-                    <Flex vertical justify={"center"}>
-                        <Title level={isMobile ? 5 : 4} className="reservation-date">{day}</Title>
-                        <Title level={isMobile ? 2 : 1} className="reservation-date">{date}</Title>
+                    <Flex vertical justify={"center"} align={"center"} style={{width :"50px"}}>
+                        <Title level={isMobile ? 4 : 3} className="reservation-date">{day}</Title>
+                        <Title level={isMobile ? 3 : 2} className="reservation-date">{date}</Title>
                     </Flex>
                     <Divider type="vertical" className="reservation-divider"
-                             style={{margin: isMobile ? "0 1rem" : "0 3rem"}}
+                             style={{margin: isMobile ? "0 1rem" : "0 2rem"}}
                     />
                     <Flex className="reservation-info">
                         <Flex gap={isMobile ? 0 : 30}
@@ -79,22 +78,33 @@ export default function ReservationCard({
                             <Flex justify="space-around" align="start" className="reservation-info-column">
                                 <Flex align="center" justify="center" className="reservation-info-item">
                                     <ClockCircleOutlined className="reservation-icon"/>
-                                    <Text type="secondary">{time} ({fullDate})</Text>
+                                    <Text type="secondary">{time}</Text>
                                 </Flex>
                                 <Flex align="center" justify="center" className="reservation-info-item">
                                     <MdOutlineTableBar className="reservation-icon"/>
-                                    <Text type="secondary">{tableNumber} ({waiterName})</Text>
+                                    <Text type="secondary">{table_number}</Text>
+                                </Flex>
+                            </Flex>
+                            <Flex vertical justify="space-around" align="start" className="reservation-info-column">
+                                <Flex align="center" justify="center" className="reservation-info-item">
+                                    <UserOutlined className="reservation-icon"/>
+                                    <Text type="secondary">{full_name}</Text>
+                                </Flex>
+                                <Flex align="center" justify="center" className="reservation-info-item">
+                                    <BookOutlined className="reservation-icon"/>
+                                    <Text type="secondary">{menu_type}</Text>
+
                                 </Flex>
                             </Flex>
                             <Flex vertical justify="space-around" align="start" className="reservation-info-column">
                                 <Flex align="center" justify="center" className="reservation-info-item">
                                     <FiUsers className="reservation-icon"/>
-                                    <Text type="secondary">{guestCount} ({menuType})</Text>
+                                    <Text type="secondary">{pax_number}</Text>
                                 </Flex>
                                 <Flex align="center" justify="center" className="reservation-info-item">
                                     <ExclamationCircleOutlined className="reservation-icon"/>
                                     <Text
-                                        className={status === 'Completed' ? 'reservation-status-completed' : ''}>{status}</Text>
+                                        className={status === 'Completed' ? 'reservation-status-completed' : 'reservation-status-pending'}>{status.charAt(0).toUpperCase() + status.slice(1)}</Text>
                                 </Flex>
                             </Flex>
                         </Flex>

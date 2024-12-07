@@ -19,6 +19,8 @@ const breadcrumbItems = [
 const ReviewPage = () => {
     const {data,refetch} = useGetReviewQuery({});
     const {data:rating} = useGetReviewDetailsQuery({});
+
+    console.log(data)
     return (
         <>
             <Layout>
