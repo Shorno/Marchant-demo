@@ -24,16 +24,6 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.userLoginInfo],
     }),
-
-    // getUser: build.query({
-    //   query: () => ({
-    //     url: USER_INFO,
-    //     method: "GET",
-        // headers: {
-        //   Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        // },
-    //   }),
-    // }),
   }),
 });
 
