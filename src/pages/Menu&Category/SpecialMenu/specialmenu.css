@@ -207,6 +207,8 @@
     background: #fff;
     padding: 8px 16px;
     border-radius: 4px;
+    font-weight: 300;
+    font-size: 12px;
 }
 
 .action-buttons {
@@ -221,7 +223,8 @@
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
-    font-weight: 500;
+    font-weight: 300;
+    font-size: 12px;
 }
 
 /* Add Product button */
@@ -229,9 +232,10 @@
     background: #fe802b;
     color: #fff;
     border: none;
-    padding: 8px 16px;
+    /* padding: 8px 16px; */
     border-radius: 4px;
-    font-weight: 500;
+    font-weight: 300;
+    font-size: 12px;
 }
 
 @media (max-width: 1024px) {
