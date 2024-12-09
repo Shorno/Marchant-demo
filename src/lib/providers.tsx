@@ -9,7 +9,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
                 components: {
                     Menu: {
                         fontSize: 14,
-                        itemHeight: 50,
+                        itemHeight: 35,
                     },
                 }
             }}

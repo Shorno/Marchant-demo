@@ -17,6 +17,7 @@ import PrivateRoute from "./route/PrivateRoute/PrivateRoute.tsx";
 import PublicRoute from "./route/PublicRoute/PublicRoute.tsx";
 import Settings from "./pages/Settings/Settings.tsx";
 import ReviewPage from "./pages/Reviews/index.tsx";
+import Reservation from "./pages/Panel/Reservation/Reservation.tsx";
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/" element={<PrivateRoute><RestaurantInfo /></PrivateRoute>} />
                 <Route path="/" element={<PrivateRoute><MainLayout /></PrivateRoute>}>
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path={"/table-reservation"} element={<Reservation/>} />
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/special-menu" element={<SpecialMenu />} />
                     <Route path="/discount-menu" element={<DiscountMenu />} />

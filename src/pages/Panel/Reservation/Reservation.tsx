@@ -1,17 +1,17 @@
 import ContentLayout from "../../../components/ContentLayout.tsx";
 import {Link} from "react-router-dom";
 import {
-    Card,
     Col,
     Flex,
     Row,
-    Segmented,
-    Statistic,
+    Segmented, Spin,
     Typography
 } from "antd";
-import {BiUpArrow} from "react-icons/bi";
-
 import ReservationCard from "../../../components/panel/ReservationCard.tsx";
+import BookingStatsCard, {BookingStatTrend} from "../../../components/panel/BookingStatsCard.tsx";
+import {useGetReservationsInfoQuery} from "../../../redux/api/ReservationsInfo/ReservationsInfo.ts";
+import {ReservationTypes} from "../../../../types/reservationTypes.ts";
+
 
 const breadcrumbItems = [
     {
@@ -23,40 +23,7 @@ const breadcrumbItems = [
 ]
 const {Title, Text} = Typography
 
-const cardStats = [
-    {
-        title: "Active",
-        value: 11.28,
-        precision: 2,
-        valueStyle: {color: '#3f8600'},
-        prefix: <BiUpArrow/>,
-        suffix: "%"
-    },
-    {
-        title: "Inactive",
-        value: 5.67,
-        precision: 2,
-        valueStyle: {color: '#cf1322'},
-        prefix: <BiUpArrow/>,
-        suffix: "%"
-    },
-    {
-        title: "Pending",
-        value: 8.45,
-        precision: 2,
-        valueStyle: {color: '#d4b106'},
-        prefix: <BiUpArrow/>,
-        suffix: "%"
-    },
-    {
-        title: "Completed",
-        value: 15.89,
-        precision: 2,
-        valueStyle: {color: '#237804'},
-        prefix: <BiUpArrow/>,
-        suffix: "%"
-    }
-]
+
 const options = [
     {value: 'upcoming', label: 'Upcoming'},
     {value: 'pending', label: 'Pending'},
@@ -65,68 +32,82 @@ const options = [
     {value: 'cancelled', label: 'Cancelled'},
 ]
 
-export default function Reservation() {
+const bookingStats = [
+    {
+        title: "Total Booking",
+        value: 50,
+        color: "#237804",
+        chartData: [264, 417, 438, 887, 309, 397, 492, 467, 513],
+    },
+    {
+        title: "Confirmed Booking",
+        value: 35,
+        color: "#237804",
+        chartData: [264, 300, 350, 320, 309, 397, 250, 320, 330],
+    },
+    {
+        title: "Pending Booking",
+        value: 10,
+        color: "#d4b106",
+        chartData: [123, 456, 789, 101, 112, 131, 415, 161, 200],
+        trend: "down",
+    },
+    {
+        title: "Cancelled Booking",
+        value: 5,
+        color: "#cf1322",
+        chartData: [264, 210, 310, 240, 309, 397, 220, 210, 150],
+        trend: "down",
+    }
+];
 
+
+export default function Reservation() {
+    //vercel-preview
+
+    const {data: reservationInfo, isFetching} = useGetReservationsInfoQuery({})
+    console.log(reservationInfo)
 
     return (
         <>
             <ContentLayout breadcrumbItems={breadcrumbItems}>
                 <Flex gap={40} vertical>
                     <Row gutter={[12, 12]}>
-                        {
-                            cardStats.map((stat, index) => {
-                                return (
-                                    <Col xs={24} sm={12} lg={6} key={index}>
-                                        <Card bordered={false}
-                                              style={{
-                                                  boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)"
-                                              }}>
-                                            <Statistic
-                                                title={stat.title}
-                                                value={stat.value}
-                                                precision={stat.precision}
-                                                valueStyle={stat.valueStyle}
-                                                prefix={stat.prefix}
-                                                suffix={stat.suffix}
-                                            />
-                                        </Card>
-                                    </Col>
-                                )
-                            })
-                        }
+                        {bookingStats?.map((stat, index) => (
+                            <BookingStatsCard
+                                key={index}
+                                title={stat.title}
+                                value={stat.value}
+                                color={stat.color}
+                                chartData={stat.chartData}
+                                trend={stat.trend as BookingStatTrend}
+                            />
+                        ))}
                     </Row>
                     <Flex vertical>
                         <Title level={4}>Reservation Table</Title>
                         <Text type="secondary">This is Reservation Table secondary text.</Text>
                     </Flex>
-                    <Col xs={24} xl={12}>
-                        <Segmented options={options} size={"middle"} style={{padding: "6px"}} block/>
+                    <Col xs={24} xl={12} style={{overflow: "auto"}}>
+                        <Segmented options={options} size={"middle"} style={{padding: "10px"}}/>
                     </Col>
-
-                    <Flex vertical gap={20}>
-                        <ReservationCard
-                            date="28"
-                            day="Wed"
-                            time="09:00 - 09:30"
-                            fullDate="2024-11-03"
-                            tableNumber="8"
-                            waiterName="Umar Glush"
-                            guestCount={5}
-                            menuType="Normal Menu"
-                            status="Completed"
-                        />
-                        <ReservationCard
-                            date="28"
-                            day="Wed"
-                            time="09:00 - 09:30"
-                            fullDate="2024-11-03"
-                            tableNumber="8"
-                            waiterName="Umar Glush"
-                            guestCount={5}
-                            menuType="Normal Menu"
-                            status="Completed"
-                        />
-                    </Flex>
+                    <Spin spinning={isFetching}>
+                        <Flex vertical gap={20}>
+                            {reservationInfo?.data?.map((reservation : ReservationTypes) => (
+                                <ReservationCard
+                                    key={`${reservation.table_number}-${reservation.date}-${reservation.time}`}
+                                    date={new Date(reservation.date).toLocaleString('en-US', {day: '2-digit'})}
+                                    day={new Date(reservation.date).toLocaleString('en-US', {weekday: 'short'})}
+                                    time={reservation.time}
+                                    table_number={reservation.table_number}
+                                    full_name={reservation.full_name}
+                                    pax_number={reservation.pax_number}
+                                    menu_type={reservation.menu_type}
+                                    status={reservation.status}
+                                />
+                            ))}
+                        </Flex>
+                    </Spin>
                 </Flex>
 
 
