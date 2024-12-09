@@ -1,3 +1,4 @@
+import FormCheckbox from "../../../../components/From/FormCheckbox";
 import GetHelp from "../GetHelp/GetHelp";
 import "./agreement.css";
 
@@ -64,12 +65,12 @@ const Agreement = () => {
                 </li>
             </ul>
             <div className="checkbox-container">
-                <input type="checkbox" id="agree" />
-                <label htmlFor="agree">
-                    By registering your restaurant on our reservation platform, you
+                <FormCheckbox
+                    name="is_agree"
+                    label="By registering your restaurant on our reservation platform, you
                     acknowledge that you have read, understood, and agree to abide by
-                    these terms and conditions.
-                </label>
+                    these terms and conditions."
+                />
             </div>
         </div>
     );

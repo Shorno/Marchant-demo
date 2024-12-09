@@ -1,81 +1,32 @@
-import React, { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import GetHelp from "../GetHelp/GetHelp";
 import "./provideservice.css";
-import { Divider, Input, } from "antd";
+import { Col, Divider, Row, } from "antd";
+import FormInput from "../../../../components/From/FromInput";
+import FormCheckbox from "../../../../components/From/FormCheckbox";
+import FormTextArea from "../../../../components/From/FormTextArea";
+import { useForm } from "react-hook-form";
+import FromTimeSlotSelector from "../../../../components/From/FromTimeSlotSelector";
 
 const ProvideService = () => {
-    const { TextArea } = Input;
 
-    interface TimeSlot {
-        time: string;
-        selected: boolean;
-    }
-
-    const [breakfastTimes, setBreakfastTimes] = useState<TimeSlot[]>([
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: false },
-    ]);
-
-    const [lunchTimes, setLunchTimes] = useState<TimeSlot[]>([
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: true },
-        { time: "05:00", selected: true },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: true },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: true },
-        { time: "05:00", selected: true },
-        { time: "05:00", selected: true },
-    ]);
-
-    const [dinnerTimes, setDinnerTimes] = useState<TimeSlot[]>([
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: true },
-        { time: "05:00", selected: true },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: true },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: true },
-        { time: "05:00", selected: true },
-        { time: "05:00", selected: false },
-        { time: "05:00", selected: true },
-    ]);
-
-    const toggleTimeSlot = (
-        index: number,
-        timeSlots: TimeSlot[],
-        setTimeSlots: React.Dispatch<React.SetStateAction<TimeSlot[]>>
-    ) => {
-        const newTimeSlots = [...timeSlots];
-        newTimeSlots[index].selected = !newTimeSlots[index].selected;
-        setTimeSlots(newTimeSlots);
-    };
-
-    const [formData, setFormData] = useState({
-        openingRemark: "",
-        restaurantServices: "",
-        publicTransport: "",
-        parkingNotes: "",
-        enableFoodOrder: false,
-        enableHallBooking: false,
+    const methods = useForm({
+        defaultValues: {
+            morning: [
+                { time: "05:00", },
+                { time: "06:00", },
+            ],
+            lunch: [
+                { time: "12:00", },
+                { time: "13:00", },
+            ],
+            dinner: [
+                { time: "19:00", },
+                { time: "20:00", },
+            ],
+        },
     });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type, checked } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: type === "checkbox" ? checked : value,
-        }));
-    };
 
 
     return (
@@ -86,80 +37,30 @@ const ProvideService = () => {
                 All info of your restaurant shown below.
             </p>
 
-            <div className="meal-time-container">
-                <div className="meal-section">
-                    <h2 className="meal-title">
-                        Breakfast Time<span className="required">*</span>
-                    </h2>
-                    <div className="time-slots">
-                        {breakfastTimes.map((slot, index) => (
-                            <button
-                                key={index}
-                                className={`time-slot ${slot.selected ? "selected" : ""
-                                    }`}
-                                onClick={() =>
-                                    toggleTimeSlot(
-                                        index,
-                                        breakfastTimes,
-                                        setBreakfastTimes
-                                    )
-                                }
-                            >
-                                {slot.time}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                <div className="meal-section">
-                    <h2 className="meal-title">
-                        Lunch Time<span className="required">*</span>
-                    </h2>
-                    <div className="time-slots">
-                        {lunchTimes.map((slot, index) => (
-                            <button
-                                key={index}
-                                className={`time-slot ${slot.selected ? "selected" : ""
-                                    }`}
-                                onClick={() =>
-                                    toggleTimeSlot(
-                                        index,
-                                        lunchTimes,
-                                        setLunchTimes
-                                    )
-                                }
-                            >
-                                {slot.time}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                <div className="meal-section">
-                    <h2 className="meal-title">
-                        Dinner Time<span className="required">*</span>
-                    </h2>
-                    <div className="time-slots">
-                        {dinnerTimes.map((slot, index) => (
-                            <button
-                                key={index}
-                                className={`time-slot ${slot.selected ? "selected" : ""
-                                    }`}
-                                onClick={() =>
-                                    toggleTimeSlot(
-                                        index,
-                                        dinnerTimes,
-                                        setDinnerTimes
-                                    )
-                                }
-                            >
-                                {slot.time}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
+            <Row gutter={{ xs: 24, xl: 24, lg: 24, md: 24 }}>
+                {/* name */}
+                <Col span={24}>
+                    <FromTimeSlotSelector
+                        name="morning"
+                        mealTime="Breakfast"
+                        timeSlots={methods.getValues("morning")}
+                    />
+                </Col>
+                <Col span={24}>
+                    <FromTimeSlotSelector
+                        name="lunch"
+                        mealTime="Lunch"
+                        timeSlots={methods.getValues("lunch")}
+                    />
+                </Col>
+                <Col span={24}>
+                    <FromTimeSlotSelector
+                        name="dinner"
+                        mealTime="Dinner"
+                        timeSlots={methods.getValues("dinner")}
+                    />
+                </Col>
+            </Row>
             <div>
                 <Divider
                     variant="dotted"
@@ -171,97 +72,81 @@ const ProvideService = () => {
                 ></Divider>
             </div>
 
-            <div>
-                <label htmlFor="" className="service-label">
-                    About the restaurant or the history of the restaurant
-                </label>
-
-                <TextArea rows={4} placeholder="" className="text-area" />
-            </div>
-
-            <form>
-                <div className="form-row">
-                    <div className="form-group">
-                        <label>
-                            Opening & closing time remark
-                            <span className="required">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            name="openingRemark"
-                            value={formData.openingRemark}
-                            onChange={handleInputChange}
-                            placeholder=""
-                            className="input-details"
+            <Row gutter={{ xs: 24, xl: 24, lg: 24, md: 24 }}>
+                {/* name */}
+                <Col span={24}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormTextArea
+                            name="description"
+                            label="About the restaurant or the history of the restaurant"
+                            placeholder="Enter a description about the restaurant"
                         />
                     </div>
-
-                    <div className="form-group">
-                        <label>
-                            Restaurant services
-                            <span className="required">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            name="restaurantServices"
-                            value={formData.restaurantServices}
-                            onChange={handleInputChange}
-                            placeholder=""
-                            className="input-details"
+                </Col>
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="opening_and_closing_time_remark"
+                            label="Opening & closing time remark"
+                            size="large"
+                            validation={{
+                                required: "Opening & closing time remark is required",
+                            }}
                         />
                     </div>
-                </div>
-
-                <div className="form-row">
-                    <div className="form-group">
-                        <label>Public transport</label>
-                        <input
-                            type="text"
-                            name="publicTransport"
-                            value={formData.publicTransport}
-                            onChange={handleInputChange}
-                            placeholder=""
-                            className="input-details"
+                </Col>
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="service_type"
+                            label="Restaurant services"
+                            size="large"
+                            validation={{
+                                required: "Restaurant services is required",
+                            }}
                         />
                     </div>
-
-                    <div className="form-group">
-                        <label>Parking Notes</label>
-                        <input
-                            type="text"
-                            name="parkingNotes"
-                            value={formData.parkingNotes}
-                            onChange={handleInputChange}
-                            placeholder=""
-                            className="input-details"
+                </Col>
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="public_transport"
+                            label="Public transport"
+                            size="large"
+                            validation={{
+                                required: "Public transport is required",
+                            }}
                         />
                     </div>
-                </div>
-
-                <div className="services-section">
-                    <p>Do you want to enable services:</p>
-                    <div className="checkbox-group">
-                        <label className="checkbox-label">
-                            <input
-                                type="checkbox"
+                </Col>
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="parking_note"
+                            label="parking Notes"
+                            size="large"
+                            validation={{
+                                required: "parking Notes is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+                <Col span={12}>
+                    <div className="services-section">
+                        <p>Do you want to enable services:</p>
+                        <div className="checkbox-group">
+                            <FormCheckbox
                                 name="enableFoodOrder"
-                                checked={formData.enableFoodOrder}
-                                onChange={handleInputChange}
+                                label="Food order service"
                             />
-                            Food order service
-                        </label>
-                        <label className="checkbox-label">
-                            <input
-                                type="checkbox"
+                            <FormCheckbox
                                 name="enableHallBooking"
-                                checked={formData.enableHallBooking}
-                                onChange={handleInputChange}
+                                label="Hall booking system"
                             />
-                            Hall booking system
-                        </label>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </Col>
+            </Row>
         </div>
     );
 };

@@ -1,120 +1,92 @@
-import { useState } from "react";
-import GetHelp from "../GetHelp/GetHelp";
-import "./location.css";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useEffect, useRef, useState } from 'react';
+import { Button, Row, Col } from 'antd';
+import FormInput from '../../../../components/From/FromInput';
+import { useFormContext } from 'react-hook-form';
 
-interface Coordinates {
-    latitude: number;
-    longitude: number;
-}
+export default function Location() {
+    const { setValue } = useFormContext();
+    const [coordinates, setCoordinates] = useState<{ latitude: number; longitude: number }>({ latitude: 23.6850, longitude: 90.3563});
 
-interface FormInputs {
-    latitude: string; // Form inputs are strings by default
-    longitude: string;
-}
+    const mapRef = useRef<google.maps.Map | null>(null);
+    const markerRef = useRef<google.maps.Marker | null>(null);
 
-const Location = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<FormInputs>();
-
-    const [coordinates, setCoordinates] = useState<Coordinates>({
-        latitude: 24.8742508, // Default latitude (Naogaon District)
-        longitude: 88.4375333, // Default longitude
-    });
-
-    const onSubmit: SubmitHandler<FormInputs> = (data) => {
-        const lat = parseFloat(data.latitude);
-        const lng = parseFloat(data.longitude);
-
-        if (!isNaN(lat) && !isNaN(lng)) {
-            setCoordinates({
-                latitude: lat,
-                longitude: lng,
+    // Function to initialize the map and marker
+    const initMap = () => {
+        if (!mapRef.current) {
+            mapRef.current = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+                center: { lat: coordinates.latitude, lng: coordinates.longitude },
+                zoom: 15,
             });
-        } else {
-            console.error("Invalid coordinates entered.");
+
+            markerRef.current = new google.maps.Marker({
+                position: { lat: coordinates.latitude, lng: coordinates.longitude },
+                map: mapRef.current,
+            });
         }
     };
 
-    const mapSrc = `https://www.google.com/maps/embed/v1/view?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}&center=${coordinates.latitude ?? 0},${coordinates.longitude ?? 0}&zoom=15`;
+
+    useEffect(() => {
+        if (window.google) {
+            initMap();
+        }
+    }, [coordinates]);
+
+    useEffect(() => {
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}&callback=initMap`;
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
+    const handleAutoDetect = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    setValue('lat_coordinates', latitude);
+                    setValue('lng_coordinates', longitude);
+                    setCoordinates({ latitude, longitude });
+                },
+                (error) => {
+                    console.error("Error detecting location:", error);
+                    alert("Unable to detect location. Please allow location access and try again.");
+                }
+            );
+        } else {
+            alert("Geolocation is not supported by your browser.");
+        }
+    };
 
     return (
-        <div className="main-location">
-            <GetHelp />
-
-            <p className="restaurant-title">MAP COORDINATES</p>
-            <p className="restaurant-paragraph">
-                Enter the latitude and longitude below to find a specific
-                location.
-            </p>
-
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-container">
-                    <div>
-                        <label>
-                            Latitude <span className="star">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            {...register("latitude", {
-                                required: "Latitude is required",
-                                pattern: {
-                                    value: /^-?\d+(\.\d+)?$/,
-                                    message: "Latitude must be a valid number",
-                                },
-                            })}
-                        />
-                        {errors.latitude && (
-                            <p className="error-message">
-                                {errors.latitude.message}
-                            </p>
-                        )}
-                    </div>
-                    <div>
-                        <label>
-                            Longitude <span className="star">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            {...register("longitude", {
-                                required: "Longitude is required",
-                                pattern: {
-                                    value: /^-?\d+(\.\d+)?$/,
-                                    message: "Longitude must be a valid number",
-                                },
-                            })}
-                        />
-                        {errors.longitude && (
-                            <p className="error-message">
-                                {errors.longitude.message}
-                            </p>
-                        )}
-                    </div>
-                    <div>
-                        <button className="detect-button" type="submit">
-                            Search Location
-                        </button>
-                    </div>
-                </div>
-
-            </form>
-
-            <div>
-                <iframe
-                    src={mapSrc}
-                    width="450"
-                    height="450"
-                    style={{ border: "0" }}
-                    allowFullScreen={true}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-            </div>
-        </div>
+        <Row gutter={{ xs: 24, xl: 24, lg: 24, md: 24 }}>
+            <Col span={10}>
+                <FormInput
+                    label="Latitude:"
+                    name="lat_coordinates"
+                    size="large"
+                />
+            </Col>
+            <Col span={10}>
+                <FormInput
+                    label="Longitude:"
+                    name="lng_coordinates"
+                    size="large"
+                />
+            </Col>
+            <Col span={4} style={{ textAlign: 'center' }}>
+                <Button type="primary" style={{ marginTop: 16 }} onClick={handleAutoDetect}>
+                    Auto Detect
+                </Button>
+            </Col>
+            <Col span={24} style={{ height: 400, marginTop: 16 }}>
+                <div id="map" style={{ width: '100%', height: '100%' }}></div>
+            </Col>
+        </Row>
     );
-};
-
-export default Location;
+}
