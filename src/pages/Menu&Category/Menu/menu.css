@@ -89,6 +89,17 @@
     width: 40%;
 } */
 
+.input-error {
+    border-color: red !important;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+
 @media (max-width: 1024px) {
     .custom-modal .ant-modal {
         width: 60%;
