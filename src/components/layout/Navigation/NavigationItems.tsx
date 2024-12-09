@@ -92,7 +92,7 @@ export const navigationItems: MenuItem[] = [
     {
         key: 'information',
         icon: <FileTextOutlined/>,
-        label: <Link to={"/information"}>Information</Link>
+        label: <Link to={"/restaurant-info"}>Information</Link>
     },
     {
         key: 'settings',

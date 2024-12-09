@@ -1,30 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { tagTypes } from "../../tag-types";
 import { baseApi } from "../baseApi";
 
-const RESTAURSNT_CREATE = "/restaurants/create/";
+const RESTAURSNT_CREATE = "/v2/restaurants/manager/restaurant/create/";
 
-export interface LoginData {
-  username: string;
-  password: string;
-}
 
-export interface LoginResponse {
-  access: string;
-  refresh: string;
-  role: string;
-}
-
-export const authApi = baseApi.injectEndpoints({
+export const restaurantCreateApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    UserLogin: build.mutation<LoginResponse, LoginData>({
-      query: (loginData) => ({
+    createRestaurant: build.mutation({
+      query: (data:any) => ({
         url: RESTAURSNT_CREATE,
         method: "POST",
-        data: loginData,
+        data: data,
       }),
-      invalidatesTags: [tagTypes.userLoginInfo],
+      invalidatesTags: [tagTypes.createRestaurant],
     }),
   }),
 });
 
-export const { useUserLoginMutation } = authApi;
+export const { useCreateRestaurantMutation } = restaurantCreateApi;

@@ -7,7 +7,7 @@ import DiscountMenu from "./pages/Menu&Category/DiscountMenu/DiscountMenu.tsx";
 import BuffetMenu from "./pages/Menu&Category/BuffetMenu/BuffetMenu.tsx";
 import HallRecognition from "./pages/HallRecognition/HallRecognition.tsx";
 import Accounts from "./pages/Accounts/Accounts.tsx";
-import Information from "./pages/Information/Information.tsx";
+// import Information from "./pages/Information/Information.tsx";
 import MyProfile from "./pages/Profile/MyProfile.tsx";
 import Video from "./pages/Video/Video.tsx";
 import Login from "./pages/Auth/login/Login.tsx";
@@ -30,7 +30,7 @@ function App() {
                 <Route path="/registration" element={<PublicRoute><Signup /></PublicRoute>} />
 
                 {/* Private Routes */}
-                <Route path="/" element={<PrivateRoute><RestaurantInfo /></PrivateRoute>} />
+                <Route path="/restaurant-info" element={<PrivateRoute><RestaurantInfo /></PrivateRoute>} />
                 <Route path="/" element={<PrivateRoute><MainLayout /></PrivateRoute>}>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path={"/table-reservation"} element={<Reservation/>} />
@@ -42,7 +42,7 @@ function App() {
                     <Route path="/reviews" element={<ReviewPage/>} />
                     <Route path="/video" element={<Video />} />
                     <Route path="/accounts" element={<Accounts />} />
-                    <Route path="/information" element={<Information />} />
+                    <Route path="/restaurant-info" element={<RestaurantInfo />} />
                     <Route path="/settings" element={<Settings/>} />
                     <Route path="/profile" element={<MyProfile />} />
                 </Route>
