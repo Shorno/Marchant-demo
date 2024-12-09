@@ -13,6 +13,12 @@ body {
 
 }
 
+.anticon {
+    font-size: 18px;
+    font-weight: 900;
+    color: #000000;
+}
+
 /* Left Section Styling */
 .left-section {
     background-color: #5e38ff;
@@ -262,11 +268,11 @@ body {
 }
 
 .signup-title {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 600px;
     line-height: 48px;
     color: #262626;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     font-family: Poppins;
 }
 
@@ -368,6 +374,9 @@ select{
     right: 10px;
     top:50%;
     transform: translateY(-50%);
+}
+.toggle-password-button span{
+   color: #262626;
 }
 
 .password-input{

@@ -1,7 +1,7 @@
-import "./signup.css";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import logo from "../../../assets/ubaky_logo.png";
 import author from "../../../assets/author-image.jpeg";
-import {  Popover, Steps } from "antd";
+import { message } from "antd";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import {
@@ -11,55 +11,51 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import type { StepsProps } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useUserRegistrationMutation } from "../../../redux/api/Auth/authApi";
+import { storeUserInfo } from "../../../services/auth.service";
+import "./signup.css";
 
 
 // Define Form Data Type
 interface FormData {
     first_name: string;
     last_name: string;
+    username: string;
     email: string;
     country: string;
     city: string;
     phone: string;
     password: string;
-    confirmPassword: string;
+    password2: string;
 }
 
 function Signup() {
     const navigate = useNavigate();
+    const [visible, setVisible] = useState(false);
+    const [confirmVisible, setConfirmVisible] = useState(false);
+    const { register, handleSubmit, formState: { errors }, control, watch, } = useForm<FormData>();
+    const [userRegistration] = useUserRegistrationMutation()
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        control,
-        watch,
-    } = useForm<FormData>(); // Define generic type for useForm
-
-    const onSubmit = (data: FormData) => {
+    const onSubmit = async (data: FormData) => {
         console.log("Form Data:", data);
-
-        navigate('/restaurant-info');
+        try {
+            const res = await userRegistration(data).unwrap();
+            const accessToken = res?.data?.access
+            const refreshToken = res?.data?.refresh
+            if (res?.data?.access) {
+                storeUserInfo({ access:accessToken, refresh:refreshToken });
+                navigate("/restaurant-info", { replace: true });
+                message.success(res.message);
+            }
+        } catch (err: any) {
+            message.error(err?.message)
+        }
     };
 
     const password = watch("password");
 
-    const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
-        <Popover
-            content={
-                <span>
-                    Step {index + 1} status: {status}
-                </span>
-            }
-        >
-            {dot}
-        </Popover>
-    );
 
-    const [visible, setVisible] = useState(false);
-    const [confirmVisible, setConfirmVisible] = useState(false);
 
     return (
         <div className="signup-container">
@@ -106,16 +102,9 @@ function Signup() {
             {/* Right side */}
             <div className="right-section">
                 <div className="progress-bar">
-                    <Steps
-                        current={1}
-                        direction="horizontal"
-                        labelPlacement="horizontal"
-                        progressDot={customDot}
-                        items={[{}, {}, {}, {}]}
-                    />
                 </div>
                 <div className="signup-info">
-                    <h1 className="signup-title">Let’s get started</h1>
+                    <h3 className="signup-title">Let’s get started</h3>
 
                     <form
                         onSubmit={handleSubmit(onSubmit)}
@@ -124,13 +113,13 @@ function Signup() {
                         <div className="form-row">
                             <div className="form-item">
                                 <label
-                                  
+
                                     htmlFor="first-name"
                                 >
                                     First Name
                                 </label>
                                 <input
-                              
+
                                     id="first-name"
                                     type="text"
                                     placeholder="First name"
@@ -152,7 +141,7 @@ function Signup() {
                                     Last Name
                                 </label>
                                 <input
-                               
+
                                     id="last-name"
                                     type="text"
                                     placeholder="Last name"
@@ -166,13 +155,35 @@ function Signup() {
                                     </span>
                                 )}
                             </div>
+                            <div className="form-item">
+                                <label
+                                    className="label-title"
+                                    htmlFor="user-name"
+                                >
+                                    User Name
+                                </label>
+                                <input
+
+                                    id="user-name"
+                                    type="text"
+                                    placeholder="user name"
+                                    {...register("username", {
+                                        required: "user Name is required",
+                                    })}
+                                />
+                                {errors.username && (
+                                    <span className="error-message">
+                                        {errors.username.message}
+                                    </span>
+                                )}
+                            </div>
                         </div>
                         <div className="form-item">
                             <label className="label-title" htmlFor="email">
                                 Email
                             </label>
                             <input
-                           
+
                                 id="email"
                                 type="email"
                                 placeholder="Email"
@@ -315,17 +326,17 @@ function Signup() {
                         <div className="password-details">
                             <label
                                 className="label-title"
-                                htmlFor="confirm-password"
+                                htmlFor="password2"
                             >
                                 Confirm Password
                             </label>
                             <div className="password-input">
                                 <input
-                                    type={confirmVisible ? "text" : "password"}
-                                    id="confirm-password"
+                                    type={confirmVisible ? "text" : "password2"}
+                                    id="password2"
                                     className="password-design"
                                     placeholder="Confirm Password"
-                                    {...register("confirmPassword", {
+                                    {...register("password2", {
                                         required:
                                             "Confirm Password is required",
                                         validate: (value: string) =>
@@ -344,9 +355,9 @@ function Signup() {
                                     )}
                                 </span>
                             </div>
-                            {errors.confirmPassword && (
+                            {errors.password2 && (
                                 <p className="error-message">
-                                    {errors.confirmPassword.message}
+                                    {errors.password2.message}
                                 </p>
                             )}
                         </div>

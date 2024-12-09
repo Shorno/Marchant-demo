@@ -1,105 +1,66 @@
-import { useState } from "react";
-import GetHelp from "../GetHelp/GetHelp";
-import "./gallery.css";
-import { PlusOutlined } from "@ant-design/icons";
-import { Upload, UploadFile } from "antd";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState} from 'react';
+import { Upload, Button, Image, notification } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { useImageUploadMutation } from '../../../../redux/api/ImageUpload/imageUpload';
 
+const Gallery = ({ onGalleryChange }: { onGalleryChange: (galleryData: { image: string }[]) => void }) => {
+    const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [galleryImageUpload] = useImageUploadMutation();
 
+    const handleImageUpload = async (options: any) => {
+        setLoading(true);
+        const { file } = options;
 
-
-const Gallery = () => {
-    // const [previewOpen, setPreviewOpen] = useState<boolean>(false);
-    // const [previewImage, setPreviewImage] = useState<string>("");
-    const [fileList, setFileList] = useState<UploadFile[]>([
-        {
-            uid: "-1",
-            name: "image.png",
-            status: "done",
-            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        },
-        {
-            uid: "-2",
-            name: "image.png",
-            status: "done",
-            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        },
-        {
-            uid: "-3",
-            name: "image.png",
-            status: "done",
-            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        },
-        {
-            uid: "-4",
-            name: "image.png",
-            status: "done",
-            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        },
-    ]);
-
-    // const handlePreview = async (file: UploadFile) => {
-    //     if (!file.url && !file.preview) {
-    //         file.preview = await new Promise<string>((resolve, reject) => {
-    //             const reader = new FileReader();
-    //             reader.readAsDataURL(file.originFileObj as Blob);
-    //             reader.onload = () => resolve(reader.result as string);
-    //             reader.onerror = (error) => reject(error);
-    //         });
-    //     }
-    //     setPreviewImage(file.url || file.preview || "");
-    //     setPreviewOpen(true);
-    // };
-
-    const handleChange = ({ fileList }: { fileList: UploadFile[] }) => {
-        // Remove files with "uploading" or "error" status
-        const filteredList = fileList.filter((file) => file.status === "done");
-        setFileList(filteredList);
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+            const result = await galleryImageUpload(formData);
+            if (result?.data?.image_url) {
+                const imageUrl: string = result.data.image_url;
+                setUploadedImages((prevImages) => {
+                    const updatedImages = [...prevImages, imageUrl];
+                    onGalleryChange(updatedImages.map((img) => ({ image: img }))); // Pass updated gallery data
+                    return updatedImages;
+                });
+            } else {
+                notification.error({
+                    message: 'Upload Error',
+                    description: 'The uploaded image could not be processed properly.',
+                });
+            }
+        } catch (error:any) {
+            notification.error({
+                message: 'Upload Error',
+                description: 'An error occurred while uploading the image.',
+            });
+        } finally {
+            setLoading(false);
+        }
     };
-
-    const uploadButton = (
-        <div className="upload-button">
-            <PlusOutlined />
-            <div>Upload</div>
-        </div>
-    );
 
     return (
         <div>
-            <GetHelp />
-            <p className="restaurant-title">Manage Restaurant Time Slot</p>
-            <p className="restaurant-paragraph">
-                All info of your restaurant shown below.
-            </p>
-
-            <div className="gallery-container">
-                {/* Upload button */}
+            <p>Upload Images</p>
+            <div>
+                {uploadedImages.map((preview, index) => (
+                    <div key={index} style={{ margin: '8px' }}>
+                        <Image width={100} height={100} src={preview} alt={`Preview ${index}`} />
+                    </div>
+                ))}
                 <Upload
-                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
                     listType="picture-card"
-                    fileList={[]}
-                    onChange={handleChange}
+                    customRequest={handleImageUpload}
                     showUploadList={false}
                 >
-                    {fileList.length >= 8 ? null : uploadButton}
+                    {loading ? (
+                        <div>Uploading...</div>
+                    ) : (
+                        uploadedImages.length < 5 && <Button icon={<UploadOutlined />}>Upload</Button>
+                    )}
                 </Upload>
-
-                {/* Render images */}
-                {/*{fileList.map((file) => (*/}
-                {/*    <div key={file.uid} className="gallery-item">*/}
-                {/*        <Image*/}
-                {/*            src={file.url}*/}
-                {/*            preview={{*/}
-                {/*                visible: previewOpen,*/}
-                {/*                onVisibleChange: (visible) =>*/}
-                {/*                    setPreviewOpen(visible),*/}
-                {/*            }}*/}
-                {/*            alt={file.name}*/}
-                {/*            onClick={() => handlePreview(file)}*/}
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*))}*/}
             </div>
-
         </div>
     );
 };

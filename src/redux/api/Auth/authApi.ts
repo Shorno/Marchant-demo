@@ -3,6 +3,7 @@ import { baseApi } from "../baseApi";
 
 const Login_URL = "/accounts/login/";
 const USER_INFO = "/accounts/info/";
+const REGISTRATION_URL = "/v2/accounts/seller/signup/";
 
 export interface LoginData {
   username: string;
@@ -26,6 +27,18 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.userLoginInfo],
     }),
 
+
+    userRegistration: build.mutation({
+      query: (registrationData) => ({
+        url: REGISTRATION_URL,
+        method: "POST",
+        data: registrationData,
+      }),
+      invalidatesTags: [tagTypes.registration],
+    }),
+
+
+
     getUser: build.query({
       query: () => ({
         url: USER_INFO,
@@ -38,4 +51,4 @@ export const authApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useUserLoginMutation } = authApi;
+export const { useUserLoginMutation , useUserRegistrationMutation} = authApi;

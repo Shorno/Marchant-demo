@@ -1,308 +1,204 @@
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { Input, Select, Upload, Row, Col, message } from "antd";
-import {
-    LoadingOutlined,
-    PlusOutlined,
-} from "@ant-design/icons";
-// import "./restaurantbookingform.css";
-import { UploadChangeParam } from "antd/es/upload";
-import GetHelp from "../GetHelp/GetHelp";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-const { Option } = Select;
-
-interface FormData {
-    restaurantName: string;
-    restaurantEmail: string;
-    restaurantWebsite: string;
-    restaurantAddress: string;
-    city: string;
-    zipCode: string;
-    country: string;
-    identifyAddress?: string;
-    reservationPerDay: string;
-    seatCapacity: string;
-    averageBill: string;
-    currency: string;
-    cuisineType: string;
-}
-
-const getBase64 = (
-    img: File,
-    callback: (result: string | ArrayBuffer | null) => void
-) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result));
-    reader.readAsDataURL(img);
-};
-
-const beforeUpload = (file: File) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-        message.error("You can only upload JPG/PNG file!");
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error("Image must smaller than 2MB!");
-    }
-    return isJpgOrPng && isLt2M;
-};
+import { Col, Row } from "antd";
+import { useGetCountryQuery } from "../../../../redux/api/CountryApi/countryApi";
+import FormSelectField from "../../../../components/From/FromSelectedField";
+import FormInput from "../../../../components/From/FromInput";
 
 
 const RestaurantInfoForm = () => {
-    const fields = [
-        {
-            label: "Restaurant Name",
-            name: "restaurantName",
-            type: "input",
-            required: true,
-        },
-        {
-            label: "Restaurant Email",
-            name: "restaurantEmail",
-            type: "input",
-            required: true,
-        },
-        {
-            label: "Restaurant Address/Street",
-            name: "restaurantAddress",
-            type: "input",
-            required: true,
-        },
-        {
-            label: "City",
-            name: "city",
-            type: "select",
-            required: true,
-            options: ["City 1", "City 2"],
-        },
-        { label: "Zip Code", name: "zipCode", type: "input", required: true },
-        {
-            label: "Country",
-            name: "country",
-            type: "select",
-            required: true,
-            options: ["Country 1", "Country 2"],
-        },
-        { label: "Identify Address", name: "identifyAddress", type: "input" },
-        {
-            label: "Reservation You Get Per Day",
-            name: "reservationPerDay",
-            type: "input",
-            required: true,
-        },
-        {
-            label: "Restaurant Seat Capacity",
-            name: "seatCapacity",
-            type: "input",
-            required: true,
-        },
-        {
-            label: "Average Bill Per Customer",
-            name: "averageBill",
-            type: "input",
-            required: true,
-        },
-        {
-            label: "Your Currency",
-            name: "currency",
-            type: "input",
-            required: true,
-        },
-        {
-            label: "Cuisine Type",
-            name: "cuisineType",
-            type: "select",
-            required: true,
-            options: ["Cuisine 1", "Cuisine 2"],
-        },
-    ];
 
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<FormData>();
-    const [loading, setLoading] = useState(false);
-    const [profileImage, setProfileImage] = useState<string>();
-    const [coverImage, setCoverImage] = useState<string>();
+    const { data: countries } = useGetCountryQuery({});
 
-    const handleChange =
-        (setImage: React.Dispatch<React.SetStateAction<string | undefined>>) =>
-            (info: UploadChangeParam) => {
-                if (info.file.status === "uploading") {
-                    setLoading(true);
-                    return;
-                }
-                if (info.file.status === "done") {
-                    getBase64(info.file.originFileObj as File, (url) => {
-                        setLoading(false);
-                        setImage(url as string);
-                    });
-                }
-            };
-
-    const onSubmit = (data: FormData) => {
-        console.log("Form Submitted:", data);
-    };
-
-    const uploadButton = (
-        <button
-            style={{
-                border: 2,
-                background: "#FCFCFC",
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "10px",
-            }}
-            type="button"
-        >
-            {loading ? <LoadingOutlined /> : <PlusOutlined />}
-        </button>
-    );
 
     return (
         <div>
-            <GetHelp />
-            <p className="restaurant-title">Restaurant Information</p>
-            <p className="restaurant-paragraph">
-                All info of your restaurant shown below.
-            </p>
+            <Row gutter={{ xs: 24, xl: 24, lg: 24, md: 24 }}>
+                {/* name */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="title"
+                            label="Restaurant Name"
+                            size="large"
+                            validation={{
+                                required: "Restaurant name is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+                {/* email */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="email"
+                            label="Restaurant Email"
+                            size="large"
+                            validation={{
+                                required: "Restaurant email is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+                {/* phone */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="phone"
+                            label="Phone Number"
+                            size="large"
+                            validation={{
+                                required: "Restaurant Phone Number is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+                {/* street */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="street"
+                            label="street"
+                            size="large"
+                            validation={{
+                                required: "street is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+                {/* city */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="city"
+                            label="city"
+                            size="large"
+                            validation={{
+                                required: "city is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+                {/* street */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="zipcode"
+                            label="zipcode"
+                            size="large"
+                            validation={{
+                                required: "zipcode is required",
+                            }}
+                        />
+                    </div>
+                </Col>
 
-            <div className="form-container">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Row gutter={[16, 16]}>
-                        {fields.map((field, index) => (
-                            <Col key={index} xs={24} sm={12} md={12} lg={12}>
-                                <div className="form-item">
-                                    <label>
-                                        {field.label}
-                                        {field.required && (
-                                            <span className="star"> *</span>
-                                        )}
-                                    </label>
-                                    <Controller
-                                        name={field.name as keyof FormData}
-                                        control={control}
-                                        rules={{ required: field.required }}
-                                        render={({ field: controllerField }) =>
-                                            field.type === "input" ? (
-                                                <Input
-                                                    {...controllerField}
-                                                    placeholder={`Enter ${field.label.toLowerCase()}`}
-                                                    status={
-                                                        errors[
-                                                            field.name as keyof FormData
-                                                        ]
-                                                            ? "error"
-                                                            : ""
-                                                    }
-                                                    style={{
-                                                        backgroundColor:
-                                                            "#F5F5F5",
-                                                    }}
-                                                />
-                                            ) : (
-                                                <Select
-                                                    size="large"
-                                                    {...controllerField}
-                                                    placeholder={`Select ${field.label.toLowerCase()}`}
-                                                    status={
-                                                        errors[
-                                                            field.name as keyof FormData
-                                                        ]
-                                                            ? "error"
-                                                            : ""
-                                                    }
-                                                    className="custom-select"
-                                                >
-                                                    {field.options?.map(
-                                                        (option, idx) => (
-                                                            <Option
-                                                                key={idx}
-                                                                value={option}
-                                                            >
-                                                                {option}
-                                                            </Option>
-                                                        )
-                                                    )}
-                                                </Select>
-                                            )
-                                        }
-                                    />
-                                    {errors[field.name as keyof FormData] && (
-                                        <span className="error-message">
-                                            {field.label} is required
-                                        </span>
-                                    )}
-                                </div>
-                            </Col>
-                        ))}
-                    </Row>
+                {/* country*/}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormSelectField
+                            size="large"
+                            name="country"
+                            options={countries?.map((country: { label: string; value: string }) => ({
+                                label: country.label,
+                                value: country.value,
+                            })) || []}
+                            label="Country"
+                            placeholder="Select"
+                            showSearch
+                            filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            validation={{
+                                required: "Country is required",
+                            }}
+                        />
+                    </div>
+                </Col>
 
-                    <Row gutter={[16, 16]}>
-                        <Col xs={24} sm={12}>
-                            <div className="form-item">
-                                <label>Restaurant Profile *</label>
-                                <Upload
-                                    name="restaurantProfile"
-                                    listType="picture-card"
-                                    className="avatar-uploader"
-                                    showUploadList={false}
-                                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                                    beforeUpload={beforeUpload}
-                                    onChange={handleChange(setProfileImage)}
-                                >
-                                    {profileImage ? (
-                                        <img
-                                            src={profileImage}
-                                            alt="profile"
-                                            style={{
-                                                width: "100%",
-                                                height: "100%",
-                                                objectFit: "cover",
-                                            }}
-                                        />
-                                    ) : (
-                                        uploadButton
-                                    )}
-                                </Upload>
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={12}>
-                            <div className="form-item">
-                                <label>Restaurant Cover *</label>
-                                <Upload
-                                    name="restaurantCover"
-                                    listType="picture-card"
-                                    className="avatar-uploader"
-                                    showUploadList={false}
-                                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                                    beforeUpload={beforeUpload}
-                                    onChange={handleChange(setCoverImage)}
-                                >
-                                    {coverImage ? (
-                                        <img
-                                            src={coverImage}
-                                            alt="cover"
-                                            style={{
-                                                width: "100%",
-                                                height: "100%",
-                                                objectFit: "cover",
-                                            }}
-                                        />
-                                    ) : (
-                                        uploadButton
-                                    )}
-                                </Upload>
-                            </div>
-                        </Col>
-                    </Row>
-                </form>
-            </div>
+                {/* identify_address */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="identify_address"
+                            label="Identify Address"
+                            size="large"
+                            validation={{
+                                required: "Identify address is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+                {/* number_of_booking_per_day */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="number_of_booking_per_day"
+                            label="Reservation Per day"
+                            size="large"
+                            validation={{
+                                required: "Reservation Per day is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+
+                {/* seat_capacity */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="seat_capacity"
+                            label="seat capacity "
+                            size="large"
+                            validation={{
+                                required: "seat capacity is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+
+                {/* average_bill */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="average_bill"
+                            label="Average Bill "
+                            size="large"
+                            validation={{
+                                required: "Average Bill is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+                {/* currency */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="currency"
+                            label="currency"
+                            size="large"
+                            validation={{
+                                required: "currency is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+
+                {/* cuisine_type */}
+                <Col span={12}>
+                    <div style={{ margin: "10px 0" }}>
+                        <FormInput
+                            name="cuisine_type"
+                            label="Cuisine Type"
+                            size="large"
+                            validation={{
+                                required: "Cuisine type is required",
+                            }}
+                        />
+                    </div>
+                </Col>
+
+            </Row>
         </div>
     );
 };

@@ -1,61 +1,89 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
-import { Steps, Button, message } from 'antd';
-import logo from "../../../../src/assets/ubaky_logo.png";
-import RestaurantInfoForm from './RestaurantBookingInfo/RestaurantInfoForm';
-import ProvideService from './ProvideService/ProvideService';
-import Location from './Location/Location';
-import Gallery from './Gallery/Gallery';
 import Agreement from './Agreement/Agreement';
-import './RestaurantInfo.css';
+import Gallery from './Gallery/Gallery';
+import Location from './Location/Location';
+import ProvideService from './ProvideService/ProvideService';
+import RestaurantInfoForm from './RestaurantBookingInfo/RestaurantInfoForm';
+import { message } from 'antd';
+import { useCreateRestaurantMutation } from '../../../redux/api/RestaurantCreate/RestaurantCreate';
+import StepperForm from '../../../components/StepperFrom/StepperForm';
 
-const { Step } = Steps;
+export default function RestaurantInfo() {
+    const [createRestaurant] = useCreateRestaurantMutation();
+    const [galleryData, setGalleryData] = useState<{ image: string }[]>([]);
 
-const steps = [
-    { title: 'Restaurant Information', children: <RestaurantInfoForm /> },
-    { title: 'Provide Service', children: <ProvideService /> },
-    { title: 'Location', children: <Location /> },
-    { title: 'Gallery', children: <Gallery /> },
-    { title: 'Agreement', children: <Agreement /> },
-];
+    const steps = [
+        { title: 'Restaurant Information', content: <RestaurantInfoForm /> },
+        { title: 'Provide Service', content: <ProvideService /> },
+        { title: 'Location', content: <Location /> },
+        { title: 'Gallery', content: <Gallery onGalleryChange={setGalleryData} /> },
+        { title: 'Agreement', content: <Agreement /> },
+    ];
 
-const RestaurantInfo = () => {
-    const [current, setCurrent] = useState(0);
+    const handleSubmit = async (values: any) => {
+        const timeslot = {
+            morning: values.morning?.filter((slot: any) => slot.selected).map((slot: any) => slot.time),
+            lunch: values.lunch?.filter((slot: any) => slot.selected).map((slot: any) => slot.time),
+            dinner: values.dinner?.filter((slot: any) => slot.selected).map((slot: any) => slot.time),
+        };
+    
+        const transformedData = {
+            title: values.title || "Default Title",
+            email: values.email,
+            phone: values.phone,
+            street: values.street,
+            city: values.city,
+            zipcode: values.zipcode,
+            country: values.country,
+            identify_address: values.identify_address,
+            number_of_booking_per_day: parseInt(values.number_of_booking_per_day, 10) || 0,
+            seat_capacity: values.seat_capacity ? parseInt(values.seat_capacity, 10) : null,
+            average_bill: values.average_bill ? parseFloat(values.average_bill) : null,
+            currency: values.currency,
+            cuisine_type: values.cuisine_type,
+            description: values.description,
+            opening_and_closing_time_remark: values.opening_and_closing_time_remark,
+            service_type: values.service_type,
+            public_transport: values.public_transport,
+            parking_note: values.parking_note,
+            enableFoodOrder: values.enableFoodOrder,
+            enableHallBooking: values.enableHallBooking,
+            lat_coordinates: values.lat_coordinates,
+            lng_coordinates: values.lng_coordinates,
+            is_agree: values.is_agree,
+            timeslot: timeslot, // Ensure timeslot is included
+            galleries: galleryData.length > 0 ? galleryData : [], // Ensure galleries are included
+        };
+    
+        console.log('Transformed Data:', transformedData);
+    
 
-    const next = () => setCurrent(current + 1);
-    const prev = () => setCurrent(current - 1);
+    
+        message.loading('Creating...');
+        try {
+            const res = await createRestaurant(transformedData);
+            console.log('Response from API:', res);
+        } catch (err: any) {
+            console.error('Error:', err);
+            if (err.data) {
+                console.error('API Errors:', err.data);
+            }
+        }
+    };
+    
+    
 
     return (
-        <div className="steps-container">
-            <div className="steps-sidebar">
-                <img className="logo" src={logo} alt="logo" />
-                <Steps direction="vertical" current={current}>
-                    {steps.map((item) => (
-                        <Step key={item.title} title={item.title} />
-                    ))}
-                </Steps>
-                {/* //bottom image */}
-            </div>
-            <div className="steps-content-container">
-                <div className="steps-content">{steps[current].children}</div>
-                <div className="steps-action">
-                    {current > 0 && (
-                        <Button className="custom-button" onClick={prev}>
-                            Previous
-                        </Button>
-                    )}
-                    {current < steps.length - 1 ? (
-                        <Button className="custom-button" type="default" onClick={next}>
-                            Next
-                        </Button>
-                    ) : (
-                        <Button type="default" className="custom-button" onClick={() => message.success('Processing complete!')}>
-                            Done
-                        </Button>
-                    )}
-                </div>
-            </div>
+        <div>
+            <h1>Restaurant Information</h1>
+            <StepperForm
+                persistKey="restaurant-create-form"
+                submitHandler={(value: any) => {
+                    handleSubmit(value);
+                }}
+                steps={steps}
+            />
         </div>
     );
-};
-
-export default RestaurantInfo;
+}
