@@ -4,11 +4,13 @@ import {
     Col,
     Flex,
     Row,
-    Segmented,
+    Segmented, Spin,
     Typography
 } from "antd";
 import ReservationCard from "../../../components/panel/ReservationCard.tsx";
 import BookingStatsCard, {BookingStatTrend} from "../../../components/panel/BookingStatsCard.tsx";
+import {useGetReservationsInfoQuery} from "../../../redux/api/ReservationsInfo/ReservationsInfo.ts";
+import {ReservationTypes} from "../../../../types/reservationTypes.ts";
 
 
 const breadcrumbItems = [
@@ -61,7 +63,10 @@ const bookingStats = [
 
 
 export default function Reservation() {
+    //vercel-preview
 
+    const {data: reservationInfo, isFetching} = useGetReservationsInfoQuery({})
+    console.log(reservationInfo)
 
     return (
         <>
@@ -83,34 +88,26 @@ export default function Reservation() {
                         <Title level={4}>Reservation Table</Title>
                         <Text type="secondary">This is Reservation Table secondary text.</Text>
                     </Flex>
-                    <Col xs={24} xl={12} style={{overflow:"auto"}}>
+                    <Col xs={24} xl={12} style={{overflow: "auto"}}>
                         <Segmented options={options} size={"middle"} style={{padding: "10px"}}/>
                     </Col>
-
-                    <Flex vertical gap={20}>
-                        <ReservationCard
-                            date="28"
-                            day="Wed"
-                            time="09:00 - 09:30"
-                            fullDate="2024-11-03"
-                            tableNumber="8"
-                            waiterName="Umar Glush"
-                            guestCount={5}
-                            menuType="Normal Menu"
-                            status="Completed"
-                        />
-                        <ReservationCard
-                            date="28"
-                            day="Wed"
-                            time="09:00 - 09:30"
-                            fullDate="2024-11-03"
-                            tableNumber="8"
-                            waiterName="Umar Glush"
-                            guestCount={5}
-                            menuType="Normal Menu"
-                            status="Completed"
-                        />
-                    </Flex>
+                    <Spin spinning={isFetching}>
+                        <Flex vertical gap={20}>
+                            {reservationInfo?.data?.map((reservation : ReservationTypes) => (
+                                <ReservationCard
+                                    key={`${reservation.table_number}-${reservation.date}-${reservation.time}`}
+                                    date={new Date(reservation.date).toLocaleString('en-US', {day: '2-digit'})}
+                                    day={new Date(reservation.date).toLocaleString('en-US', {weekday: 'short'})}
+                                    time={reservation.time}
+                                    table_number={reservation.table_number}
+                                    full_name={reservation.full_name}
+                                    pax_number={reservation.pax_number}
+                                    menu_type={reservation.menu_type}
+                                    status={reservation.status}
+                                />
+                            ))}
+                        </Flex>
+                    </Spin>
                 </Flex>
 
 

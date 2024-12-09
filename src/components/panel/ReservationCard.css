@@ -46,6 +46,9 @@
 .reservation-status-completed {
     color: #52c41a;
 }
+.reservation-status-pending {
+    color: var(--primary-color);
+}
 
 .reservation-edit-button {
     color: white;
