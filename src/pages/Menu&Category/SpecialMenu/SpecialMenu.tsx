@@ -7,6 +7,7 @@ import {
     Checkbox,
     Upload,
     Image,
+    Button,
     // Grid,
 } from "antd";
 import type { CheckboxProps } from "antd";
@@ -17,7 +18,19 @@ import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import "./specialmenu.css";
 import { Controller, useForm } from "react-hook-form";
+import { usePostSpecialMenuMutation } from "../../../redux/api/Menu/menu";
 
+interface FormData {
+    title: string;
+    menuDescription: string;
+    menuType: string | null;
+    menuCategory: string | null;
+    sellingType: string[];
+    variants: string[];
+    images: UploadFile[];
+    price: string;
+    compareAtPrice: string;
+}
 // const { useBreakpoint } = Grid;
 const SpecialMenu: React.FC = () => {
     // const screens = useBreakpoint();
@@ -27,45 +40,6 @@ const SpecialMenu: React.FC = () => {
 
     const [open, setOpen] = useState(false);
     const [editorHtml, setEditorHtml] = useState("");
-    // const [theme, setTheme] = useState<"snow" | "bubble">("snow"); // Restrict theme to 'snow' or 'bubble'
-
-    const showModal = () => {
-        setOpen(true);
-    };
-
-    const handleOk = () => {
-        setTimeout(() => {
-            setOpen(false);
-        }, 1000);
-    };
-
-    const handleCancel = () => {
-        setOpen(false);
-    };
-
-    // text editor
-    const handleEditorChange = (html: string) => {
-        setEditorHtml(html);
-    };
-
-    /// checkbox
-
-    const onChange: CheckboxProps["onChange"] = (e) => {
-        console.log(`checked = ${e.target.checked}`);
-    };
-
-    // Image upload
-
-    type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
-
-    const getBase64 = (file: FileType): Promise<string> =>
-        new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = (error) => reject(error);
-        });
-
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [fileList, setFileList] = useState<UploadFile[]>([
@@ -75,51 +49,14 @@ const SpecialMenu: React.FC = () => {
             status: "done",
             url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
         },
-
         {
             uid: "-5",
             name: "image.png",
             status: "error",
         },
     ]);
-
-    const handlePreview = async (file: UploadFile) => {
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj as FileType);
-        }
-
-        setPreviewImage(file.url || (file.preview as string));
-        setPreviewOpen(true);
-    };
-
-    const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
-        setFileList(newFileList);
-
-    const uploadButton = (
-        <button style={{ border: 0, background: "" }} type="button">
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </button>
-    );
-
-    // varient
-    const [variants, setVariants] = useState([""]);
-
-    const addVariant = () => {
-        const newVariants = [...variants, ""];
-        setVariants(newVariants);
-        setValue("variants", newVariants); // Sync variants with react-hook-form
-    };
-
-    const updateVariant = (index, value) => {
-        const newVariants = [...variants];
-        newVariants[index] = value;
-        setVariants(newVariants);
-        setValue("variants", newVariants); // Sync updated variants
-        trigger("variants"); // Re-validate on update
-    };
-
-    // Form validation
+    const [variants, setVariants] = useState<string[]>([""]);
+    const [specialMenu, { isLoading }] = usePostSpecialMenuMutation();
 
     const {
         handleSubmit,
@@ -128,9 +65,9 @@ const SpecialMenu: React.FC = () => {
         watch,
         setValue,
         trigger,
-    } = useForm({
+    } = useForm<FormData>({
         defaultValues: {
-            menuName: "",
+            title: "",
             menuDescription: "",
             menuType: null,
             menuCategory: null,
@@ -144,9 +81,82 @@ const SpecialMenu: React.FC = () => {
 
     const sellingType = watch("sellingType");
 
-    const onSubmit = (data) => {
-        console.log("Form Submitted: ", data);
+    const showModal = () => setOpen(true);
+
+    const handleOk = () => setTimeout(() => setOpen(false), 1000);
+
+    const handleCancel = () => setOpen(false);
+
+    const handleEditorChange = (html: string) => setEditorHtml(html);
+
+    const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+        setFileList(newFileList);
+
+    const getBase64 = (file: File): Promise<string> =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = (error) => reject(error);
+        });
+
+    const handlePreview = async (file: UploadFile) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj as File);
+        }
+        setPreviewImage(file.url || (file.preview as string));
+        setPreviewOpen(true);
     };
+
+    const addVariant = () => {
+        const newVariants = [...variants, ""];
+        setVariants(newVariants);
+        setValue("variants", newVariants);
+    };
+
+    const updateVariant = (index: number, value: string) => {
+        const newVariants = [...variants];
+        newVariants[index] = value;
+        setVariants(newVariants);
+        setValue("variants", newVariants);
+        trigger("variants");
+    };
+
+    // const onSubmit =async (data: FormData) => {
+    //     console.log("Form Submitted: ", data);
+
+    // };
+
+    type FormValues = {
+        title: string;
+        price: string;
+    };
+
+    const onSubmit = async (formData: FormValues) => {
+    const payload = {
+        title: formData.title,
+        price: formData.price,
+    };
+
+    console.log("Payload being sent:", payload); // Debug the payload
+
+    try {
+        const result = await specialMenu(payload).unwrap(); // Unwrap RTK Query response
+        console.log("API Success Response:", result);
+
+        setOpen(false); // Close modal
+        reset(); // Reset form
+    } catch (error: any) {
+        console.error("Error posting data:", error?.data || error);
+    }
+};
+    
+
+    const uploadButton = (
+        <Button icon={<PlusOutlined />} type="text">
+            Upload
+        </Button>
+    );
 
     return (
         <div>
@@ -179,7 +189,7 @@ const SpecialMenu: React.FC = () => {
                             {/* Menu Name */}
                             <label className="label">Menu Name</label>
                             <Controller
-                                name="menuName"
+                                name="title"
                                 control={control}
                                 rules={{
                                     required: "Menu Name is required",
@@ -192,9 +202,9 @@ const SpecialMenu: React.FC = () => {
                                     />
                                 )}
                             />
-                            {errors.menuName && (
+                            {errors.title && (
                                 <p className="error-message">
-                                    {errors.menuName.message}
+                                    {errors.title.message}
                                 </p>
                             )}
 

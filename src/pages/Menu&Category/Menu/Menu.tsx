@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Input, Modal, Select } from "antd";
 import { useForm, Controller } from "react-hook-form";
 import "./menu.css";
-import { usePostAMenuMutation } from "../../../redux/api/Menu/menu";
+import { usePostMenuMutation } from "../../../redux/api/Menu/menu";
 
 const { TextArea } = Input;
 
@@ -13,7 +13,7 @@ type FormValues = {
 };
 
 export default function Menu() {
-    const [postAMenu, { isLoading }] = usePostAMenuMutation();
+    const [menu, { isLoading }] = usePostMenuMutation();
     const [open, setOpen] = useState(false);
 
     const {
@@ -29,48 +29,25 @@ export default function Menu() {
         },
     });
 
-    // Function to handle form submission
-    // const onSubmit = async (data: FormValues) => {
-    //     try {
-    //         console.log("Form Submitted:", data);
-    //         const result = await postAMenu(data); // API call
-    //         console.log(result);
-
-    //         // Close modal and reset form after successful submission
-    //         setOpen(false);
-    //         reset();
-    //     } catch (error) {
-    //         console.error("Error submitting form:", error);
-    //     }
-    // };
-
-    const onSubmit = async (formData: FormValues) => {
-        const payload = {
-            title: formData.title,
-            notes: formData.notes,
-            slot: formData.slot,
-        };
-    
-        console.log("Payload being sent:", payload);
-    
+    const onSubmit = async (data: FormValues) => {
         try {
-            const result = await postAMenu(payload).unwrap();
-            console.log("API Success Response:", result);
-    
-            setOpen(false); // Close modal on success
+            console.log("Form Submitted:", data);
+            const result = await menu(data);
+            console.log(result);
+            setOpen(false);
+            reset();
         } catch (error) {
-            console.error("API Error:", error);
+            console.error("Error submitting form:", error);
         }
     };
-    // Function to show the modal
+
     const showModal = () => {
         setOpen(true);
     };
 
-    // Function to handle modal cancellation
     const handleCancel = () => {
         setOpen(false);
-        reset(); // Reset form when the modal is closed
+        reset();
     };
 
     return (
@@ -82,7 +59,7 @@ export default function Menu() {
                 open={open}
                 title="Add Menu Category"
                 onCancel={handleCancel}
-                footer={null} // Remove default footer (OK and Cancel buttons)
+                footer={null}
                 className="custom-modal"
                 closeIcon={<span>×</span>}
             >
@@ -104,9 +81,8 @@ export default function Menu() {
                             render={({ field }) => (
                                 <Input
                                     {...field}
-                                    className={`menu-input ${
-                                        errors.title ? "input-error" : ""
-                                    }`}
+                                    className={`menu-input ${errors.title ? "input-error" : ""
+                                        }`}
                                     placeholder="e.g Drinks"
                                 />
                             )}
@@ -135,9 +111,8 @@ export default function Menu() {
                             render={({ field }) => (
                                 <TextArea
                                     {...field}
-                                    className={`menu-input ${
-                                        errors.notes ? "input-error" : ""
-                                    }`}
+                                    className={`menu-input ${errors.notes ? "input-error" : ""
+                                        }`}
                                     placeholder="Menu Notes"
                                     autoSize={{ minRows: 3, maxRows: 5 }}
                                 />

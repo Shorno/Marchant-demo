@@ -1,28 +1,41 @@
 import { tagTypes } from "../../tag-types";
 import { baseApi } from "../baseApi";
 
-const MENU_END_POINT= "/restaurants/info/menu/"
-
+const MENU_END_POINT = "/restaurants/info/menu/";
+const SPECIAL_MENU_END_POINT = "/restaurants/info/menu/special/";
+const BUFFET_MENU_END_POINT = "/restaurants/info/menu/buffet/";
 
 export const MenuApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        postAMenu: build.mutation({
-            query: (data) => {
-                console.log("Data sent to query:", data); // Log here
-                return {
-                    url: MENU_END_POINT,
-                    method: "POST",
-                    body: JSON.stringify({ ...data }),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                };
-            },
+        postMenu: build.mutation({
+            query: (data) => ({
+                url: MENU_END_POINT,
+                method: "POST",
+                data: data,
+            }),
             invalidatesTags: [tagTypes.menu],
         }),
-        
+        postSpecialMenu: build.mutation({
+            query: (data) => ({
+                url: SPECIAL_MENU_END_POINT,
+                method: "POST",
+                data: data,
+            }),
+            invalidatesTags: [tagTypes.specialMenu],
+        }),
+        postBuffetMenu: build.mutation({
+            query: (data) => ({
+                url: BUFFET_MENU_END_POINT,
+                method: "POST",
+                data: data,
+            }),
+            invalidatesTags: [tagTypes.buffetMenu], 
+        }),
     }),
 });
 
-
-export const { usePostAMenuMutation } = MenuApi;
+export const {
+    usePostMenuMutation,
+    usePostSpecialMenuMutation,
+    usePostBuffetMenuMutation,
+} = MenuApi;
