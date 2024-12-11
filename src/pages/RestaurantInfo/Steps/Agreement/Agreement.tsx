@@ -1,10 +1,10 @@
 import FormCheckbox from "../../../../components/From/FormCheckbox";
 import GetHelp from "../GetHelp/GetHelp";
-import "./agreement.css";
+import './agreement.css';  
 
 const Agreement = () => {
     return (
-        <div>
+        <div className="arrgiment">
             <GetHelp></GetHelp>
 
             <p className="restaurant-title">AGREEMENT</p>
