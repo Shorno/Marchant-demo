@@ -1,0 +1,117 @@
+.stepper-form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+}
+
+.steps {
+  position: fixed;
+  height: 100vh;
+  top: 20px;
+  left: 0;
+  padding: 10px;
+  background-image: url('../../assets/bottom-img.png'); 
+  background-position: bottom left;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+
+.logo {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.form-content {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-left: 300px;
+}
+
+.step-content {
+  padding: 16px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+}
+
+.form-buttons {
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 300px);
+  background-color: rgb(255, 255, 255);
+  left: 300px;
+  text-align: end;
+}
+.btn{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  height: 40px;
+  margin-right: 20px;
+}
+
+
+/* Tablet and smaller screens */
+@media (max-width: 768px) {
+  .stepper-form-container {
+    flex-direction: column;
+  }
+
+  .steps {
+    position: relative;
+    width: 100%; 
+    margin-bottom: 16px; 
+  }
+
+  .form-content {
+    margin-left: 0;
+  }
+
+  .steps .ant-steps {
+    display: flex;
+    flex-direction: row; 
+    overflow-x: auto;
+  }
+
+  .steps .ant-steps-item {
+    flex: 1;
+    display: inline-block;
+  }
+
+  .step-content {
+    padding: 12px;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .stepper-form-container {
+    padding: 8px;
+  }
+
+  .steps {
+    min-width: 100%; 
+  }
+
+  .form-content {
+    padding: 8px;
+  }
+
+  .steps .ant-steps {
+    flex-direction: column; 
+  }
+
+  .steps .ant-steps-item {
+    display: block;
+  }
+}
