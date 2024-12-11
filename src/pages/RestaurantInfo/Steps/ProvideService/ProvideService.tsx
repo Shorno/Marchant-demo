@@ -7,22 +7,24 @@ import FormCheckbox from "../../../../components/From/FormCheckbox";
 import FormTextArea from "../../../../components/From/FormTextArea";
 import { useForm } from "react-hook-form";
 import FromTimeSlotSelector from "../../../../components/From/FromTimeSlotSelector";
+import FormMultiSelect from "../../../../components/From/FormMultiSelect";
+import { selectRestaurantServices } from "../../../../constants/Restaurantservece";
 
 const ProvideService = () => {
 
     const methods = useForm({
         defaultValues: {
             morning: [
-                { time: "05:00", },
-                { time: "06:00", },
+                { time: "05:00", selected: false },
+                { time: "06:00", selected: false },
             ],
             lunch: [
-                { time: "12:00", },
-                { time: "13:00", },
+                { time: "12:00", selected: false },
+                { time: "13:00", selected: false },
             ],
             dinner: [
-                { time: "19:00", },
-                { time: "20:00", },
+                { time: "19:00", selected: false },
+                { time: "20:00", selected: false },
             ],
         },
     });
@@ -97,14 +99,13 @@ const ProvideService = () => {
                 </Col>
                 <Col span={12}>
                     <div style={{ margin: "10px 0" }}>
-                        <FormInput
+                        <FormMultiSelect
                             name="service_type"
                             label="Restaurant services"
                             size="large"
-                            validation={{
-                                required: "Restaurant services is required",
-                            }}
+                            options={selectRestaurantServices}
                         />
+
                     </div>
                 </Col>
                 <Col span={12}>

@@ -37,9 +37,10 @@ const FromTimeSlotSelector: React.FC<TimeSlotSelectorProps> = ({
           defaultValue={timeSlots}
           render={({ field }) => (
             <>
-              {timeSlots.map((slot, index) => (
+              {field.value.map((slot: TimeSlot, index: number) => (
                 <button
                   key={index}
+                  type="button" // Prevents form submission
                   className={`time-slot ${slot.selected ? "selected" : ""}`}
                   onClick={() => toggleTimeSlot(index)}
                 >

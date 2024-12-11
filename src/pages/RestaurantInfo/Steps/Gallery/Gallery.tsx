@@ -57,7 +57,7 @@ const Gallery = ({ onGalleryChange }: { onGalleryChange: (galleryData: { image: 
                     {loading ? (
                         <div>Uploading...</div>
                     ) : (
-                        uploadedImages.length < 5 && <Button icon={<UploadOutlined />}>Upload</Button>
+                        uploadedImages.length < 15 && <Button icon={<UploadOutlined />}>Upload</Button>
                     )}
                 </Upload>
             </div>
