@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Upload, message } from 'antd'
-import { UploadOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 import { useFormContext, Controller, RegisterOptions } from 'react-hook-form'
 import React from 'react'
 
@@ -64,7 +64,7 @@ const FormImageUpload: React.FC<IImageUpload> = ({
         rules={validation}
         render={({ field }) => (
           <Upload
-            listType="picture"
+            listType="picture-card"
             maxCount={maxCount}
             beforeUpload={beforeUpload}
             accept={accept}
@@ -76,9 +76,12 @@ const FormImageUpload: React.FC<IImageUpload> = ({
             }}
           >
             <div>
-              <UploadOutlined /> Upload Image
+              <PlusOutlined />
+              <div>Upload</div>
             </div>
           </Upload>
+
+
         )}
       />
       {errorMessage && (
@@ -90,3 +93,22 @@ const FormImageUpload: React.FC<IImageUpload> = ({
 
 export default FormImageUpload
 
+
+
+// <Upload
+//                                 name="image"
+//                                 listType="picture-card"
+//                                 showUploadList={false}
+//                                 customRequest={({ file }: any) => {
+//                                     handleImageUpload(file).then((imageUrl) => {
+//                                         form.setFieldsValue({
+//                                             image: [{ url: imageUrl }],
+//                                         });
+//                                     });
+//                                 }}
+//                             >
+// <div>
+//     <PlusOutlined />
+//     <div>Upload</div>
+// </div>
+//                             </Upload>

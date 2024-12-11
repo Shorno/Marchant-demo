@@ -1,25 +1,7 @@
-.main-location {
-    padding: 20px;
+.location{
+    height: 100vh;
 }
-
-.restaurant-title {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.restaurant-paragraph {
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.auto-detect-btn {
+.map-div{
     width: 100%;
-    text-align: center;
-}
-
-.map-container {
-    margin-top: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
+    height: 600px;
 }

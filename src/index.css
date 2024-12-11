@@ -15,3 +15,13 @@ body {
     --primary-color: #ffb62f; /* Primary color */
     --secondary-color: #e3bd76; /* Secondary color */
 }
+
+.ant-input-outlined{
+    border-color: #ffb62f;
+}
+.ant-select-outlined{
+    border-color: #ffb62f;
+}
+.ant-select-single{
+    border-color: #ffb62f;
+}
