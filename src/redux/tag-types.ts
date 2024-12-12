@@ -14,7 +14,12 @@ export enum tagTypes {
     discountMenu = "discountMenu",
     buffetMenu = "buffetMenu",
     menuCetegory = "menuCetegory",
+    SingleMenuChild = "SingleMenuChild",
+    UpdateSingleMenuChild = "UpdateSingleMenuChild",
     alert = "alert",
+    image = "image",
+    createRestaurant = "createRestaurant",
+    singleCategory = "singleCategory",
 }
 
 export const tagTypesList = [
@@ -33,5 +38,10 @@ export const tagTypesList = [
     tagTypes.menuChild,
     tagTypes.menuList,
     tagTypes.menuCetegory,
+    tagTypes.SingleMenuChild,
+    tagTypes.UpdateSingleMenuChild,
     tagTypes.alert,
+    tagTypes.image,
+    tagTypes.createRestaurant,
+    tagTypes.singleCategory,
 ];
