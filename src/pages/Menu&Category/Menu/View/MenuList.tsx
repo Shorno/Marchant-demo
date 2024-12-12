@@ -1,23 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
-import { CaretRightOutlined, DeleteOutlined, EditOutlined, EyeOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { Collapse, Image, theme, Row, Col, Spin, Modal, Form, Input, InputNumber, Select, Button, Upload } from 'antd';
+import { CaretRightOutlined, DeleteOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Collapse, Image, theme, Row, Col, Spin, Modal, Form, Input, InputNumber, Select, Button, Upload, message } from 'antd';
 import './menuList.css';
 import { useImageUploadMutation } from '../../../../redux/api/ImageUpload/imageUpload';
-import { usePostMenuCategoryMutation } from '../../../../redux/api/Menu/menu';
+import { useDeleteMenuCategoryMutation, usePostMenuCategoryMutation } from '../../../../redux/api/Menu/menu';
 import { useAlertQuery } from '../../../../redux/api/FoodAlert/foodAlert';
+import EditMenuModal from '../../../../components/menu/EditMenuModal';
+import EditMenuCategoryModal from '../../../../components/menu/EditMenuCategoryModal';
 
 const MenuList = ({ data, refetch, isLoading, error }: any) => {
     const [form] = Form.useForm();
     const { token } = theme.useToken();
     const [imageUpload] = useImageUploadMutation();
     const [menuCategory] = usePostMenuCategoryMutation();
+    const [deleteCategory] = useDeleteMenuCategoryMutation();
+
     const { data: alert } = useAlertQuery({})
 
 
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+    const [isEditCategoryModalVisible, setIsEditCategoryModalVisible] = useState(false);
+    const [setEditMenuData] = useState<any>(null);
     const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('');
     const [menuID, SetMenuID] = useState();
+    const [categoryMenuID, SetCategoryMenuID] = useState();
+
+
 
     const panelStyle: React.CSSProperties = {
         marginBottom: 24,
@@ -37,11 +47,23 @@ const MenuList = ({ data, refetch, isLoading, error }: any) => {
 
     const showModal = () => {
         setIsModalVisible(true);
+
+    };
+    const showEditCategoryModal = () => {
+        setIsEditCategoryModalVisible(true);
+
     };
 
     const handleCancel = () => {
         setIsModalVisible(false);
     };
+    const handleEditCancel = () => {
+        setIsEditModalVisible(false);
+    };
+    const handleEditCategoryCancel = () => {
+        setIsEditCategoryModalVisible(false);
+    };
+
 
 
     const handleImageUpload = async (file: File) => {
@@ -83,22 +105,222 @@ const MenuList = ({ data, refetch, isLoading, error }: any) => {
 
     };
 
+
+
+    const handleViewClick = async (menuId: number) => {
+        try {
+            const token = localStorage.getItem("access");
+
+            // Fetch the current menu data
+            const currentMenuResponse = await fetch(
+                `${import.meta.env.VITE_BASE_URL}/restaurants/info/menu/${menuId}/`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!currentMenuResponse.ok) {
+                throw new Error("Failed to fetch current menu data");
+            }
+
+            const currentMenuData = await currentMenuResponse.json();
+
+            const payload = {
+                id: menuId,
+                is_active: !currentMenuData.is_active,
+                slot: currentMenuData.slot || '',
+                title: currentMenuData.title || '',
+            };
+
+            const updateResponse = await fetch(
+                `${import.meta.env.VITE_BASE_URL}/restaurants/info/menu/${menuId}/`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
+
+            if (!updateResponse.ok) {
+                const errorDetails = await updateResponse.json();
+                throw new Error(errorDetails.detail || "Failed to update menu status");
+            }
+
+            await updateResponse.json();
+            message.success(`Menu ${!currentMenuData.is_active ? "Opened" : "Closed"} successfully!`);
+            refetch();
+        } catch (error: any) {
+            console.error("Error updating menu status:", error);
+            message.error(error.message || "Failed to update the menu status.");
+        }
+    };
+
+
+
+
+
+    const handleCategoryViewClick = async (categoryId: number) => {
+        try {
+            const token = localStorage.getItem("access");
+
+            // Fetch the current menu data
+            const currentMenuResponse = await fetch(
+                `${import.meta.env.VITE_BASE_URL}/restaurants/info/category/${categoryId}/`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!currentMenuResponse.ok) {
+                throw new Error("Failed to fetch current menu data");
+            }
+
+            const currentMenuData = await currentMenuResponse.json();
+
+            const payload = {
+                id: categoryId,
+                is_active: !currentMenuData.is_active, 
+                slot: currentMenuData.slot || '',
+                title: currentMenuData.title || '',
+                price:currentMenuData.price ||'',
+                menu: currentMenuData.menu
+            };
+
+            const updateResponse = await fetch(
+                `${import.meta.env.VITE_BASE_URL}/restaurants/info/category/${categoryId}/`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
+
+            if (!updateResponse.ok) {
+                const errorDetails = await updateResponse.json();
+                throw new Error(errorDetails.detail || "Failed to update category status");
+            }
+
+            await updateResponse.json();
+            message.success(`Menu ${!currentMenuData.is_active ? "Opened" : "Closed"} successfully!`);
+            refetch();
+        } catch (error: any) {
+            console.error("Error updating category status:", error);
+            message.error(error.message || "Failed to update the category status.");
+        }
+    };
+
+
+
+
+
+    const handleDeleteMenu = async (menuId: number) => {
+        try {
+            const token = localStorage.getItem("access");
+            const payload = {
+                id: menuId,
+            };
+
+            const updateResponse = await fetch(
+                `${import.meta.env.VITE_BASE_URL}/restaurants/info/menu/${menuId}/`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
+
+            if (!updateResponse.ok) {
+                const errorDetails = await updateResponse.json();
+                throw new Error(errorDetails.detail || "Failed to Dlete menu");
+            }
+
+            refetch();
+            message.success(`Menu Delete successfully!`);
+        } catch (error: any) {
+            console.error("Error Delete menu :", error);
+            message.error(error.message || "Failed to delete the menu.");
+        }
+    };
+
+
+    const handleDeteteCategory = async (id: number) => {
+        try {
+            const res = await deleteCategory({ id });
+            message.success(res?.data?.message || "successfully delete the category.");
+            refetch();
+        } catch (error: any) {
+            message.error(error.message || "Failed to delete the category.");
+        }
+    }
+
+
+
     const items = data?.results.map((menu: any) => ({
         key: menu.id,
         label: (
-            <div onClick={() => SetMenuID(menu?.id)} className="menu-label">
+            <div className="menu-label">
                 <h3>{menu.title}</h3>
                 <div className="action-icons">
-                    <span className="icon edit-icon" title="Add" onClick={showModal}>
+                    <span
+                        className="icon edit-icon"
+                        title="Add"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            showModal();
+                            SetMenuID(menu?.id)
+                        }}
+                    >
                         <PlusOutlined />
                     </span>
-                    <span className="icon edit-icon" title="Edit">
+
+
+                    <span
+                        className="icon edit-icon"
+                        title="Edit"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            SetMenuID(menu?.id)
+                            setEditMenuData(menu);
+                            setIsEditModalVisible(true);
+                        }}
+                    >
                         <EditOutlined />
                     </span>
-                    <span className="icon view-icon" title="View">
-                        <EyeOutlined />
+
+                    <span
+                        className="icon view-icon"
+                        title={menu.is_active ? "Hide" : "View"}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleViewClick(menu.id);
+                        }}
+                    >
+                        {menu.is_active ? <EyeOutlined /> : <EyeInvisibleOutlined />}
                     </span>
-                    <span className="icon delete-icon" title="Delete">
+
+                    <span className="icon delete-icon" title="Delete"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteMenu(menu.id);
+                        }}
+                    >
                         <DeleteOutlined />
                     </span>
                 </div>
@@ -120,20 +342,36 @@ const MenuList = ({ data, refetch, isLoading, error }: any) => {
                         <Col xs={24} sm={16} md={20} className="category">
                             <div className="category-title-action">
                                 <div>
-                                    <h3>{category.title}</h3>
-                                    <p>{category.description}</p>
+                                    <h3>{category?.title}</h3>
+                                    <p>{category?.description}</p>
                                 </div>
                                 <div className="action-icons">
-                                    {/* <span className="icon edit-icon" title="Edit">
-                                        <PlusOutlined />
-                                    </span> */}
-                                    <span className="icon edit-icon" title="Edit">
+                                    <span
+                                        className="icon edit-icon"
+                                        title="Edit"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            SetMenuID(menu?.id)
+                                            showEditCategoryModal()
+                                            SetCategoryMenuID(category?.id)
+                                            showEditCategoryModal()
+                                        }}
+                                    >
                                         <EditOutlined />
                                     </span>
-                                    <span className="icon view-icon" title="View">
-                                        <EyeOutlined />
+                                    <span className="icon view-icon" title="View" onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleCategoryViewClick(category?.id);
+                                    }}
+                                    >
+                                        {category?.is_active ? <EyeOutlined /> : <EyeInvisibleOutlined />}
                                     </span>
-                                    <span className="icon delete-icon" title="Delete">
+                                    <span className="icon delete-icon" title="Delete"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleDeteteCategory(category?.id);
+                                        }}
+                                    >
                                         <DeleteOutlined />
                                     </span>
                                 </div>
@@ -162,7 +400,7 @@ const MenuList = ({ data, refetch, isLoading, error }: any) => {
                 items={items}
             />
 
-            {/* Modal for Add Action */}
+            {/* Modal for Add  menu  cetagory*/}
             <Modal
                 title="Add Menu"
                 visible={isModalVisible}
@@ -212,7 +450,7 @@ const MenuList = ({ data, refetch, isLoading, error }: any) => {
                     >
                         <Select mode="multiple" placeholder="Select food alerts">
                             {alert &&
-                                alert.map((item:any) => (
+                                alert.map((item: any) => (
                                     <Select.Option key={item.value} value={item.value}>
                                         {item.label}
                                     </Select.Option>
@@ -261,6 +499,26 @@ const MenuList = ({ data, refetch, isLoading, error }: any) => {
                         </Button>
                     </Form.Item>
                 </Form>
+            </Modal>
+
+            {/* Modal for update Add menu */}
+
+            <Modal
+                title="Edit Menu"
+                visible={isEditModalVisible}
+                onCancel={handleEditCancel}
+                footer={null}
+            >
+                <EditMenuModal id={menuID} refetch={refetch} />
+            </Modal>
+
+            <Modal
+                title="Edit Category Menu"
+                visible={isEditCategoryModalVisible}
+                onCancel={handleEditCategoryCancel}
+                footer={null}
+            >
+                <EditMenuCategoryModal data={data} id={categoryMenuID} menuId={menuID} refetch={refetch} modalClose={handleEditCategoryCancel} />
             </Modal>
         </>
     );
