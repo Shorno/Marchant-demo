@@ -11,14 +11,14 @@ import {
     // Grid,
 } from "antd";
 import type { CheckboxProps } from "antd";
-import type { GetProp, UploadFile, UploadProps } from "antd";
+import type { GetProp, UploadFile, UploadProps, SelectProps } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import "./specialmenu.css";
 import { Controller, useForm } from "react-hook-form";
-import { usePostSpecialMenuMutation } from "../../../redux/api/Menu/menu";
+import { usePostSpecialMenuMutation } from "../../../redux/api/Menu/SpecialMenu";
 
 interface FormData {
     title: string;
@@ -30,6 +30,7 @@ interface FormData {
     images: UploadFile[];
     price: string;
     compareAtPrice: string;
+    selectedDays: string[];
 }
 // const { useBreakpoint } = Grid;
 const SpecialMenu: React.FC = () => {
@@ -65,6 +66,7 @@ const SpecialMenu: React.FC = () => {
         watch,
         setValue,
         trigger,
+        reset
     } = useForm<FormData>({
         defaultValues: {
             title: "",
@@ -76,6 +78,7 @@ const SpecialMenu: React.FC = () => {
             images: [],
             price: "",
             compareAtPrice: "",
+            selectedDays: [],
         },
     });
 
@@ -130,27 +133,44 @@ const SpecialMenu: React.FC = () => {
     type FormValues = {
         title: string;
         price: string;
+        // image: [];
+        // description:string;
+        // days: string[];
     };
 
     const onSubmit = async (formData: FormValues) => {
-    const payload = {
-        title: formData.title,
-        price: formData.price,
+        const payload = {
+            title: formData.title,
+            price: formData.price,
+            // description:formData.description,
+            // days:formData.days
+        };
+
+        console.log("Payload being sent:", payload); // Debug the payload
+        console.log("Complete Form Data:", formData);
+
+        try {
+            const result = await specialMenu(payload).unwrap(); // Unwrap RTK Query response
+            console.log("API Success Response:", result);
+
+            setOpen(false); // Close modal
+            reset(); // Reset form
+        } catch (error: any) {
+            console.error("Error posting data:", error?.data || error);
+        }
     };
 
-    console.log("Payload being sent:", payload); // Debug the payload
+    // Days
 
-    try {
-        const result = await specialMenu(payload).unwrap(); // Unwrap RTK Query response
-        console.log("API Success Response:", result);
-
-        setOpen(false); // Close modal
-        reset(); // Reset form
-    } catch (error: any) {
-        console.error("Error posting data:", error?.data || error);
-    }
-};
-    
+    const daysOfWeek = [
+        { value: "Monday", label: "Monday" },
+        { value: "Tuesday", label: "Tuesday" },
+        { value: "Wednesday", label: "Wednesday" },
+        { value: "Thursday", label: "Thursday" },
+        { value: "Friday", label: "Friday" },
+        { value: "Saturday", label: "Saturday" },
+        { value: "Sunday", label: "Sunday" },
+    ];
 
     const uploadButton = (
         <Button icon={<PlusOutlined />} type="text">
@@ -517,6 +537,36 @@ const SpecialMenu: React.FC = () => {
                                 />
                             )}
                         </Card>
+
+                        {/* DAYS */}
+                        <div style={{ marginBottom: "10px" }}>
+                            <p className="title">Select Days</p>
+
+                            <Controller
+                                name="selectedDays"
+                                control={control}
+                                rules={{
+                                    required: "Please select at least one day.",
+                                    validate: (value) =>
+                                        value.length > 0 ||
+                                        "Please select at least one day.",
+                                }}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        mode="multiple"
+                                        style={{ width: "100%" }}
+                                        placeholder="Select days of the week"
+                                        options={daysOfWeek}
+                                    />
+                                )}
+                            />
+                            {errors.selectedDays && (
+                                <p style={{ color: "red", marginTop: "5px" }}>
+                                    {errors.selectedDays.message}
+                                </p>
+                            )}
+                        </div>
 
                         {/* Price */}
                         <p className="title">Pricing</p>

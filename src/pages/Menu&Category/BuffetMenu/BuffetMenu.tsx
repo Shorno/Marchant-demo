@@ -18,11 +18,11 @@ import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import "./buffetmenu.css";
 import { Controller, useForm } from "react-hook-form";
-import { usePostBuffetMenuMutation } from "../../../redux/api/Menu/menu";
+import { usePostBuffetMenuMutation } from "../../../redux/api/Menu/BuffetMenu";
 
 interface FormData {
     title: string;
-    menuDescription: string;
+    description: string;
     menuType: string | null;
     menuCategory: string | null;
     sellingType: string[];
@@ -30,6 +30,7 @@ interface FormData {
     images: UploadFile[];
     price: string;
     compareAtPrice: string;
+    days: string[];
 }
 // const { useBreakpoint } = Grid;
 const BuffetMenu: React.FC = () => {
@@ -65,10 +66,11 @@ const BuffetMenu: React.FC = () => {
         watch,
         setValue,
         trigger,
+        reset
     } = useForm<FormData>({
         defaultValues: {
             title: "",
-            menuDescription: "",
+            description: "",
             menuType: null,
             menuCategory: null,
             sellingType: [],
@@ -76,6 +78,7 @@ const BuffetMenu: React.FC = () => {
             images: [],
             price: "",
             compareAtPrice: "",
+            days: [],
         },
     });
 
@@ -139,6 +142,8 @@ const BuffetMenu: React.FC = () => {
         };
 
         console.log("Payload being sent:", payload); // Debug the payload
+        console.log("complete form data:", formData);
+        
 
         try {
             const result = await buffetMenu(payload).unwrap(); // Unwrap RTK Query response
@@ -150,6 +155,18 @@ const BuffetMenu: React.FC = () => {
             console.error("Error posting data:", error?.data || error);
         }
     };
+
+    // Days
+
+    const daysOfWeek = [
+        { value: "Monday", label: "Monday" },
+        { value: "Tuesday", label: "Tuesday" },
+        { value: "Wednesday", label: "Wednesday" },
+        { value: "Thursday", label: "Thursday" },
+        { value: "Friday", label: "Friday" },
+        { value: "Saturday", label: "Saturday" },
+        { value: "Sunday", label: "Sunday" },
+    ];
 
     const uploadButton = (
         <Button icon={<PlusOutlined />} type="text">
@@ -211,7 +228,7 @@ const BuffetMenu: React.FC = () => {
                             <label className="label">Menu Description</label>
                             <div>
                                 <Controller
-                                    name="menuDescription"
+                                    name="description"
                                     control={control}
                                     rules={{
                                         required:
@@ -230,9 +247,9 @@ const BuffetMenu: React.FC = () => {
                                         />
                                     )}
                                 />
-                                {errors.menuDescription && (
+                                {errors.description && (
                                     <p className="error-message">
-                                        {errors.menuDescription.message}
+                                        {errors.description.message}
                                     </p>
                                 )}
                             </div>
@@ -516,6 +533,36 @@ const BuffetMenu: React.FC = () => {
                                 />
                             )}
                         </Card>
+
+                        {/* DAYS */}
+                        <div style={{ marginBottom: "10px" }}>
+                            <p className="title">Select Days</p>
+
+                            <Controller
+                                name="days"
+                                control={control}
+                                rules={{
+                                    required: "Please select at least one day.",
+                                    validate: (value) =>
+                                        value.length > 0 ||
+                                        "Please select at least one day.",
+                                }}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        mode="multiple"
+                                        style={{ width: "100%" }}
+                                        placeholder="Select days of the week"
+                                        options={daysOfWeek}
+                                    />
+                                )}
+                            />
+                            {errors.days && (
+                                <p style={{ color: "red", marginTop: "5px" }}>
+                                    {errors.days.message}
+                                </p>
+                            )}
+                        </div>
 
                         {/* Price */}
                         <p className="title">Pricing</p>

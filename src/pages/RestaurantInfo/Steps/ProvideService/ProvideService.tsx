@@ -1,16 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import GetHelp from "../GetHelp/GetHelp";
 import "./provideservice.css";
 import { Col, Divider, Row, } from "antd";
 import FormInput from "../../../../components/From/FromInput";
 import FormCheckbox from "../../../../components/From/FormCheckbox";
 import FormTextArea from "../../../../components/From/FormTextArea";
-import { useForm } from "react-hook-form";
+import { useForm} from "react-hook-form";
 import FromTimeSlotSelector from "../../../../components/From/FromTimeSlotSelector";
 import FormMultiSelect from "../../../../components/From/FormMultiSelect";
 import { selectRestaurantServices } from "../../../../constants/Restaurantservece";
 
 const ProvideService = () => {
+
+
 
     const methods = useForm({
         defaultValues: {
@@ -32,7 +33,7 @@ const ProvideService = () => {
 
 
     return (
-        <div>
+        <div className="peovide-service">
             <GetHelp></GetHelp>
             <p className="restaurant-title">Manage Restaurant Time Slot</p>
             <p className="restaurant-paragraph">

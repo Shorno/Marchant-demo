@@ -1,3 +1,4 @@
+import React from "react";
 import { Checkbox } from "antd";
 import { useFormContext, Controller, RegisterOptions } from "react-hook-form";
 
@@ -6,15 +7,15 @@ interface ICheckbox {
   label?: string;
   validation?: RegisterOptions;
   required?: boolean;
+  onChange?: () => void;
 }
 
-const FormCheckbox = ({ name, label, validation, required }: ICheckbox) => {
+const FormCheckbox: React.FC<ICheckbox> = ({ name, label, validation, required, onChange }) => {
   const {
     control,
     formState: { errors },
   } = useFormContext();
 
-  // Get error message for the specific field
   const errorMessage = errors[name]?.message as string | undefined;
 
   return (
@@ -24,7 +25,16 @@ const FormCheckbox = ({ name, label, validation, required }: ICheckbox) => {
         name={name}
         rules={validation}
         render={({ field }) => (
-          <Checkbox {...field} checked={field.value}>
+          <Checkbox
+            {...field}
+            checked={field.value}
+            onChange={(e) => {
+              field.onChange(e);
+              if (onChange) {
+                onChange();
+              }
+            }}
+          >
             {label && (
               <span>
                 {required && <span style={{ color: "red" }}>*</span>} {label}
@@ -41,3 +51,4 @@ const FormCheckbox = ({ name, label, validation, required }: ICheckbox) => {
 };
 
 export default FormCheckbox;
+

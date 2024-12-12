@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState} from 'react';
+import { useState } from 'react';
 import { Upload, Button, Image, notification } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useImageUploadMutation } from '../../../../redux/api/ImageUpload/imageUpload';
-
+import './gallery.css'
 const Gallery = ({ onGalleryChange }: { onGalleryChange: (galleryData: { image: string }[]) => void }) => {
     const [uploadedImages, setUploadedImages] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ const Gallery = ({ onGalleryChange }: { onGalleryChange: (galleryData: { image: 
                     description: 'The uploaded image could not be processed properly.',
                 });
             }
-        } catch (error:any) {
+        } catch (error: any) {
             notification.error({
                 message: 'Upload Error',
                 description: 'An error occurred while uploading the image.',
@@ -41,7 +41,7 @@ const Gallery = ({ onGalleryChange }: { onGalleryChange: (galleryData: { image: 
     };
 
     return (
-        <div>
+        <div className='gallery'>
             <p>Upload Images</p>
             <div>
                 {uploadedImages.map((preview, index) => (
@@ -57,7 +57,7 @@ const Gallery = ({ onGalleryChange }: { onGalleryChange: (galleryData: { image: 
                     {loading ? (
                         <div>Uploading...</div>
                     ) : (
-                        uploadedImages.length < 15 && <Button icon={<UploadOutlined />}>Upload</Button>
+                        <Button icon={<UploadOutlined />}></Button>
                     )}
                 </Upload>
             </div>

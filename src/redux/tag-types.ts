@@ -8,9 +8,16 @@ export enum tagTypes {
     replyReviews = "replyReviews",
     reviewDetails = "reviewDetails",
     menu = "menu",
+    menuChild = "menuChild",
+    menuList = "menuList",
     specialMenu = "specialMenu",
     discountMenu = "discountMenu",
     buffetMenu = "buffetMenu",
+    menuCetegory = "menuCetegory",
+    alert = "alert",
+
+    // change
+    uploadProfileImage="uploadProfileImage"
 }
 
 export const tagTypesList = [
@@ -26,4 +33,8 @@ export const tagTypesList = [
     tagTypes.discountMenu,
     tagTypes.specialMenu,
     tagTypes.menu,
+    tagTypes.menuChild,
+    tagTypes.menuList,
+    tagTypes.menuCetegory,
+    tagTypes.alert,
 ];

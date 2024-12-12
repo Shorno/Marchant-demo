@@ -1,97 +1,127 @@
-/* General container styling */
-.top-section {
-    display: flex;
-    gap: 20px; /* Adjusts spacing between fields */
-    align-items: center;
-    flex-wrap: wrap; /* Allows wrapping for responsiveness */
+/* General container styling for both top and bottom sections */
+.top-section,
+.bottom-section {
+    display: flex;             
+    align-items: center;       
+    flex-wrap: wrap;          
 }
 
-/* Ensure all input and select fields take full width */
-.top-section .field {
-    flex: 1; /* Makes each field flexible */
-    min-width: 200px; /* Ensures fields don’t shrink too small */
+/* Ensures each input field or select element takes up equal space */
+.top-section .field,
+.bottom-section .field {
+    flex: 1;                   
+    min-width: 200px;          
+padding: 10px;
 }
 
-.top-section input,
-.top-section select {
-    width: 100%; /* Full width of the container */
-    box-sizing: border-box; /* Prevents overflow due to padding or borders */
-    padding: 8px; /* Adds internal spacing */
-    border: 1px solid #d9d9d9; /* Matches default Ant Design input border */
-    border-radius: 4px; /* Smooth corners */
-    font-size: 14px; /* Consistent font size */
-    line-height: 1.5715; /* Matches Ant Design's default line-height */
+/* Ensures all input, select, DatePicker fields are styled consistently */
+.bottom-section input,
+.bottom-section select,
+.bottom-section .ant-picker,
+.bottom-section .ant-select {
+    width: 100%;               /* Makes the fields take up the full available width */
+    box-sizing: border-box;    /* Ensures padding and border are included in the width */
+    border-radius: 4px;        /* Smoothens corners */
+    font-size: 14px;           /* Ensures consistent font size across inputs */
+    /* padding: 10px;             Adds padding inside the inputs */
+    /* border: 1px solid #ccc;   Adds a border around inputs */
+    transition: border-color 0.3s ease-in-out; /* Adds smooth transition on focus */
 }
 
-/* Specific adjustment for select field to align with input */
-.top-section select {
-    appearance: none; /* Removes default browser styles for select */
-    height: auto; /* Ensures it respects the padding and line-height */
+/* Adds a focus effect to input, select, DatePicker */
+.bottom-section input:focus,
+.bottom-section select:focus,
+.bottom-section .ant-picker:focus,
+.bottom-section .ant-select:focus {
+    border-color: #F97316;     /* Changes border color on focus */
+    outline: none;             /* Removes default outline */
 }
 
-/* Modal styling */
-.custom-modal .ant-modal-header {
-    background-color: #f97316;
-    border-radius: 8px 8px 0 0;
-    padding: 16px 24px;
-    border-bottom: none;
-}
-
-.custom-modal .ant-modal-title {
-    color: white !important;
-    font-size: 16px;
-    line-height: 24px;
-}
-
-.custom-modal .ant-modal-content {
-    padding: 0;
-    border-radius: 8px;
-}
-
+/* Modal-specific adjustments for responsive behavior */
 .custom-modal .ant-modal-body {
-    padding: 20px;
+    padding: 20px;             /* Adds padding inside the modal */
+    display: flex;             /* Enables flexbox for better control */
+    flex-wrap: wrap;           /* Allows elements to wrap on smaller screens */
+    gap: 20px;                 /* Adds space between modal elements */
 }
 
-.custom-modal .ant-modal-close-x {
-    font-size: 18px;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Button styling for submit button */
+.btn-sunmit {
+    background-color: #F97316; /* Bright orange background */
+    width: 100%;                /* Full width button */
+    padding: 12px;              /* Adds padding inside the button */
+    color: white;               /* White text color */
+    border: none;               /* Removes default border */
+    border-radius: 10px;        /* Rounded corners */
+    text-align: center;         /* Centers text inside the button */
+    font-size: 16px;            /* Increases font size */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+    margin-top: 20px;
 }
 
-/* Button styling */
-.modal-button {
-    background-color: #fe802b;
-    color: white;
-    font-size: 14px;
-    font-weight: 300;
-    text-decoration: none;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
+/* Hover effect for submit button */
+.btn-sunmit:hover {
+    background-color: #F97316; /* Bright orange background */
+    width: 100%;                /* Full width button */
+    padding: 12px;              /* Adds padding inside the button */
+    color: white;               /* White text color */
+    border: none;               /* Removes default border */
+    border-radius: 10px;        /* Rounded corners */
+    text-align: center;         /* Centers text inside the button */
+    font-size: 16px;            /* Increases font size */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
 }
 
-.modal-button:hover {
-    background-color: orange;
+/* Error message styling */
+.error {
+    font-size: 12px;            /* Larger font size for better readability */
+    color: red;                 /* Red color for errors */
+    margin-top: 0px;            /* Adds space between the error and the input */
 }
 
-/* Label styling */
-.title {
-    font-size: 14px !important;
-    color: #000000;
-    display: block;
-    margin-bottom: 5px; /* Spacing between label and input/select */
-}
+/* Media Queries for responsiveness */
 
-/* Responsiveness */
+/* Adjust layout for screens less than 768px (mobile and tablet) */
 @media (max-width: 768px) {
-    .top-section {
-        flex-direction: column; /* Stacks fields vertically on smaller screens */
+    /* Stacks fields vertically */
+    .top-section,
+    .bottom-section {
+        flex-direction: row; /* Align fields vertically */
+        gap: 15px;              /* Adds space between vertically stacked fields */
     }
 
-    .top-section .field {
-        width: 100%; /* Fields take full width on smaller screens */
+    /* Ensures fields occupy full width on smaller screens */
+    .top-section .field,
+    .bottom-section .field {
+        width: 100% !important;             /* Full width on smaller screens */
+        margin-bottom: 15px;     /* Adds space between fields */
+    }
+
+    /* Adjusts modal body padding for small screens */
+    .custom-modal .ant-modal-body {
+        padding: 15px;           /* Reduces padding on smaller screens */
+    }
+
+    /* Adjust button size and padding for smaller devices */
+    .btn-sunmit {
+        padding: 10px;           /* Reduced padding on small screens */
+        font-size: 14px;         /* Slightly smaller font size for better fit */
+    }
+}
+
+/* Additional responsiveness for very small devices (mobile-first) */
+@media (max-width: 480px) {
+    /* Adjust input field font size and padding for small screens */
+    .bottom-section input,
+    .bottom-section select,
+    .bottom-section .ant-picker,
+    .bottom-section .ant-select {
+        font-size: 12px;         /* Smaller font size */
+        padding: 8px;            /* Reduced padding */
+    }
+
+    /* Adjust button for very small devices */
+    .btn-sunmit {
+        font-size: 14px;         /* Font size reduced for smaller screens */
     }
 }
