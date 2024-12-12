@@ -79,12 +79,11 @@
 .action-icons span {
   cursor: pointer;
   font-size: 18px;
-  color: #ffb300;
   transition: color 0.3s ease;
 }
 
 .action-icons span :hover {
-  color: #ffdc18;
+  color: #e19e00;
 }
 
 .alert{

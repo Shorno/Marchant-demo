@@ -18,18 +18,7 @@ export default function Menu() {
     const { data, isLoading:loading, error ,refetch} = useMenuQuery({});
     const [open, setOpen] = useState(false);
 
-    const {
-        handleSubmit,
-        control,
-        formState: { errors },
-        reset,
-    } = useForm<FormValues>({
-        defaultValues: {
-            title: "",
-            notes: "",
-            slot: "",
-        },
-    });
+    const {handleSubmit,control,formState: { errors },reset,} = useForm<FormValues>({defaultValues: {title: "",notes: "",slot: "",},});
 
     const onSubmit = async (data: FormValues) => {
         try {
