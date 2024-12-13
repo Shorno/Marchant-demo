@@ -159,7 +159,7 @@ const SpecialMenu: React.FC = () => {
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={null}
-                className="panel-custom-modal"
+                className="custom-modal"
                 closeIcon={<span>×</span>}
                 // width={isMobile && 100 }
                 // style={{

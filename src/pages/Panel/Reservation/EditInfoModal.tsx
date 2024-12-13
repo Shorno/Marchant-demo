@@ -20,7 +20,7 @@ export default function EditInfoModal({isModalOpen, handleOk, handleCancel, data
     return (
         <>
             <Modal
-                className={"panel-custom-modal"}
+                className={"custom-modal"}
                 title={"Edit Table"}
                 open={isModalOpen}
                 onOk={handleOk}
