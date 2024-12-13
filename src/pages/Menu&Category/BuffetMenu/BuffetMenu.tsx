@@ -122,7 +122,7 @@ const BuffetMenu: React.FC = () => {
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={null}
-                className="custom-modal"
+                className="panel-custom-modal"
                 closeIcon={<span>×</span>}
                 width={900}
                
