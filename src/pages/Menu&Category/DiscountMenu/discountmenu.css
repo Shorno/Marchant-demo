@@ -1,281 +1,127 @@
-.add-menu-button {
-    background-color: #fe802b;
-    color: white;
-    font-size: 14px;
-    font-weight: 300;
-    text-decoration: none;
-    border: none;
-    padding: 8px;
-    border-radius: 10px;
-    margin-top: 10px;
-    width: 100%;
-    cursor: pointer;
+/* General container styling for both top and bottom sections */
+.top-section,
+.bottom-section {
+    display: flex;             
+    align-items: center;       
+    flex-wrap: wrap;          
 }
 
-.modal-button {
-    background-color: #fe802b;
-    color: white;
-    font-size: 14px;
-    font-weight: 300;
-    text-decoration: none;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
+/* Ensures each input field or select element takes up equal space */
+.top-section .field,
+.bottom-section .field {
+    flex: 1;                   
+    min-width: 200px;          
+padding: 10px;
 }
 
-.modal-button:hover {
-    background-color: orange;
-    color: white;
+/* Ensures all input, select, DatePicker fields are styled consistently */
+.bottom-section input,
+.bottom-section select,
+.bottom-section .ant-picker,
+.bottom-section .ant-select {
+    width: 100%;               /* Makes the fields take up the full available width */
+    box-sizing: border-box;    /* Ensures padding and border are included in the width */
+    border-radius: 4px;        /* Smoothens corners */
+    font-size: 14px;           /* Ensures consistent font size across inputs */
+    /* padding: 10px;             Adds padding inside the inputs */
+    /* border: 1px solid #ccc;   Adds a border around inputs */
+    transition: border-color 0.3s ease-in-out; /* Adds smooth transition on focus */
 }
 
-.add-menu-button:hover {
-    background-color: #fe802b !important;
-    color: #fff;
+/* Adds a focus effect to input, select, DatePicker */
+.bottom-section input:focus,
+.bottom-section select:focus,
+.bottom-section .ant-picker:focus,
+.bottom-section .ant-select:focus {
+    border-color: #F97316;     /* Changes border color on focus */
+    outline: none;             /* Removes default outline */
 }
 
-.custom-modal .ant-modal-header {
-    background-color: #f97316;
-    border-radius: 8px 8px 0 0;
-    padding: 16px 24px;
-    border-bottom: none;
-}
-
-.custom-modal .ant-modal-title {
-    color: white !important;
-    font-size: 16px;
-    line-height: 24px;
-}
-
-.custom-modal .ant-modal-content {
-    padding: 0;
-    border-radius: 8px;
-}
-
+/* Modal-specific adjustments for responsive behavior */
 .custom-modal .ant-modal-body {
-    padding: 20px;
+    padding: 20px;             /* Adds padding inside the modal */
+    display: flex;             /* Enables flexbox for better control */
+    flex-wrap: wrap;           /* Allows elements to wrap on smaller screens */
+    gap: 20px;                 /* Adds space between modal elements */
 }
 
-.custom-modal {
+/* Button styling for submit button */
+.btn-sunmit {
+    background-color: #F97316; /* Bright orange background */
+    width: 100%;                /* Full width button */
+    padding: 12px;              /* Adds padding inside the button */
+    color: white;               /* White text color */
+    border: none;               /* Removes default border */
+    border-radius: 10px;        /* Rounded corners */
+    text-align: center;         /* Centers text inside the button */
+    font-size: 16px;            /* Increases font size */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+    margin-top: 20px;
 }
 
-/* /////////////// */
-
-/* Left side */
-
-.title {
-    font-size: 14px !important;
-    color: #000000;
+/* Hover effect for submit button */
+.btn-sunmit:hover {
+    background-color: #F97316; /* Bright orange background */
+    width: 100%;                /* Full width button */
+    padding: 12px;              /* Adds padding inside the button */
+    color: white;               /* White text color */
+    border: none;               /* Removes default border */
+    border-radius: 10px;        /* Rounded corners */
+    text-align: center;         /* Centers text inside the button */
+    font-size: 16px;            /* Increases font size */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
 }
 
-.label {
-    font-size: 10px;
-    color: #8c8c8c;
+/* Error message styling */
+.error {
+    font-size: 12px;            /* Larger font size for better readability */
+    color: red;                 /* Red color for errors */
+    margin-top: 0px;            /* Adds space between the error and the input */
 }
 
-.normal-input {
-    margin-bottom: 10px;
-    margin-top: 5px;
-}
+/* Media Queries for responsiveness */
 
-.menu-input,
-.ant-select,
-.ant-input {
-    width: 100%;
-    color: black;
-}
-
-.custom-select {
-    width: 100%;
-}
-
-.custom-select .ant-select-selector {
-    width: 100%;
-}
-
-.custom-select .ant-select-arrow {
-    color: black !important;
-}
-
-.ant-select-dropdown {
-    /* background-color: black !important; */
-}
-
-.main-content {
-    display: flex;
-    gap: 10px;
-}
-
-/* varient */
-
-.menu-variants-container {
-    width: 100%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.menu-variants-label {
-    color: #374151;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 4px;
-}
-
-.menu-variants-input-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.menu-variants-input {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s;
-}
-
-.menu-variants-input:focus {
-    border-color: #10b981;
-}
-
-.menu-variants-input::placeholder {
-    color: #9ca3af;
-}
-
-.menu-variants-add-button {
-    position: absolute;
-    right: 8px;
-    background: none;
-    border: none;
-    color: #10b981;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 0;
-    font-weight: 500;
-}
-
-.menu-variants-add-button:hover {
-    color: #059669;
-}
-
-
-/* Right side */
-.price-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
-.price-input-group {
-    display: flex;
-    flex-direction: row; 
-    gap: 16px; 
-}
-
-.price-input-wrapper {
-    flex: 1; 
-    display: flex;
-    flex-direction: column;
-}
-
-.label {
-    margin-bottom: 8px; 
-    font-weight: 500;
-    color: #333;
-}
-
-.price-input-container .price-input {
-    width: 100%; 
-    border-radius: 4px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-}
-
-/* Discard button */
-.discard-btn {
-    border: 1px solid #d9d9d9;
-    color: #333;
-    background: #fff;
-    padding: 8px 16px;
-    border-radius: 4px;
-}
-
-.action-buttons {
-    display: flex;
-    gap: 16px; 
-}
-
-/* Schedule button */
-.schedule-btn {
-    background: #fff3ea;
-    color: #fe802b;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-weight: 500;
-}
-
-/* Add Product button */
-.add-product-btn {
-    background: #fe802b;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-weight: 500;
-}
-
-@media (max-width: 1024px) {
-    .custom-modal .ant-modal {
-        width: 60%;
-        top: 30%;
-    }
-
-    .main-content {
-        flex-direction: column;
-    }
-}
-
+/* Adjust layout for screens less than 768px (mobile and tablet) */
 @media (max-width: 768px) {
-    .custom-modal .ant-modal {
-        width: 80%;
-        top: 20%;
-        transform: translate(-50%, 0);
+    /* Stacks fields vertically */
+    .top-section,
+    .bottom-section {
+        flex-direction: row; /* Align fields vertically */
+        gap: 15px;              /* Adds space between vertically stacked fields */
     }
 
+    /* Ensures fields occupy full width on smaller screens */
+    .top-section .field,
+    .bottom-section .field {
+        width: 100% !important;             /* Full width on smaller screens */
+        margin-bottom: 15px;     /* Adds space between fields */
+    }
+
+    /* Adjusts modal body padding for small screens */
     .custom-modal .ant-modal-body {
-        padding: 16px;
+        padding: 15px;           /* Reduces padding on smaller screens */
     }
 
-    .label {
-        font-size: 10px;
+    /* Adjust button size and padding for smaller devices */
+    .btn-sunmit {
+        padding: 10px;           /* Reduced padding on small screens */
+        font-size: 14px;         /* Slightly smaller font size for better fit */
     }
 }
 
+/* Additional responsiveness for very small devices (mobile-first) */
 @media (max-width: 480px) {
-    .custom-modal .ant-modal {
-        width: 95%;
-        top: 10%;
+    /* Adjust input field font size and padding for small screens */
+    .bottom-section input,
+    .bottom-section select,
+    .bottom-section .ant-picker,
+    .bottom-section .ant-select {
+        font-size: 12px;         /* Smaller font size */
+        padding: 8px;            /* Reduced padding */
     }
 
-    .label {
-        font-size: 10px;
-    }
-
-    .menu-input {
-        font-size: 12px;
-    }
-
-    .main-content {
-        flex-direction: column;
+    /* Adjust button for very small devices */
+    .btn-sunmit {
+        font-size: 14px;         /* Font size reduced for smaller screens */
     }
 }
