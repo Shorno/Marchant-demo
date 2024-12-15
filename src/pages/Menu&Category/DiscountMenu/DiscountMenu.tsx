@@ -157,4 +157,4 @@ const DiscountMenu = () => {
     );
 };
 
-export default DiscountMenu;
+export default DiscountMenu

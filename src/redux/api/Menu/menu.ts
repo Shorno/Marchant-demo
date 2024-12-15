@@ -9,7 +9,6 @@ const UPDATE_CATEGORY = "/restaurants/info/category/";
 
 export const MenuApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-
     postMenu: build.mutation({
       query: (data) => ({
         url: MENU_ADD,

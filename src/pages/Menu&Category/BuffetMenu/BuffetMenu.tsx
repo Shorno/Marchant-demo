@@ -71,6 +71,7 @@ const BuffetMenu = () => {
                 onCancel={() => setOpen(false)}
                 footer={null}
                 width={900}
+               
             >
                 <Form
                     form={form}
