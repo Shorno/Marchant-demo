@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Input, Modal, Select } from "antd";
+import { Input, Modal, Select,message } from "antd";
 import { useForm, Controller } from "react-hook-form";
 import "./menu.css";
 import { useMenuQuery, usePostMenuMutation } from "../../../redux/api/Menu/menu";
@@ -22,14 +23,13 @@ export default function Menu() {
 
     const onSubmit = async (data: FormValues) => {
         try {
-            console.log("Form Submitted:", data);
             const result = await menu(data);
-            console.log(result);
+            message.success(result?.data?.message || "Menu added successfully");
             setOpen(false);
             refetch()
             reset();
-        } catch (error) {
-            console.error("Error submitting form:", error);
+        } catch (error:any) {
+            message.error("Error submitting form:", error);
         }
     };
 
