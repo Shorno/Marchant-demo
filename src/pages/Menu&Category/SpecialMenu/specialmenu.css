@@ -33,12 +33,12 @@
     color: #fff;
 }
 
-.custom-modal .ant-modal-header {
-    background-color: #f97316;
-    border-radius: 8px 8px 0 0;
-    padding: 16px 24px;
-    border-bottom: none;
-}
+/*.custom-modal .ant-modal-header {*/
+/*    background-color: #f97316;*/
+/*    border-radius: 8px 8px 0 0;*/
+/*    padding: 16px 24px;*/
+/*    border-bottom: none;*/
+/*}*/
 
 .custom-modal .ant-modal-title {
     color: white !important;

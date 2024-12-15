@@ -525,3 +525,4 @@ const MenuList = ({ data, refetch, isLoading, error }: any) => {
 };
 
 export default MenuList;
+

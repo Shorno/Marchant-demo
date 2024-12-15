@@ -50,17 +50,19 @@
     color: var(--primary-color);
 }
 
-.reservation-edit-button {
+.ubaky-primary-button {
     color: white;
     background: var(--primary-color);
 }
 
-.reservation-edit-button:hover {
+.ubaky-primary-button:hover {
     color: white !important;
     background: var(--primary-color) !important
 }
 
-
+.dropdown-arrow{
+    color: white;
+}
 
 .ubaky-stats {
     display: flex;
@@ -79,4 +81,9 @@
 
 .mobile-dropdown:hover {
     color: var(--primary-color);
+}
+
+
+.assign-button{
+    padding: 4px;
 }

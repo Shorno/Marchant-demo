@@ -1,130 +1,124 @@
-import React, { useState } from "react";
-import "./discountmenu.css";
-import { Input, Modal, Select, DatePicker, Button } from "antd";
-import { Controller, useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import { Card, Input, Modal, Select, Checkbox, Upload, Image } from "antd";
+import type { CheckboxProps } from "antd";
+import type { GetProp, UploadFile, UploadProps } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import ReactQuill from "react-quill";
-import type { DatePickerProps, SelectProps } from "antd";
-import { usePostDiscountMenuMutation } from "../../../redux/api/Menu/DiscountMenu";
-
-// Define the types for the form data
-interface DiscountMenuForm {
-    discountTitle: string;
-    discount: string;
-    slot: string;
-    startDate: string;
-    endDate: string;
-    time: string[];
-    menuDescription: string;
-}
+import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.bubble.css";
+import "./discountmenu.css";
 
 const DiscountMenu: React.FC = () => {
-    const [open, setOpen] = useState<boolean>(false);
-    const [timeOptions, setTimeOptions] = useState<SelectProps["options"]>([]); // Store time options
-    const [postDiscountMenu] = usePostDiscountMenuMutation(); // API mutation hook
+    const [open, setOpen] = useState(false);
+    const [editorHtml, setEditorHtml] = useState("");
+    // const [theme, setTheme] = useState<"snow" | "bubble">("snow"); // Restrict theme to 'snow' or 'bubble'
 
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-        setValue,
-        watch,
-        setError,
-    } = useForm<DiscountMenuForm>(); // Type the form with DiscountMenuForm
-
-    // Handlers for Modal
-    const showModal = () => setOpen(true);
-    const handleOk = () => setTimeout(() => setOpen(false), 1000);
-    const handleCancel = () => setOpen(false);
-
-    // Handler for Slot Select input
-    const onChangeSlot = (value: string) => {
-        setValue("slot", value); // Ensure slot value is set in the form
-        setTimeOptions(getTimeOptionsForSlot(value)); // Update time options based on selected slot
+    const showModal = () => {
+        setOpen(true);
     };
 
-    // Get time options based on the selected slot
-    const getTimeOptionsForSlot = (slot: string): SelectProps["options"] => {
-        const timeMap = {
-            Morning: [
-                { value: "07:00", label: "07:00 AM" },
-                { value: "08:00", label: "08:00 AM" },
-                { value: "09:00", label: "09:00 AM" },
-                { value: "10:00", label: "10:00 AM" },
-            ],
-            Lunch: [
-                { value: "12:00", label: "12:00 PM" },
-                { value: "13:00", label: "01:00 PM" },
-                { value: "14:00", label: "02:00 PM" },
-                { value: "15:00", label: "03:00 PM" },
-            ],
-            Dinner: [
-                { value: "18:00", label: "06:00 PM" },
-                { value: "19:00", label: "07:00 PM" },
-                { value: "20:00", label: "08:00 PM" },
-                { value: "21:00", label: "09:00 PM" },
-            ],
-        };
-        return timeMap[slot] || [];
-    };
-
-    // if (!data.slot) {
-    //     alert("Please select a slot.");
-    //     return;
-    // }
-
-    // Custom validation for date range
-    const validateDates = (data: DiscountMenuForm) => {
-        const startDate = new Date(data.startDate);
-        const endDate = new Date(data.endDate);
-
-        // Check if the end date is greater than or equal to the start date
-        if (endDate < startDate) {
-            setError("endDate", {
-                type: "manual",
-                message: "End date must be greater than or equal to start date",
-            });
-            return false; // Prevent form submission
-        }
-        return true;
-    };
-
-    // Handle form submission
-    const onSubmit: SubmitHandler<DiscountMenuForm> = async (data) => {
-        if (!validateDates(data)) return;
-        const discountData = {
-            description: data.menuDescription,
-            title: data.discountTitle,
-            start_date: new Date(data.startDate).toISOString().split("T")[0], // Format start date
-            end_date: new Date(data.endDate).toISOString().split("T")[0], // Format end date
-            slot: data.slot.toLowerCase(), // Convert slot to lowercase for the API
-            time: data.time,
-            discount: data.discount, // Use the numeric discount value
-            show_calender: true, // Assuming it's always true
-        };
-
-        try {
-            await postDiscountMenu(discountData).unwrap();
-            console.log("Discount menu submitted successfully");
+    const handleOk = () => {
+        setTimeout(() => {
             setOpen(false);
-        } catch (error) {
-            console.error("Error submitting discount menu:", error);
-        }
+        }, 1000);
     };
 
-    // Calculate discounted price (if applicable)
-    const watchDiscount = watch("discount");
-    const calculateDiscountedPrice = (price: number) => {
-        return price - (price * watchDiscount) / 100;
+    const handleCancel = () => {
+        setOpen(false);
     };
+
+    // text editor
+    const handleEditorChange = (html: string) => {
+        setEditorHtml(html);
+    };
+
+    /// checkbox
+
+    const onChange: CheckboxProps["onChange"] = (e) => {
+        console.log(`checked = ${e.target.checked}`);
+    };
+
+    // Image upload
+
+    type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
+
+    const getBase64 = (file: FileType): Promise<string> =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = (error) => reject(error);
+        });
+
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState("");
+    const [fileList, setFileList] = useState<UploadFile[]>([
+        {
+            uid: "-1",
+            name: "image.png",
+            status: "done",
+            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        },
+        {
+            uid: "-2",
+            name: "image.png",
+            status: "done",
+            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        },
+        {
+            uid: "-3",
+            name: "image.png",
+            status: "done",
+            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        },
+        {
+            uid: "-4",
+            name: "image.png",
+            status: "done",
+            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        },
+
+        {
+            uid: "-5",
+            name: "image.png",
+            status: "error",
+        },
+    ]);
+
+    const handlePreview = async (file: UploadFile) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj as FileType);
+        }
+
+        setPreviewImage(file.url || (file.preview as string));
+        setPreviewOpen(true);
+    };
+
+    const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+        setFileList(newFileList);
+
+    const uploadButton = (
+        <button style={{ border: 0, background: "none" }} type="button">
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Upload</div>
+        </button>
+    );
+
+    // varient
+    const [variants, setVariants] = useState<string[]>([""]);
+
+    const addVariant = () => {
+        setVariants([...variants, ""]);
+    };
+
     return (
         <div>
             <button className="modal-button" onClick={showModal}>
                 Discount menu
             </button>
-
             <Modal
                 open={open}
-                title="Discount Menu"
+                title="Discount menu"
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={null}
@@ -132,202 +126,264 @@ const DiscountMenu: React.FC = () => {
                 closeIcon={<span>×</span>}
                 width={900}
             >
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    {/* Discount Title, Discount, Slot, Start Date, End Date, Time, Description */}
-                    <div className="top-section">
-                        {/* Discount Title */}
-                        <div className="field">
-                            <label className="title">Discount Title</label>
-                            <Controller
-                                name="discountTitle"
-                                control={control}
-                                rules={{
-                                    required: "Discount Title is required",
-                                }}
-                                render={({ field }) => (
-                                    <Input
-                                        {...field}
-                                        className="menu-input"
-                                        placeholder="e.g. Drink"
-                                    />
-                                )}
+                <div className="main-content">
+                    {/* Left side content */}
+                    <div>
+                        {/* //Description  */}
+                        <p className="title">Description</p>
+                        <Card style={{ width: "100%", marginBottom: "10px" }}>
+                            <label className="label">Menu Name</label>
+                            <Input
+                                className="normal-input"
+                                placeholder="Basic usage"
                             />
-                            {errors.discountTitle && (
-                                <span className="error">
-                                    {errors.discountTitle.message}
-                                </span>
-                            )}
-                        </div>
-
-                        {/* Discount */}
-                        <div className="field">
-                            <label className="title">Discount (%)</label>
-                            <Controller
-                                name="discount"
-                                control={control}
-                                rules={{
-                                    required: "Discount is required",
-                                    pattern: {
-                                        value: /^[0-9]+$/,
-                                        message: "Discount must be a number",
-                                    },
-                                }}
-                                render={({ field }) => (
-                                    <Input
-                                        {...field}
-                                        className="menu-input"
-                                        placeholder="Enter Discount (%)"
-                                        type="number"
-                                    />
-                                )}
-                            />
-                            {errors.discount && (
-                                <span className="error">
-                                    {errors.discount.message}
-                                </span>
-                            )}
-                        </div>
-
-                        {/* Slot */}
-
-                        <div className="field">
-                            <label className="title">Slot</label>
-                            <Controller
-                                name="slot"
-                                control={control}
-                                rules={{ required: "Slot is required" }}
-                                render={({ field }) => (
-                                    <Select
-                                        {...field}
-                                        className="menu-input"
-                                        placeholder="Pick a slot"
-                                        optionFilterProp="label"
-                                        onChange={onChangeSlot} // On slot change, update the form value
-                                        options={[
-                                            {
-                                                value: "Morning",
-                                                label: "Morning",
-                                            },
-                                            { value: "Lunch", label: "Lunch" },
-                                            {
-                                                value: "Dinner",
-                                                label: "Dinner",
-                                            },
-                                        ]}
-                                    />
-                                )}
-                            />
-                            {errors.slot && (
-                                <span className="error">
-                                    {errors.slot.message}
-                                </span>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="bottom-section">
-                        {/* Start Date */}
-                        <div className="field">
-                            <label className="title">Start Date</label>
-                            <Controller
-                                name="startDate"
-                                control={control}
-                                rules={{ required: "Start Date is required" }}
-                                render={({ field }) => (
-                                    <DatePicker
-                                        {...field}
-                                        className="menu-input"
-                                    />
-                                )}
-                            />
-                            {errors.startDate && (
-                                <span className="error">
-                                    {errors.startDate.message}
-                                </span>
-                            )}
-                        </div>
-
-                        {/* End Date */}
-                        <div className="field">
-                            <label className="title">End Date</label>
-                            <Controller
-                                name="endDate"
-                                control={control}
-                                rules={{ required: "End Date is required" }}
-                                render={({ field }) => (
-                                    <DatePicker
-                                        {...field}
-                                        className="menu-input"
-                                    />
-                                )}
-                            />
-                            {errors.endDate && (
-                                <span className="error">
-                                    {errors.endDate.message}
-                                </span>
-                            )}
-                        </div>
-
-                        {/* Time */}
-                        <div className="field">
-                            <label className="title">Time</label>
-                            <Controller
-                                name="time"
-                                control={control}
-                                rules={{ required: "Time is required" }}
-                                render={({ field }) => (
-                                    <Select
-                                        {...field}
-                                        className="menu-input"
-                                        mode="tags"
-                                        style={{ width: "100%" }}
-                                        placeholder="Select Time"
-                                        options={timeOptions}
-                                    />
-                                )}
-                            />
-                            {errors.time && (
-                                <span className="error">
-                                    {errors.time.message}
-                                </span>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Menu Description */}
-                    <div style={{padding:' 10px'}}>
-                        <label className="title">Description</label>
-                        <Controller
-                            name="menuDescription"
-                            control={control}
-                            rules={{
-                                required: "Menu Description is required",
-                                validate: (value) =>
-                                    value.trim() !== "" ||
-                                    "Menu Description cannot be empty",
-                            }}
-                            render={({ field }) => (
+                            <label className="label">Menu Description</label>
+                            <div>
+                                {/* ReactQuill editor inside the blank div */}
                                 <ReactQuill
-                                    {...field}
+                                    // theme={theme}
+                                    onChange={handleEditorChange}
+                                    value={editorHtml}
+                                    modules={Editor.modules}
+                                    formats={Editor.formats}
+                                    bounds={".app"}
                                     placeholder="Enter menu description"
-                                    className="normal-input menu-input"
+                                    className="normal-input"
+                                />
+                            </div>
+                        </Card>
+
+                        {/* Category */}
+                        <p className="title">Category</p>
+                        <Card style={{ width: "100%", marginBottom: "10px" }}>
+                            <div>
+                                <label className="label">Menu Type</label>
+                                <Select
+                                    placeholder="Select menu type"
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? "")
+                                            .toLowerCase()
+                                            .includes(input.toLowerCase())
+                                    }
+                                    options={[
+                                        { value: "1", label: "Jack" },
+                                        { value: "2", label: "Lucy" },
+                                        { value: "3", label: "Tom" },
+                                    ]}
+                                    style={{ width: "100%" }}
+                                    className="custom-select normal-input"
+                                />
+                            </div>
+                            <div>
+                                <label className="label">Menu Category</label>
+                                <Select
+                                    placeholder="Select menu category"
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? "")
+                                            .toLowerCase()
+                                            .includes(input.toLowerCase())
+                                    }
+                                    options={[
+                                        { value: "1", label: "Jack" },
+                                        { value: "2", label: "Lucy" },
+                                        { value: "3", label: "Tom" },
+                                    ]}
+                                    style={{ width: "100%" }}
+                                    className="custom-select normal-input"
+                                />
+                            </div>
+                        </Card>
+
+                        {/* Selling type */}
+                        <p className="title">Selling Type</p>
+                        <Card style={{ width: "100%", marginBottom: "10px" }}>
+                            <div>
+                                <Checkbox onChange={onChange}>
+                                    Dine-in selling only
+                                </Checkbox>
+                            </div>
+                            <div>
+                                <Checkbox
+                                    onChange={onChange}
+                                    style={{
+                                        marginTop: "5px",
+                                        marginBottom: "5px",
+                                    }}
+                                >
+                                    Online selling only
+                                </Checkbox>
+                            </div>
+                            <div>
+                                <Checkbox onChange={onChange}>
+                                    Available for both dine-in and online
+                                </Checkbox>
+                            </div>
+                        </Card>
+
+                        {/* Additional Variant */}
+
+                        <p className="title">Additional Variant</p>
+                        <div className="menu-variants-container">
+                            <label className="menu-variants-label">
+                                Menu variants
+                            </label>
+                            <div className="menu-variants-input-container">
+                                <input
+                                    type="text"
+                                    className="menu-variants-input"
+                                    placeholder="Enter variant name"
+                                    value={variants[variants.length - 1]}
+                                    onChange={(e) => {
+                                        const newVariants = [...variants];
+                                        newVariants[newVariants.length - 1] =
+                                            e.target.value;
+                                        setVariants(newVariants);
+                                    }}
+                                />
+                                <button
+                                    onClick={addVariant}
+                                    className="menu-variants-add-button"
+                                    type="button"
+                                >
+                                    + Add Variants
+                                </button>
+                            </div>
+                            {variants.slice(0, -1).map((variant, index) => (
+                                <input
+                                    key={index}
+                                    type="text"
+                                    className="menu-variants-input"
+                                    placeholder="Enter variant name"
+                                    value={variant}
+                                    onChange={(e) => {
+                                        const newVariants = [...variants];
+                                        newVariants[index] = e.target.value;
+                                        setVariants(newVariants);
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Right side content */}
+                    <div>
+                        <p className="title">Menu Images</p>
+                        <Card style={{ width: "100%", marginBottom: "10px" }}>
+                            <Upload
+                                action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+                                listType="picture-card"
+                                fileList={fileList}
+                                onPreview={handlePreview}
+                                onChange={handleChange}
+                            >
+                                {fileList.length >= 8 ? null : uploadButton}
+                            </Upload>
+                            {previewImage && (
+                                <Image
+                                    wrapperStyle={{ display: "none" }}
+                                    preview={{
+                                        visible: previewOpen,
+                                        onVisibleChange: (visible) =>
+                                            setPreviewOpen(visible),
+                                        afterOpenChange: (visible) =>
+                                            !visible && setPreviewImage(""),
+                                    }}
+                                    src={previewImage}
                                 />
                             )}
-                        />
-                        {errors.menuDescription && (
-                            <span className="error">
-                                {errors.menuDescription.message}
-                            </span>
-                        )}
-                    </div>
+                        </Card>
 
-                    <Button className="btn-sunmit" htmlType="submit">
-                        Submit
-                    </Button>
-                </form>
+                        <p className="title">Pricing</p>
+                        <Card
+                            className="price-card"
+                            style={{ width: "100%", marginBottom: "10px" }}
+                        >
+                            <div className="price-input-group">
+                                <div className="price-input-wrapper">
+                                    <label className="label">Price</label>
+                                    <div className="price-input-container">
+                                        <Input
+                                            prefix="$"
+                                            placeholder=""
+                                            className="price-input"
+                                            type="number"
+                                            min={0}
+                                            step={0.01}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="price-input-wrapper">
+                                    <label className="label">
+                                        Compare at Price
+                                    </label>
+                                    <div className="price-input-container">
+                                        <Input
+                                            prefix="$"
+                                            placeholder=""
+                                            className="price-input"
+                                            type="number"
+                                            min={0}
+                                            step={0.01}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
+
+                        <div className="button-container">
+                            <button className="discard-btn">Discard</button>
+                            <div className="action-buttons">
+                                <button className="schedule-btn">
+                                    Schedule
+                                </button>
+                                <button className="add-product-btn">
+                                    Add Product
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </Modal>
         </div>
     );
+};
+
+// Editor component modules and formats
+const Editor = {
+    modules: {
+        toolbar: [
+            [{ header: "1" }, { header: "2" }, { font: [] }],
+            [{ size: [] }],
+            ["bold", "italic", "underline", "strike", "blockquote"],
+            [
+                { list: "ordered" },
+                { list: "bullet" },
+                { indent: "-1" },
+                { indent: "+1" },
+            ],
+            ["link", "image", "video"],
+            ["clean"],
+        ],
+        clipboard: {
+            matchVisual: false,
+        },
+    },
+    formats: [
+        "header",
+        "font",
+        "size",
+        "bold",
+        "italic",
+        "underline",
+        "strike",
+        "blockquote",
+        "list",
+        "bullet",
+        "indent",
+        "link",
+        "image",
+        "video",
+    ],
 };
 
 export default DiscountMenu;

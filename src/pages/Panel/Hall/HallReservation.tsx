@@ -8,27 +8,26 @@ import {
     Typography
 } from "antd";
 import BookingStatsCard, {BookingStatTrend} from "../../../components/panel/BookingStatsCard.tsx";
-import {
-    useGetReservationListQuery,
-} from "../../../redux/api/ReservationsInfo/ReservationsInfo.ts";
-import {TableReservationTypes} from "../../../../types/reservationTypes.ts";
+import {useGetReservationsInfoQuery} from "../../../redux/api/ReservationsInfo/ReservationsInfo.ts";
+import {ReservationTypes} from "../../../../types/reservationTypes.ts";
 import {bookingStats, bookingStatsTitle} from "../PanelData.ts";
-import TableReservationCard from "./TableReservationCard.tsx";
-
+import HallReservationCard from "./HallReservationCard.tsx";
 
 const breadcrumbItems = [
     {
         title: <Link to={"/"}>Dashboard</Link>,
     },
     {
-        title: 'Table Reservation',
+        title: 'Hall Reservation',
     },
 ]
 const {Title, Text} = Typography
 
-export default function Reservation() {
-    const {data: reservationList, isFetching} = useGetReservationListQuery({})
 
+
+export default function HallReservation() {
+    const {data: hallReservationInfo, isFetching} = useGetReservationsInfoQuery({})
+    console.log(hallReservationInfo)
 
     return (
         <>
@@ -47,7 +46,7 @@ export default function Reservation() {
                         ))}
                     </Row>
                     <Flex vertical>
-                        <Title level={4}>Reservation Table</Title>
+                        <Title level={4}>Hall Reservation</Title>
                         <Text type="secondary">This is Reservation Table secondary text.</Text>
                     </Flex>
                     <Col xs={24} xl={12} style={{overflow: "auto"}}>
@@ -55,17 +54,16 @@ export default function Reservation() {
                     </Col>
                     <Spin spinning={isFetching}>
                         <Flex vertical gap={20}>
-                            {reservationList?.results?.map((reservation : TableReservationTypes) => (
-                                <TableReservationCard
-                                    data={reservation}
-                                    key={`${reservation.table_number}-${reservation.date}-${reservation.time}`}
+                            {hallReservationInfo?.data?.map((reservation : ReservationTypes) => (
+                                <HallReservationCard
+                                    key={`${reservation.table_number}-${reservation.time}`}
                                     date={new Date(reservation.date).toLocaleString('en-US', {day: '2-digit'})}
                                     day={new Date(reservation.date).toLocaleString('en-US', {weekday: 'short'})}
                                     time={reservation.time}
                                     table_number={reservation.table_number}
-                                    full_name={reservation.name}
-                                    pax_number={reservation.person}
-                                    menu_type={reservation.buffet_menu?.title}
+                                    full_name={reservation.full_name}
+                                    pax_number={reservation.pax_number}
+                                    menu_type={reservation.menu_type}
                                     status={reservation.status}
                                 />
                             ))}
