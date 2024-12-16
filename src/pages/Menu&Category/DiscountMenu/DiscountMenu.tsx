@@ -1,58 +1,168 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import { Input, Modal, Select, Button, Form, DatePicker, message, } from "antd";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { usePostDiscountMenuMutation } from "../../../redux/api/Menu/DiscountMenu";
+import { useEffect, useState } from "react";
+import { Modal, Form, Input, Select, message, Pagination, Spin, Card, DatePicker } from "antd";
+import { EditOutlined, RightCircleFilled } from "@ant-design/icons";
 import { useGetSlotQuery } from "../../../redux/api/TimeSlot/timeSlot";
+import { useGetDiscountQuery, usePostDiscountMenuMutation, useUpdateDiscountMutation } from "../../../redux/api/Menu/DiscountMenu";
 import "./discountmenu.css";
-
-const { RangePicker } = DatePicker;
+import QuillEditor from "../../../components/QuillEditor/QuillEditor";
+import dayjs from "dayjs";
 
 const DiscountMenu = () => {
-    const [open, setOpen] = useState(false);
     const [slot, setSlot] = useState("morning");
     const [activeTime, setActiveTime] = useState<string[]>([]);
-    const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+    const [description, setDescription] = useState<string>("");
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedMenu, setSelectedMenu] = useState<any>(null);
     const [form] = Form.useForm();
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [discount] = usePostDiscountMenuMutation();
+    const [updateDiscount] = useUpdateDiscountMutation();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
 
-    const [discountMenu] = usePostDiscountMenuMutation();
+    const [currentDate, setCurrentDate] = useState("");
+
+    useEffect(() => {
+        const today = new Date();
+        const formattedDate = today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+        setCurrentDate(formattedDate);
+    }, []);
+
+    const { data, isFetching, refetch } = useGetDiscountQuery({
+        page: currentPage,
+        page_size: pageSize,
+        date: currentDate,
+    });
+
     const { data: activeTimes, isLoading: isTimeLoading } = useGetSlotQuery(slot);
 
     const handleSubmit = async (values: any) => {
+        const start_date = values.start_date?.format("YYYY-MM-DD");
+        const end_date = values.end_date?.format("YYYY-MM-DD");
+
         const payload = {
-            ...values,
-            start_date: values.dateRange[0].format("YYYY-MM-DD"),
-            end_date: values.dateRange[1].format("YYYY-MM-DD"),
+            title: values.title,
+            description,
+            start_date,
+            end_date,
+            discount: values.discount,
+            slot: values.slot,
             time: values.time,
-            images: uploadedImageUrl ? [uploadedImageUrl] : [],
         };
 
         try {
-            const result = await discountMenu(payload).unwrap();
-            console.log(result);
-            message.success("Discount menu created successfully!");
+            if (isEditMode) {
+                await updateDiscount({ id: selectedMenu.id, data: payload, date: currentDate }).unwrap();
+                message.success("Discount updated successfully!");
+            } else {
+                await discount(payload).unwrap();
+                message.success("Discount created successfully!");
+            }
+
+            refetch();
             form.resetFields();
-            setUploadedImageUrl("");
-            setOpen(false);
-        } catch (error) {
-            console.error("API Error:", error);
-            message.error("Failed to create the discount menu. Please try again.");
+            setDescription("");
+            setIsModalVisible(false);
+        } catch (error: any) {
+            console.error(error);
+            message.error("Failed to save the Discount. Please try again.");
         }
     };
 
-    return (
-        <div className="discount-menu-container">
-            <Button type="primary" onClick={() => setOpen(true)}>
-                Discount Menu
-            </Button>
+    const handleEditClick = (menu: any) => {
+        setSelectedMenu(menu);
+        setIsEditMode(true);
+        form.setFieldsValue({
+            title: menu.title || "",
+            discount: menu.discount || "",
+            start_date: menu.start_date ? dayjs(menu.start_date) : null,
+            end_date: menu.end_date ? dayjs(menu.end_date) : null,
+            slot: menu.slot || "",
+            time: menu.time || [],
+            description: menu.description || "",
+        });
+        setDescription(menu.description || "");
+        setIsModalVisible(true);
+    };
 
+    const handleAddClick = () => {
+        setSelectedMenu(null);
+        setIsEditMode(false);
+        form.resetFields();
+        setDescription("");
+        setIsModalVisible(true);
+    };
+
+    const handleModalCancel = () => {
+        setIsModalVisible(false);
+        form.resetFields();
+        setDescription("");
+    };
+
+    const handlePageChange = (page: number, pageSize?: number) => {
+        setCurrentPage(page);
+        if (pageSize) setPageSize(pageSize);
+    };
+
+    return (
+        <div className="discount">
+            <div className="modal-btn">
+                <button onClick={handleAddClick}>Add Discount</button>
+            </div>
+
+            <div className="discount-item">
+                {isFetching ? (
+                    <div className="loading">
+                        <Spin />
+                    </div>
+                ) : (
+                    data?.results?.map((menu: any) => (
+                        <Card hoverable key={menu.id}>
+                            <div className="discount-list">
+                                <div className="title">
+                                    <h3>{menu.title}</h3>
+                                    <div>
+                                        {menu?.status === "pending" ? (
+                                            <Spin tip="Loading..." />
+                                        ) : (
+                                            <div><RightCircleFilled /></div>
+                                        )}
+
+                                    </div>
+                                </div>
+
+                                <div className="action">
+                                    <EditOutlined
+                                        className="edit"
+                                        onClick={() => handleEditClick(menu)}
+                                    />
+                                </div>
+                            </div>
+                        </Card>
+                    ))
+                )}
+            </div>
+
+            {/* Pagination */}
+            <div className="pagination">
+                <Pagination
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={data?.count || 0}
+                    onChange={handlePageChange}
+                />
+            </div>
+
+            {/* Modal for adding/editing */}
             <Modal
-                open={open}
-                title="Discount Menu"
-                onCancel={() => setOpen(false)}
-                footer={null}
+                title={isEditMode ? "Edit Discount" : "Add Discount"}
+                open={isModalVisible}
                 width={900}
+                onOk={() => form.submit()}
+                onCancel={handleModalCancel}
+                okText={isEditMode ? "Save" : "Add"}
+                cancelText="Cancel"
             >
                 <Form
                     form={form}
@@ -60,40 +170,44 @@ const DiscountMenu = () => {
                     onFinish={handleSubmit}
                     initialValues={{
                         title: "",
-                        description: "",
                         discount: "",
+                        start_date: null,
+                        end_date: null,
                         slot: "",
                         time: [],
                     }}
                 >
-                    <div className="from-header">
+                    <Form.Item
+                        name="title"
+                        label="Discount Title"
+                        rules={[{ required: true, message: "Discount Title is required" }]}
+                    >
+                        <Input placeholder="Discount Title" />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="discount"
+                        label="Discount Percentage"
+                        rules={[{ required: true, message: "Discount Percentage is required" }]}
+                    >
+                        <Input type="number" placeholder="Discount Percentage" />
+                    </Form.Item>
+
+                    <div className="date">
                         <Form.Item
-                            name="title"
-                            label="Discount Title"
-                            rules={[{ required: true, message: "Discount Title is required" }]}
+                            name="start_date"
+                            label="Start Date"
+                            rules={[{ required: true, message: "Select start date" }]}
                         >
-                            <Input placeholder="Discount Title" />
+                            <DatePicker format="YYYY-MM-DD" />
                         </Form.Item>
-
-
                         <Form.Item
-                            name="discount"
-                            label="Discount Percentage"
-                            rules={[{ required: true, message: "Discount Percentage is required" }]}
+                            name="end_date"
+                            label="End Date"
+                            rules={[{ required: true, message: "Select end date" }]}
                         >
-                            <Input type="number" placeholder="Discount Percentage" />
+                            <DatePicker format="YYYY-MM-DD" />
                         </Form.Item>
-
-
-                        <Form.Item
-                            name="dateRange"
-                            label="Discount Duration"
-                            rules={[{ required: true, message: "Select start and end date" }]}
-                        >
-                            <RangePicker />
-                        </Form.Item>
-
-
                     </div>
 
                     <div className="slot-time">
@@ -131,25 +245,16 @@ const DiscountMenu = () => {
                         </div>
                     </div>
 
-
                     <Form.Item
                         name="description"
                         label="Menu Description"
                         rules={[{ required: true, message: "Description is required" }]}
                     >
-                        <ReactQuill
-                            value={form.getFieldValue("description")}
-                            onChange={(value) => form.setFieldsValue({ description: value })}
-                            placeholder="Menu Description"
+                        <QuillEditor
+                            value={description}
+                            onChange={setDescription}
+                            placeholder="Enter menu description here..."
                         />
-                    </Form.Item>
-
-
-
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Submit
-                        </Button>
                     </Form.Item>
                 </Form>
             </Modal>
@@ -157,4 +262,4 @@ const DiscountMenu = () => {
     );
 };
 
-export default DiscountMenu
+export default DiscountMenu;
