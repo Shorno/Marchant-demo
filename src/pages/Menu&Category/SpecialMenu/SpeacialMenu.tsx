@@ -2,10 +2,11 @@
 import { useState } from "react";
 import { Modal, Form, Input, Upload, Image, Select, message, Pagination, Spin, Card } from "antd";
 import { DeleteOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined } from "@ant-design/icons";
+import { useDeleteSpecialMenuMutation, useGetSpecialMenuQuery, usePostSpecialMenuMutation, useUpdateSpecialMenuMutation } from "../../../redux/api/Menu/SpecialMenu";
 import ReactQuill from "react-quill";
 import { useImageUploadMutation } from "../../../redux/api/ImageUpload/imageUpload";
-import { useDeleteBuffetMenuMutation, useGetBuffetMenuQuery, usePostBuffetMenuMutation, useUpdateBuffetMenuMutation } from "../../../redux/api/Menu/BuffetMenu";
-import './BuffetMenu.css';
+import './SpecialMenu.css';
+
 const daysOfWeek = [
     { value: "mon", label: "Monday" },
     { value: "tue", label: "Tuesday" },
@@ -16,21 +17,21 @@ const daysOfWeek = [
     { value: "sun", label: "Sunday" },
 ];
 
-const BuffetMenu = () => {
+const SpecialMenu = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState<any>(null);
     const [form] = Form.useForm();
     const [isEditMode, setIsEditMode] = useState(false);
-    const [buffetMenu] = usePostBuffetMenuMutation();
-    const [updateBuffetMenu] = useUpdateBuffetMenuMutation();
-    const [DeleteBuffetMenu] = useDeleteBuffetMenuMutation();
+    const [specialMenu] = usePostSpecialMenuMutation();
+    const [updateSpecialMenu] = useUpdateSpecialMenuMutation();
+    const [DeleteSpecialMenu] = useDeleteSpecialMenuMutation();
     const [imageUpload] = useImageUploadMutation();
     const [uploadedImageUrl, setUploadedImageUrl] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
 
     // Pass page and page_size as parameters
-    const { data, isFetching, refetch } = useGetBuffetMenuQuery({ page: currentPage, page_size: pageSize });
+    const { data, isFetching, refetch } = useGetSpecialMenuQuery({ page: currentPage, page_size: pageSize });
 
     const handleImageUpload = async (file: any) => {
         const formData = new FormData();
@@ -53,12 +54,12 @@ const BuffetMenu = () => {
 
         try {
             if (isEditMode) {
-                await updateBuffetMenu({ id: selectedMenu.id, data: payload }).unwrap();
-                message.success("Buffet menu updated successfully!");
+                await updateSpecialMenu({ id: selectedMenu.id, data: payload }).unwrap();
+                message.success("Special menu updated successfully!");
                 refetch()
             } else {
-                await buffetMenu(payload).unwrap();
-                message.success("Buffet menu created successfully!");
+                await specialMenu(payload).unwrap();
+                message.success("Special menu created successfully!");
                 refetch()
             }
 
@@ -66,7 +67,7 @@ const BuffetMenu = () => {
             setUploadedImageUrl("");
             setIsModalVisible(false);
         } catch (error: any) {
-            message.error("Failed to save the Buffet menu. Please try again.", error);
+            message.error("Failed to save the special menu. Please try again.", error);
         }
     };
 
@@ -117,7 +118,7 @@ const BuffetMenu = () => {
 
             form.setFieldsValue(payload);
 
-            await updateBuffetMenu({
+            await updateSpecialMenu({
                 id: menuID,
                 data: payload,
             }).unwrap();
@@ -135,23 +136,23 @@ const BuffetMenu = () => {
 
     const handleDeleteMenu = async (menuID: number) => {
         try {
-            await DeleteBuffetMenu({ id: menuID, }).unwrap();
+            await DeleteSpecialMenu({ id: menuID, }).unwrap();
 
-            message.success('Buffet menu Deleted successfully');
+            message.success('Special menu Deleted successfully');
             refetch();
         } catch (error) {
-            console.error("Error updating Buffet menu:", error);
-            message.error("Failed to delete Buffet menu. Please try again.");
+            console.error("Error updating special menu:", error);
+            message.error("Failed to delete Special menu. Please try again.");
         }
     }
 
     return (
-        <div className="buffet">
+        <div className="special">
             <div className="modal-btn">
-                <button onClick={handleAddClick}>Add Buffet Menu</button>
+                <button onClick={handleAddClick}>Add Special Menu</button>
             </div>
 
-            <div className="buffet-item">
+            <div className="special-item">
                 {isFetching ? (
                     <div className="loading">
                         <Spin />
@@ -159,7 +160,7 @@ const BuffetMenu = () => {
                 ) : (
                     data?.results?.map((menu: any) => (
                         <Card hoverable key={menu.id}>
-                            <div className="buffet-list">
+                            <div className="special-list">
                                 <div className="title">
                                     <h3>{menu.title}</h3>
                                 </div>
@@ -204,7 +205,7 @@ const BuffetMenu = () => {
 
             {/* Modal for adding/editing */}
             <Modal
-                title={isEditMode ? "Edit Buffet Menu" : "Add Buffet Menu"}
+                title={isEditMode ? "Edit Special Menu" : "Add Special Menu"}
                 visible={isModalVisible}
                 width={900}
                 onOk={() => form.submit()}
@@ -306,5 +307,4 @@ const BuffetMenu = () => {
     );
 };
 
-export default BuffetMenu;
-
+export default SpecialMenu;

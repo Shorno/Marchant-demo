@@ -20,6 +20,9 @@ export enum tagTypes {
     image = "image",
     createRestaurant = "createRestaurant",
     singleCategory = "singleCategory",
+    uploadProfileImage="uploadProfileImage",
+    updateSpecialMenu="updateSpecialMenu",
+    deleteSpecialMenu="deleteSpecialMenu",
 }
 
 export const tagTypesList = [
@@ -44,4 +47,7 @@ export const tagTypesList = [
     tagTypes.image,
     tagTypes.createRestaurant,
     tagTypes.singleCategory,
+    tagTypes.uploadProfileImage,
+    tagTypes.updateSpecialMenu,
+    tagTypes.deleteSpecialMenu,
 ];

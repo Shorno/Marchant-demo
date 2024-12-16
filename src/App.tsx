@@ -2,9 +2,6 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Signup from "./pages/Auth/Registration/Signup.tsx";
 import Menu from "./pages/Menu&Category/Menu/Menu.tsx";
-import SpecialMenu from "./pages/Menu&Category/SpecialMenu/SpecialMenu.tsx";
-import DiscountMenu from "./pages/Menu&Category/DiscountMenu/DiscountMenu.tsx";
-import BuffetMenu from "./pages/Menu&Category/BuffetMenu/BuffetMenu.tsx";
 import Accounts from "./pages/Accounts/Accounts.tsx";
 // import Information from "./pages/Information/Information.tsx";
 import MyProfile from "./pages/Profile/MyProfile.tsx";
@@ -19,6 +16,9 @@ import ReviewPage from "./pages/Reviews/index.tsx";
 import Reservation from "./pages/Panel/Reservation/Reservation.tsx";
 import HallReservation from "./pages/Panel/Hall/HallReservation.tsx";
 import FoodOrder from "./pages/Panel/FoodOrder/FoodOrder.tsx";
+import BuffetMenu from "./pages/Menu&Category/BuffetMenu/BuffetMenu.tsx";
+import SpecialMenu from "./pages/Menu&Category/SpecialMenu/SpeacialMenu.tsx";
+import DiscountMenu from "./pages/Menu&Category/DiscountMenu/DiscountMenu.tsx";
 
 function App() {
     return (
