@@ -19,6 +19,7 @@ import FoodOrder from "./pages/Panel/FoodOrder/FoodOrder.tsx";
 import BuffetMenu from "./pages/Menu&Category/BuffetMenu/BuffetMenu.tsx";
 import SpecialMenu from "./pages/Menu&Category/SpecialMenu/SpeacialMenu.tsx";
 import DiscountMenu from "./pages/Menu&Category/DiscountMenu/DiscountMenu.tsx";
+import Information from "./pages/Information/Information.tsx";
 
 function App() {
     return (
@@ -44,7 +45,7 @@ function App() {
                     <Route path="/reviews" element={<ReviewPage/>} />
                     <Route path="/video" element={<Video />} />
                     <Route path="/accounts" element={<Accounts />} />
-                    <Route path="/restaurant-info" element={<RestaurantInfo />} />
+                    <Route path="/information" element={<Information />} />
                     <Route path="/settings" element={<Settings/>} />
                     <Route path="/profile" element={<MyProfile />} />
                 </Route>
