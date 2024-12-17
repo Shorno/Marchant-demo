@@ -47,17 +47,17 @@
     color: #52c41a;
 }
 .reservation-status-pending {
-    color: var(--primary-color);
+    color: #ffa500;
 }
 
 .ubaky-primary-button {
     color: white;
-    background: var(--primary-color);
+    background: #ffa500;
 }
 
 .ubaky-primary-button:hover {
     color: white !important;
-    background: var(--primary-color) !important
+    background: #ffa500 !important
 }
 
 .dropdown-arrow{
@@ -75,12 +75,12 @@
     top: -8px;
     right: -8px;
     font-size: 1.5rem;
-    color: var(--primary-color);
+    color: #ffa500;
     cursor: pointer;
 }
 
 .mobile-dropdown:hover {
-    color: var(--primary-color);
+    color: #ffa500;
 }
 
 

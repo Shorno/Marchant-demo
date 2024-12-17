@@ -29,6 +29,8 @@ const {Title, Text} = Typography
 export default function Reservation() {
     const {data: reservationList, isFetching} = useGetReservationListQuery({})
 
+    console.log(reservationList)
+
 
     return (
         <>
