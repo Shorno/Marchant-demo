@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 import {Upload, Image, Button, Space, Card, Typography, Layout, Row, Col} from 'antd';
 import type {GetProp, UploadFile, UploadProps} from 'antd';
-import { transitions } from './transitions';
+import {data} from "./data.ts";
 const {Title, Text} = Typography;
 const {Content} = Layout;
 
@@ -23,7 +23,7 @@ const getBase64 = (file: FileType): Promise<string> =>
         reader.onerror = (error) => reject(error);
     });
 
-export default function Video() {
+export default function ImageSlider() {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -88,7 +88,7 @@ export default function Video() {
             animationRef.current?.cancel();
             nextAnimationRef.current?.cancel();
 
-            const transition = transitions[Math.floor(Math.random() * transitions.length)];
+            const transition = data[Math.floor(Math.random() * data.length)];
 
             animationRef.current = currentImageRef.current.animate(
                 transition.current,

@@ -1,4 +1,4 @@
-export const transitions = [
+export const data = [
     {
         current: [
             { opacity: 1, transform: 'scale(1)' },
