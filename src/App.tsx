@@ -18,7 +18,7 @@ import BuffetMenu from "./pages/Menu&Category/BuffetMenu/BuffetMenu.tsx";
 import SpecialMenu from "./pages/Menu&Category/SpecialMenu/SpeacialMenu.tsx";
 import DiscountMenu from "./pages/Menu&Category/DiscountMenu/DiscountMenu.tsx";
 import Information from "./pages/Information/Information.tsx";
-import Video from "./pages/video/Video.tsx";
+import ImageSlider from "./pages/Video/ImageSlider.tsx";
 
 function App() {
     return (
@@ -42,7 +42,7 @@ function App() {
                     <Route path="/discount-menu" element={<DiscountMenu />} />
                     <Route path="/buffet-menu" element={<BuffetMenu />} />
                     <Route path="/reviews" element={<ReviewPage/>} />
-                    <Route path="/video" element={<Video />} />
+                    <Route path="/video" element={<ImageSlider />} />
                     <Route path="/accounts" element={<Accounts />} />
                     <Route path="/information" element={<Information />} />
                     <Route path="/settings" element={<Settings/>} />

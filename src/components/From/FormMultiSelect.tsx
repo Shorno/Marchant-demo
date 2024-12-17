@@ -1,7 +1,6 @@
 import { Select } from "antd";
 import { useFormContext, Controller, RegisterOptions } from "react-hook-form";
 
-const { Option } = Select;
 
 interface IFormMultiSelect {
   name: string;
