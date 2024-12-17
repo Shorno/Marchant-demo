@@ -10,6 +10,7 @@ import {useState} from "react";
 import "../Hall/HallReservation.tsx"
 import EditInfoModal from "../Reservation/EditInfoModal.tsx";
 import {TableReservationTypes} from "../../../../types/reservationTypes.ts";
+import {useUpdateReservationMutation} from "../../../redux/api/ReservationsInfo/ReservationsInfo.ts";
 
 const {Title, Text} = Typography;
 
@@ -20,7 +21,7 @@ interface ReservationCardProps {
     full_name: string;
     pax_number: number;
     menu_type: string;
-    status: 'Completed' | 'Pending' | 'Cancelled';
+    status: 'completed' | 'pending' | 'cancelled' | 'hold On' | 'confirmed' | 'absent';
     table_number: number;
     data: TableReservationTypes
 }
@@ -28,21 +29,34 @@ interface ReservationCardProps {
 const {useBreakpoint} = Grid
 
 export default function TableReservationCard({
-                                                date,
-                                                day,
-                                                time,
-                                                full_name,
-                                                pax_number,
-                                                menu_type,
-                                                status,
-                                                table_number = 8,
-                                                data,
+                                                 date,
+                                                 day,
+                                                 time,
+                                                 full_name,
+                                                 pax_number,
+                                                 menu_type,
+                                                 status,
+                                                 table_number = 8,
+                                                 data,
 
-                                            }: ReservationCardProps) {
+                                             }: ReservationCardProps) {
 
     const screens = useBreakpoint()
     const isMobile = !screens.md;
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [updateReservation] = useUpdateReservationMutation();
+
+    const handleUpdateReservation = async (updatedData) => {
+        console.log(data.id)
+        try {
+            console.log(updatedData)
+            await updateReservation({id: data.id, data: updatedData}).unwrap();
+            setIsModalOpen(false);
+        } catch (error) {
+            console.error('Failed to update reservation:', error);
+        }
+    };
 
     const handleMenuClick: MenuProps['onClick'] = () => {
         setIsModalOpen(true);
@@ -150,6 +164,7 @@ export default function TableReservationCard({
                 isModalOpen={isModalOpen}
                 handleOk={handleOk}
                 handleCancel={handleCancel}
+                handleUpdate={handleUpdateReservation}
             />
         </Card>
     );

@@ -8,13 +8,29 @@ interface EditInfoModalProps {
     isModalOpen: boolean;
     handleOk: () => void;
     handleCancel: () => void;
-    data: TableReservationTypes
+    data: TableReservationTypes;
+    handleUpdate: (values) => void;
 }
 
-export default function EditInfoModal({isModalOpen, handleOk, handleCancel, data}: EditInfoModalProps) {
+export default function EditInfoModal({isModalOpen, handleOk, handleCancel, data, handleUpdate}: EditInfoModalProps) {
+    const Completed = data.status === "completed";
 
-    const onFinish = (values: never) => {
-        console.log('Received values of form: ', values);
+
+    const onFinish = (values) => {
+        const {pax, date, time, table, slot, status, customerComment, remark} = values;
+
+
+        const updatedData = {
+            pax,
+            table_number: table,
+            date: date.format("YYYY-MM-DD"),
+            time_slot: {[slot]: time},
+            status,
+            remark,
+            slot,
+            comment: customerComment
+        };
+        handleUpdate(updatedData);
     };
 
     return (
@@ -28,6 +44,7 @@ export default function EditInfoModal({isModalOpen, handleOk, handleCancel, data
                 footer={false}
             >
                 <Form
+                    disabled={Completed}
                     requiredMark={false}
                     name="edit-table"
                     onFinish={onFinish}
@@ -39,7 +56,6 @@ export default function EditInfoModal({isModalOpen, handleOk, handleCancel, data
                     <Form.Item
                         label={"Pax"}
                         name="pax"
-                        rules={[{required: true, message: 'Pax is required!'}]}
                     >
                         <Input placeholder="Enter pax no"/>
                     </Form.Item>
@@ -84,7 +100,10 @@ export default function EditInfoModal({isModalOpen, handleOk, handleCancel, data
                         <Select placeholder="Select status">
                             <Select.Option value="pending">Pending</Select.Option>
                             <Select.Option value="cancelled">Cancelled</Select.Option>
+                            <Select.Option value="confirmed">Confirmed</Select.Option>
                             <Select.Option value="completed">Completed</Select.Option>
+                            <Select.Option value="hold-on">Hold On</Select.Option>
+                            <Select.Option value="absent">Absent</Select.Option>
                         </Select>
                     </Form.Item>
 
