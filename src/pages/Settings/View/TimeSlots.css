@@ -16,10 +16,10 @@
     justify-content: space-between;
     align-items: center;
 }
-.full_day_header h2{
-    font-size: 18px;
+.full_day_header h2 {
+    display: flex;
+    gap: 15px;
     text-align: start;
-    margin-inline-start: 4px;
 }
 .date_picker{
     width: 80%;
@@ -43,9 +43,9 @@
     align-items: center;
 }
 .header h2{
-    font-size: 18px;
+    display: flex;
+    gap: 15px;
     text-align: start;
-    margin-inline-start: 4px;
 }
 .time_slot{
     margin-left: 20px;
