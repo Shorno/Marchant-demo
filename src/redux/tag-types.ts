@@ -1,5 +1,6 @@
 export enum tagTypes {
     userLoginInfo = "userLoginInfo",
+    registration="registration",
     ownerInfo = "ownerInfo",
     holiday = "holiday",
     timeSlots = "timeSlots",
@@ -23,10 +24,13 @@ export enum tagTypes {
     uploadProfileImage="uploadProfileImage",
     updateSpecialMenu="updateSpecialMenu",
     deleteSpecialMenu="deleteSpecialMenu",
+    restaurant="restaurant",
+    updateRestaurant="updateRestaurant",
 }
 
 export const tagTypesList = [
     tagTypes.userLoginInfo,
+    tagTypes.registration,
     tagTypes.ownerInfo,
     tagTypes.holiday,
     tagTypes.timeSlots,
@@ -50,4 +54,6 @@ export const tagTypesList = [
     tagTypes.uploadProfileImage,
     tagTypes.updateSpecialMenu,
     tagTypes.deleteSpecialMenu,
+    tagTypes.restaurant,
+    tagTypes.updateRestaurant,
 ];

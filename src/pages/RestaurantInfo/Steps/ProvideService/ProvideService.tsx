@@ -18,14 +18,28 @@ const ProvideService = () => {
             morning: [
                 { time: "05:00", selected: false },
                 { time: "06:00", selected: false },
+                { time: "07:00", selected: false },
+                { time: "08:00", selected: false },
+                { time: "09:00", selected: false },
+                { time: "10:00", selected: false },
+                { time: "11:00", selected: false },
             ],
             lunch: [
                 { time: "12:00", selected: false },
                 { time: "13:00", selected: false },
+                { time: "14:00", selected: false },
+                { time: "15:00", selected: false },
+                { time: "16:00", selected: false },
+                { time: "17:00", selected: false },
+                { time: "18:00", selected: false },
             ],
             dinner: [
                 { time: "19:00", selected: false },
                 { time: "20:00", selected: false },
+                { time: "21:00", selected: false },
+                { time: "22:00", selected: false },
+                { time: "23:00", selected: false },
+                { time: "24:00", selected: false },
             ],
         },
     });
