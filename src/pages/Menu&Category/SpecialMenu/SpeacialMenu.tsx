@@ -5,7 +5,7 @@ import { DeleteOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOu
 import { useDeleteSpecialMenuMutation, useGetSpecialMenuQuery, usePostSpecialMenuMutation, useUpdateSpecialMenuMutation } from "../../../redux/api/Menu/SpecialMenu";
 import ReactQuill from "react-quill";
 import { useImageUploadMutation } from "../../../redux/api/ImageUpload/imageUpload";
-import './SpecialMenu.css';
+import './specialMenu.css';
 
 const daysOfWeek = [
     { value: "mon", label: "Monday" },
