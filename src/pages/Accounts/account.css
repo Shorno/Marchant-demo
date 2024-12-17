@@ -1,0 +1,275 @@
+.billing-container {
+    padding: 16px;
+    font-family: "Poppins", sans-serif;
+    background-color: #fff;
+}
+
+/* Notification Banner */
+.notification-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F5F5F5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+
+.progress-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.progress-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.progress-text Text {
+    color: #262626;
+}
+
+.sub-text {
+    color: #595959;
+    font-size: 12px;
+}
+
+.button-group {
+    display: flex;
+    gap: 8px;
+}
+
+.dismiss-btn {
+    border-color: #ccc;
+}
+
+.upgrade-btn1 {
+    background-color: #262626;
+    color: white;
+    border: 1px solid #d9d9d9;
+}
+
+.upgrade-btn:hover {
+    background-color: #262626 !important;
+    color: white !important;
+    border: 1px solid #d9d9d9;
+}
+
+/* Billing Section */
+.billing-section {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.billing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.billing-title {
+    margin: 0;
+    color: #262626;
+    font-size: 18px !important;
+    margin-bottom: 10px;
+}
+
+.billing-subtext {
+    color: #888;
+    font-size: 14px !important;
+    margin-top: -10px;
+}
+
+.options-btn {
+    font-size: 20px;
+    color: #555;
+    cursor: pointer;
+}
+
+/* price card */
+
+.pricing-container {
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    gap: 16px;
+    /* padding: 16px; */
+    flex-wrap: wrap;
+    /* background-color: #f8f9fa; */
+    margin-bottom: 30px;
+}
+
+.pricing-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 350px;
+    /* padding: 16px; */
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+}
+
+.plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.plan-details {
+    color: #888;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.plan-price {
+    margin: 16px 0;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.business-paln {
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.plan-price span {
+    font-size: 14px;
+    color: #888;
+}
+
+.current-btn,
+.upgrade-btn {
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.current-btn {
+    background-color: #e9ecef;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.upgrade-btn {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+}
+
+.badge {
+    font-size: 12px;
+    background-color: #f2f2f2;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: #555;
+}
+
+/* Table */
+
+.invoice-table-container {
+    padding: 16px;
+    background-color: #fff;
+}
+
+.ant-table {
+    border: 1px solid #f0f0f0;
+}
+
+.ant-table-cell {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #262626;
+}
+
+.invoice-table-container .ant-table-cell {
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden;    /* Hide overflow */
+    text-overflow: ellipsis; /* Add ellipsis (...) if text overflows */
+}
+
+.invoice-table-container .ant-table-cell-invoice {
+    max-width: 120px; /* Adjust max-width for small screens */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .notification-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .button-group {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .billing-header {
+        flex-direction: row;
+    }
+
+    .pricing-card {
+        width: 100%;
+    }
+
+    .ant-table th,
+    .ant-table td {
+        font-size: 12px; /* Adjust font size for small devices */
+        padding: 8px;
+    }
+
+    .invoice-table-container {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .button-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .dismiss-btn,
+    .upgrade-btn {
+        width: 100%;
+    }
+
+    .ant-table-cell {
+        font-size: 11px !important;
+        width: 100%;
+    }
+}
+
+@media (min-width: 990px) and (max-width: 1035px) {
+    .pricing-container {
+        justify-content: left; /* Center the cards */
+    }
+
+    .pricing-card {
+        flex: 0 0 calc(50% - 16px); /* Set each card to occupy 50% width minus gap */
+        max-width: calc(
+            50% - 16px
+        ); /* Prevent cards from exceeding 50% width */
+    }
+}
