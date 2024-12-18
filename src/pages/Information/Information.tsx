@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
 import { Form, Input, InputNumber, Button, Select, Upload, Checkbox, Row, Col } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
@@ -48,36 +47,20 @@ const apiData = {
 
 const Information = () => {
 
-    const [selectedSlots, setSelectedSlots] = useState<{
-        morning: string[];
-        lunch: string[];
-        dinner: string[];
-    }>({
-        morning: [],
-        lunch: [],
-        dinner: []
-    })
 
-    const timeSlots: { [key in keyof typeof selectedSlots]: string[] } = {
-        morning: ["05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00"],
-        lunch: ["12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00",],
-        dinner: ["19:00", "20:00", "21:00", "22:00", "23:00", "24:00",]
+    const timeSlots = {
+        morning: ["05:00", "05:30", "06:00", "06:30", "07:00", "07:30",
+            "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30"],
+
+        lunch: ["12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
+            "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30"],
+        dinner: ["19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
+            "22:00", "22:30", "23:00", "23:30", "24:00"]
     };
 
-    const handleSlotToggle = (slotType: keyof typeof selectedSlots, time: string) => {
-        setSelectedSlots(prevState => {
-            const isSelected = prevState[slotType].includes(time);
-            return {
-                ...prevState,
-                [slotType]: isSelected
-                    ? prevState[slotType].filter(t => t !== time) // Remove if already selected
-                    : [...prevState[slotType], time] // Add if not selected
-            };
-        });
-    };
 
     const onFinish = (values: any) => {
-        console.log('Submitted values:', { ...values, selectedSlots });
+        console.log('Submitted values:', { ...values });
     };
 
     return (
@@ -168,15 +151,7 @@ const Information = () => {
                                 <h4>{slotType.charAt(0).toUpperCase() + slotType.slice(1)} Slots</h4>
                                 {times.map(time => (
                                     <Button
-                                        key={time}
-                                        onClick={() => handleSlotToggle(slotType as keyof typeof selectedSlots, time)}
-                                        style={{
-                                            margin: '0 8px 8px 0',
-                                            backgroundColor: selectedSlots[slotType as keyof typeof selectedSlots].includes(time)
-                                                ? 'amber'
-                                                : ''
-                                        }}
-                                    >
+                                        key={time}>
                                         {time}
                                     </Button>
                                 ))}

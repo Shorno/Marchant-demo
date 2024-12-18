@@ -1,14 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Col, Row } from "antd";
 import { useGetCountryQuery } from "../../../../redux/api/CountryApi/countryApi";
 import FormSelectField from "../../../../components/From/FromSelectedField";
 import FormInput from "../../../../components/From/FromInput";
 import FormMultiSelect from "../../../../components/From/FormMultiSelect";
 import FormImageUpload from "../../../../components/From/FormImageUpload";
-import { selectCuisines } from "../../../../constants/selectCuisines";
 import { useImageUploadMutation } from "../../../../redux/api/ImageUpload/imageUpload";
+import { useGetCuisineQuery } from "../../../../redux/api/Cuisine/cuisine";
 
 const RestaurantInfoForm: React.FC = () => {
     const { data: countries } = useGetCountryQuery({});
+    const { data: cuisine } = useGetCuisineQuery({})
+
+    const cuisinesOptions = cuisine?.cuisines?.map((cuisine: any) => ({
+        label: cuisine,
+        value: cuisine.toLowerCase().replace(/\s+/g, "_"),
+    }));
+
     const [imageUpload] = useImageUploadMutation();
 
     const handleImageUploadLogo = async (file: File) => {
@@ -45,33 +53,26 @@ const RestaurantInfoForm: React.FC = () => {
                             name="title"
                             label="Restaurant Name"
                             size="large"
-                            validation={{
-                                required: "Restaurant name is required",
-                            }}
                         />
                     </div>
                 </Col>
                 <Col span={12}>
                     <div style={{ margin: "10px 0" }}>
                         <FormInput
+                            type="email"
                             name="email"
                             label="Restaurant Email"
                             size="large"
-                            validation={{
-                                required: "Restaurant email is required",
-                            }}
                         />
                     </div>
                 </Col>
                 <Col span={12}>
                     <div style={{ margin: "10px 0" }}>
                         <FormInput
+                            type="phone"
                             name="phone"
                             label="Phone Number"
                             size="large"
-                            validation={{
-                                required: "Restaurant Phone Number is required",
-                            }}
                         />
                     </div>
                 </Col>
@@ -81,9 +82,6 @@ const RestaurantInfoForm: React.FC = () => {
                             name="street"
                             label="Street"
                             size="large"
-                            validation={{
-                                required: "Street is required",
-                            }}
                         />
                     </div>
                 </Col>
@@ -93,9 +91,6 @@ const RestaurantInfoForm: React.FC = () => {
                             name="city"
                             label="City"
                             size="large"
-                            validation={{
-                                required: "City is required",
-                            }}
                         />
                     </div>
                 </Col>
@@ -105,9 +100,6 @@ const RestaurantInfoForm: React.FC = () => {
                             name="zipcode"
                             label="Zipcode"
                             size="large"
-                            validation={{
-                                required: "Zipcode is required",
-                            }}
                         />
                     </div>
                 </Col>
@@ -126,9 +118,6 @@ const RestaurantInfoForm: React.FC = () => {
                             filterOption={(input, option) =>
                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                             }
-                            validation={{
-                                required: "Country is required",
-                            }}
                         />
                     </div>
                 </Col>
@@ -138,45 +127,36 @@ const RestaurantInfoForm: React.FC = () => {
                             name="identify_address"
                             label="Identify Address"
                             size="large"
-                            validation={{
-                                required: "Identify address is required",
-                            }}
                         />
                     </div>
                 </Col>
                 <Col span={12}>
                     <div style={{ margin: "10px 0" }}>
                         <FormInput
+                            type="number"
                             name="number_of_booking_per_day"
                             label="Reservation Per day"
                             size="large"
-                            validation={{
-                                required: "Reservation Per day is required",
-                            }}
                         />
                     </div>
                 </Col>
                 <Col span={12}>
                     <div style={{ margin: "10px 0" }}>
                         <FormInput
+                            type="number"
                             name="seat_capacity"
                             label="Seat Capacity"
                             size="large"
-                            validation={{
-                                required: "Seat capacity is required",
-                            }}
                         />
                     </div>
                 </Col>
                 <Col span={12}>
                     <div style={{ margin: "10px 0" }}>
                         <FormInput
+                            type="number"
                             name="average_bill"
                             label="Average Bill"
                             size="large"
-                            validation={{
-                                required: "Average Bill is required",
-                            }}
                         />
                     </div>
                 </Col>
@@ -186,9 +166,6 @@ const RestaurantInfoForm: React.FC = () => {
                             name="currency"
                             label="Currency"
                             size="large"
-                            validation={{
-                                required: "Currency is required",
-                            }}
                         />
                     </div>
                 </Col>
@@ -198,10 +175,7 @@ const RestaurantInfoForm: React.FC = () => {
                             name="cuisine_type"
                             label="Cuisine Type"
                             size="large"
-                            validation={{
-                                required: "Cuisine type is required",
-                            }}
-                            options={selectCuisines}
+                            options={cuisinesOptions}
                         />
                     </div>
                 </Col>
@@ -213,9 +187,6 @@ const RestaurantInfoForm: React.FC = () => {
                             name="logo"
                             label="Restaurant Logo"
                             required
-                            validation={{
-                                required: "Restaurant logo is required",
-                            }}
                             maxCount={1}
                             accept="image/*"
                             onUpload={handleImageUploadLogo}
@@ -227,9 +198,6 @@ const RestaurantInfoForm: React.FC = () => {
                         name="cover"
                         label="Restaurant Cover Image"
                         required
-                        validation={{
-                            required: "Restaurant cover image is required",
-                        }}
                         maxCount={1}
                         accept="image/*"
                         onUpload={handleImageUploadCover}
