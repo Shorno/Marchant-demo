@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
-import { Upload, Button, Image, notification } from 'antd';
+import { Upload, Button, Image, notification, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useImageUploadMutation } from '../../../../redux/api/ImageUpload/imageUpload';
 import './gallery.css'
@@ -21,7 +21,7 @@ const Gallery = ({ onGalleryChange }: { onGalleryChange: (galleryData: { image: 
                 const imageUrl: string = result.data.image_url;
                 setUploadedImages((prevImages) => {
                     const updatedImages = [...prevImages, imageUrl];
-                    onGalleryChange(updatedImages.map((img) => ({ image: img }))); // Pass updated gallery data
+                    onGalleryChange(updatedImages.map((img) => ({ image: img }))); 
                     return updatedImages;
                 });
             } else {
@@ -31,10 +31,7 @@ const Gallery = ({ onGalleryChange }: { onGalleryChange: (galleryData: { image: 
                 });
             }
         } catch (error: any) {
-            notification.error({
-                message: 'Upload Error',
-                description: 'An error occurred while uploading the image.',
-            });
+           message.error(error.message, error)
         } finally {
             setLoading(false);
         }
@@ -43,7 +40,7 @@ const Gallery = ({ onGalleryChange }: { onGalleryChange: (galleryData: { image: 
     return (
         <div className='gallery'>
             <p>Upload Images</p>
-            <div>
+            <div className='image'>
                 {uploadedImages.map((preview, index) => (
                     <div key={index} style={{ margin: '8px' }}>
                         <Image width={100} height={100} src={preview} alt={`Preview ${index}`} />

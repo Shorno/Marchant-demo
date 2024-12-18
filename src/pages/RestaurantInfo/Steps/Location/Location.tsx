@@ -92,6 +92,7 @@ export default function Location() {
         <Row className='location' gutter={{ xs: 24, xl: 24, lg: 24, md: 24 }}>
             <Col span={10}>
                 <FormInput
+                    type='number'
                     label="Latitude:"
                     name="lat_coordinates"
                     size="large"
@@ -99,6 +100,7 @@ export default function Location() {
             </Col>
             <Col span={10}>
                 <FormInput
+                    type='number'
                     label="Longitude:"
                     name="lng_coordinates"
                     size="large"
