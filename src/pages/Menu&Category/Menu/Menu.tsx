@@ -158,7 +158,7 @@ export default function Menu() {
 
                         {/* Submit Button */}
                         <button type="submit" className="add-menu-button">
-                            {isLoading ? "Submitting..." : "Add Product"}
+                            {isLoading ? "Submitting..." : "Add Categoty"}
                         </button>
                     </form>
                 </Modal>

@@ -9,7 +9,7 @@ import { message } from 'antd';
 import { useCreateRestaurantMutation } from '../../../redux/api/RestaurantCreate/RestaurantCreate';
 import StepperForm from '../../../components/StepperFrom/StepperForm';
 import './RestaurantInfo.css';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function RestaurantInfo() {
     const [createRestaurant] = useCreateRestaurantMutation();
@@ -17,7 +17,7 @@ export default function RestaurantInfo() {
     const navigate = useNavigate();
 
     const steps = [
-        { title: 'Restaurant Information', content: <RestaurantInfoForm/> },
+        { title: 'Restaurant Information', content: <RestaurantInfoForm /> },
         { title: 'Provide Service', content: <ProvideService /> },
         { title: 'Location', content: <Location /> },
         { title: 'Gallery', content: <Gallery onGalleryChange={setGalleryData} /> },
@@ -40,13 +40,13 @@ export default function RestaurantInfo() {
             zipcode: values.zipcode,
             country: values.country,
             identify_address: values.identify_address,
-            number_of_booking_per_day:values.number_of_booking_per_day,
-            seat_capacity: values.seat_capacity ,
+            number_of_booking_per_day: values.number_of_booking_per_day,
+            seat_capacity: values.seat_capacity,
             average_bill: values.average_bill,
             currency: values.currency,
             cuisine_type: values.cuisine_type,
             logo: values.logo[0],
-            cover: values.cover[0], 
+            cover: values.cover[0],
             description: values.description,
             opening_and_closing_time_remark: values.opening_and_closing_time_remark,
             service_type: values.service_type,
@@ -61,13 +61,14 @@ export default function RestaurantInfo() {
             galleries: galleryData.length > 0 ? galleryData : [],
         };
 
-        console.log('Transformed Data:', transformedData);
 
         message.loading('Creating...');
         try {
             const res = await createRestaurant(transformedData);
             console.log('Response from API:', res);
-            navigate('/dashboard');
+            if (res.data.status === 201) {
+                navigate('/dashboard');
+            }
         } catch (err: any) {
             console.error('Error:', err);
             if (err.data) {
