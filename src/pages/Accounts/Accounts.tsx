@@ -77,7 +77,7 @@ export default function Accounts() {
         {
           dataIndex: "id",
           key: "id",
-          render: (id) => <Text>Invoice {id}</Text>,
+          render: (id:any) => <Text>Invoice {id}</Text>,
           className: "ant-table-cell-invoice", // Add specific class for styling
         },
         {

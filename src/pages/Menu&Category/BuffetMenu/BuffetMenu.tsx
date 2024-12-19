@@ -5,7 +5,7 @@ import { DeleteOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOu
 import ReactQuill from "react-quill";
 import { useImageUploadMutation } from "../../../redux/api/ImageUpload/imageUpload";
 import { useDeleteBuffetMenuMutation, useGetBuffetMenuQuery, usePostBuffetMenuMutation, useUpdateBuffetMenuMutation } from "../../../redux/api/Menu/BuffetMenu";
-import './BuffetMenu.css';
+import './buffetMenu.css';
 const daysOfWeek = [
     { value: "mon", label: "Monday" },
     { value: "tue", label: "Tuesday" },

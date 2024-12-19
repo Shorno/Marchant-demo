@@ -9,10 +9,12 @@ import { message } from 'antd';
 import { useCreateRestaurantMutation } from '../../../redux/api/RestaurantCreate/RestaurantCreate';
 import StepperForm from '../../../components/StepperFrom/StepperForm';
 import './RestaurantInfo.css';
+import {useNavigate} from "react-router-dom";
 
 export default function RestaurantInfo() {
     const [createRestaurant] = useCreateRestaurantMutation();
     const [galleryData, setGalleryData] = useState<{ image: string }[]>([]);
+    const navigate = useNavigate();
 
     const steps = [
         { title: 'Restaurant Information', content: <RestaurantInfoForm/> },
@@ -65,6 +67,7 @@ export default function RestaurantInfo() {
         try {
             const res = await createRestaurant(transformedData);
             console.log('Response from API:', res);
+            navigate('/dashboard');
         } catch (err: any) {
             console.error('Error:', err);
             if (err.data) {

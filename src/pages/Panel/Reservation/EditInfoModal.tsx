@@ -9,14 +9,14 @@ interface EditInfoModalProps {
     handleOk: () => void;
     handleCancel: () => void;
     data: TableReservationTypes;
-    handleUpdate: (values) => void;
+    handleUpdate: (values:any) => void;
 }
 
 export default function EditInfoModal({isModalOpen, handleOk, handleCancel, data, handleUpdate}: EditInfoModalProps) {
     const Completed = data.status === "completed";
 
 
-    const onFinish = (values) => {
+    const onFinish = (values:any) => {
         const {pax, date, time, table, slot, status, customerComment, remark} = values;
 
 

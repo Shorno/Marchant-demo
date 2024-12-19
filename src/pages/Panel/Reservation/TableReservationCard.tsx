@@ -47,7 +47,7 @@ export default function TableReservationCard({
 
     const [updateReservation] = useUpdateReservationMutation();
 
-    const handleUpdateReservation = async (updatedData) => {
+    const handleUpdateReservation = async (updatedData:any) => {
         console.log(data.id)
         try {
             console.log(updatedData)
@@ -136,7 +136,7 @@ export default function TableReservationCard({
                                 <Flex align="center" justify="center" className="reservation-info-item">
                                     <ExclamationCircleOutlined className="reservation-icon"/>
                                     <Text
-                                        className={status === 'Completed' ? 'reservation-status-completed' : 'reservation-status-pending'}>{status.charAt(0).toUpperCase() + status.slice(1)}</Text>
+                                        className={status === 'completed' ? 'reservation-status-completed' : 'reservation-status-pending'}>{status.charAt(0).toUpperCase() + status.slice(1)}</Text>
                                 </Flex>
                             </Flex>
                         </Flex>

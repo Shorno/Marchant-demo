@@ -28,6 +28,7 @@ export enum tagTypes {
     deleteSpecialMenu="deleteSpecialMenu",
     restaurant="restaurant",
     updateRestaurant="updateRestaurant",
+    country="country",
 }
 
 export const tagTypesList = [
@@ -60,4 +61,5 @@ export const tagTypesList = [
     tagTypes.deleteSpecialMenu,
     tagTypes.restaurant,
     tagTypes.updateRestaurant,
+    tagTypes.country,
 ];
