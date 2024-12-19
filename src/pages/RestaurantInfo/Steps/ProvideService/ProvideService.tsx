@@ -1,31 +1,71 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import GetHelp from "../GetHelp/GetHelp";
 import "./provideservice.css";
 import { Col, Divider, Row, } from "antd";
 import FormInput from "../../../../components/From/FromInput";
 import FormCheckbox from "../../../../components/From/FormCheckbox";
 import FormTextArea from "../../../../components/From/FormTextArea";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import FromTimeSlotSelector from "../../../../components/From/FromTimeSlotSelector";
 import FormMultiSelect from "../../../../components/From/FormMultiSelect";
-import { selectRestaurantServices } from "../../../../constants/Restaurantservece";
+import { useGetServiceQuery } from "../../../../redux/api/Service/service";
 
 const ProvideService = () => {
 
+    const { data: services } = useGetServiceQuery({})
+    console.log(services)
 
+    const serviceOptions = services?.services?.map((service:any) => ({
+        label: service,
+        value: service.toLowerCase().replace(/\s+/g, "_"), // Example transformation for unique values
+    }));
 
     const methods = useForm({
         defaultValues: {
             morning: [
                 { time: "05:00", selected: false },
+                { time: "05:30", selected: false },
                 { time: "06:00", selected: false },
+                { time: "06:30", selected: false },
+                { time: "07:00", selected: false },
+                { time: "07:30", selected: false },
+                { time: "08:00", selected: false },
+                { time: "08:30", selected: false },
+                { time: "09:00", selected: false },
+                { time: "09:30", selected: false },
+                { time: "10:00", selected: false },
+                { time: "10:30", selected: false },
+                { time: "11:00", selected: false },
+                { time: "11:30", selected: false },
             ],
             lunch: [
                 { time: "12:00", selected: false },
+                { time: "12:30", selected: false },
                 { time: "13:00", selected: false },
+                { time: "13:30", selected: false },
+                { time: "14:00", selected: false },
+                { time: "14:30", selected: false },
+                { time: "15:00", selected: false },
+                { time: "15:30", selected: false },
+                { time: "16:00", selected: false },
+                { time: "16:30", selected: false },
+                { time: "17:00", selected: false },
+                { time: "17:30", selected: false },
+                { time: "18:00", selected: false },
+                { time: "18:30", selected: false },
             ],
             dinner: [
                 { time: "19:00", selected: false },
+                { time: "19:30", selected: false },
                 { time: "20:00", selected: false },
+                { time: "20:30", selected: false },
+                { time: "21:00", selected: false },
+                { time: "21:30", selected: false },
+                { time: "22:00", selected: false },
+                { time: "22:30", selected: false },
+                { time: "23:00", selected: false },
+                { time: "23:30", selected: false },
+                { time: "24:00", selected: false },
             ],
         },
     });
@@ -104,7 +144,7 @@ const ProvideService = () => {
                             name="service_type"
                             label="Restaurant services"
                             size="large"
-                            options={selectRestaurantServices}
+                            options={serviceOptions}
                         />
 
                     </div>

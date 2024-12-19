@@ -3,9 +3,7 @@ import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Signup from "./pages/Auth/Registration/Signup.tsx";
 import Menu from "./pages/Menu&Category/Menu/Menu.tsx";
 import Accounts from "./pages/Accounts/Accounts.tsx";
-// import Information from "./pages/Information/Information.tsx";
 import MyProfile from "./pages/Profile/MyProfile.tsx";
-import Video from "./pages/Video/Video.tsx";
 import Login from "./pages/Auth/login/Login.tsx";
 import RestaurantInfo from "./pages/RestaurantInfo/Steps/RestaurantInfo.tsx";
 import MainLayout from "./layouts/Main/MainLayout.tsx";
@@ -20,6 +18,7 @@ import BuffetMenu from "./pages/Menu&Category/BuffetMenu/BuffetMenu.tsx";
 import SpecialMenu from "./pages/Menu&Category/SpecialMenu/SpeacialMenu.tsx";
 import DiscountMenu from "./pages/Menu&Category/DiscountMenu/DiscountMenu.tsx";
 import Information from "./pages/Information/Information.tsx";
+import ImageSlider from "./pages/Video/ImageSlider.tsx";
 
 function App() {
     return (
@@ -43,7 +42,7 @@ function App() {
                     <Route path="/discount-menu" element={<DiscountMenu />} />
                     <Route path="/buffet-menu" element={<BuffetMenu />} />
                     <Route path="/reviews" element={<ReviewPage/>} />
-                    <Route path="/video" element={<Video />} />
+                    <Route path="/video" element={<ImageSlider />} />
                     <Route path="/accounts" element={<Accounts />} />
                     <Route path="/information" element={<Information />} />
                     <Route path="/settings" element={<Settings/>} />

@@ -9,6 +9,7 @@ export type ReservationTypes = {
 }
 
 export type TableReservationTypes = {
+    id: number
     date: string;
     time: string;
     table_number: number;
@@ -21,6 +22,6 @@ export type TableReservationTypes = {
         price: string;
         title: string;
     };
-    status: 'Completed' | 'Pending' | 'Cancelled';
+    status: 'completed' | 'pending' | 'cancelled' | 'hold On' | 'confirmed' | 'absent';
     remark: string;
 }
