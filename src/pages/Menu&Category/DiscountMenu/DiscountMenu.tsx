@@ -116,22 +116,20 @@ const DiscountMenu = () => {
                     <div className="loading">
                         <Spin />
                     </div>
-                ) : (
-                    data?.results?.map((menu: any) => (
+                ) : data?.results?.length ? (
+                    data.results.map((menu: any) => (
                         <Card hoverable key={menu.id}>
                             <div className="discount-list">
                                 <div className="title">
                                     <h3>{menu.title}</h3>
                                     <div>
-                                        {menu?.status === "pending" ? (
+                                        {menu.status === "pending" ? (
                                             <Spin tip="Loading..." />
                                         ) : (
-                                            <div><RightCircleFilled /></div>
+                                            <RightCircleFilled />
                                         )}
-
                                     </div>
                                 </div>
-
                                 <div className="action">
                                     <EditOutlined
                                         className="edit"
@@ -141,18 +139,26 @@ const DiscountMenu = () => {
                             </div>
                         </Card>
                     ))
+                ) : (
+                    <div className="no-data">
+                        <h1>No Discount menu</h1>
+                    </div>
                 )}
             </div>
 
             {/* Pagination */}
             <div className="pagination">
-                <Pagination
-                    current={currentPage}
-                    pageSize={pageSize}
-                    total={data?.count || 0}
-                    onChange={handlePageChange}
-                />
+                {data?.results?.length > 0 && (
+                    <Pagination
+                        current={currentPage}
+                        pageSize={pageSize}
+                        total={data?.count}
+                        onChange={handlePageChange}
+                    />
+                )}
             </div>
+
+
 
             {/* Modal for adding/editing */}
             <Modal
