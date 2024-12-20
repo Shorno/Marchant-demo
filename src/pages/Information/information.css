@@ -1,0 +1,204 @@
+
+.form-container {
+    display: grid;
+    gap: 16px; 
+}
+
+/* Upload Container for Logo and Cover */
+.upload-container {
+    display: flex;
+    justify-content: space-between; 
+    gap: 16px; 
+    flex-wrap: wrap; 
+    margin-bottom: 20px;
+}
+
+/* Individual Upload Item */
+.upload-item {
+    flex: 1; 
+    max-width: 48%; 
+}
+
+
+/* slot code */
+
+/* Container for all time slots */
+.time-slots-container {
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 20px;
+}
+
+.title{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+
+/* Individual section (e.g., Breakfast, Lunch, Dinner) */
+.time-slot-section {
+    width: 100%;
+}
+
+/* Section title (e.g., Breakfast Time) */
+.time-slot-title {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+/* Row container for buttons */
+.time-buttons-row {
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between;
+    gap: 2px; */
+}
+
+/* Button styling */
+.time-button {
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ff7f0e;
+    border-radius: 4px;
+    color: #ff7f0e;
+    transition: all 0.3s ease;
+    padding: 8px;
+    /* text-align: center; */
+}
+
+.time-button:hover {
+    background-color: #ff7f0e;
+    color: #fff;
+}
+
+
+.time-button.selected {
+    background-color: #ff7f0e;
+    color: #fff;
+  }
+
+  .textarea-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 16px; 
+}
+
+/* Ensure each TextArea takes full width on tablet and mobile */
+.textarea-item {
+    width: 100%;
+}
+
+
+/* Container for the three form fields */
+.form-item {
+    display: flex;
+    flex-direction: column; 
+    width: 100%;
+}
+
+/* Label styling */
+.form-item label {
+    margin-bottom: 8px; 
+    font-weight: 600;
+}
+
+.ant-input {
+    background-color: #F5F5F5; /* Set the desired background color */
+}
+
+/* Change background color of Ant Design Select */
+.ant-select-selector {
+    background-color: #F5F5F5 !important; /* Set your desired background color */
+    border-color: #ff7f0e; /* Optional: Change the border color */
+}
+
+/* Change background color of the dropdown items */
+.ant-select-item-option {
+    background-color: #F5F5F5 !important; /* Set background color for dropdown options */
+}
+
+/* Optionally, change background color on hover */
+.ant-select-item-option:hover {
+    background-color: #e1e1e1; /* Set background color on hover */
+}
+
+/* Change background color for selected item in dropdown */
+.ant-select-item-option-selected {
+    background-color: #ff7f0e !important; /* Set background color for selected option */
+    color: #fff; /* Optional: Change text color for selected option */
+}
+
+/* Change background color of the dropdown items */
+.ant-select-item-option {
+    background-color: #F5F5F5 !important; /* Set background color for dropdown options */
+}
+
+/* Desktop and Tablet Layout */
+@media (min-width: 768px) {
+    .form-container {
+        grid-template-columns: repeat(4, 1fr); 
+    }
+
+    .textarea-container {
+        grid-template-columns: 1fr 1fr; 
+    }
+
+    .form-row {
+        grid-template-columns: repeat(3, 1fr); 
+    }
+}
+
+/* Mobile Layout */
+@media (max-width: 767px) {
+    .form-container {
+        grid-template-columns: 1fr; 
+    }
+
+    .upload-item {
+        max-width: 100%; 
+    }
+
+    .time-buttons-row {
+        gap: 12px;
+    }
+
+    .textarea-container {
+        grid-template-columns: 1fr; 
+    }
+
+    .half-width {
+        grid-column: span 1; 
+    }
+
+    .form-item {
+        width: 100%;
+    }
+
+    /* Ensure inputs have 100% width on mobile */
+    .form-item input,
+    .form-item select,
+    .form-item textarea {
+        width: 100%; 
+    }
+}
+
+/* Half-Width Items for Grid Layout */
+.half-width {
+    grid-column: span 2; 
+}
+
+
+@media (max-width: 480px) {
+    .time-buttons-row {
+        gap: 8px;
+    }
+
+    .form-item {
+        width: 100%;
+    }
+
+}
