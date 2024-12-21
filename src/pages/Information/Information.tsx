@@ -11,7 +11,6 @@ import {
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import "./information.css";
-import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { RcFile } from "antd/lib/upload";
 

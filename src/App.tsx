@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Signup from "./pages/Auth/Registration/Signup.tsx";
 import Menu from "./pages/Menu&Category/Menu/Menu.tsx";
@@ -19,34 +19,40 @@ import SpecialMenu from "./pages/Menu&Category/SpecialMenu/SpeacialMenu.tsx";
 import DiscountMenu from "./pages/Menu&Category/DiscountMenu/DiscountMenu.tsx";
 import Information from "./pages/Information/Information.tsx";
 import ImageSlider from "./pages/Video/ImageSlider.tsx";
+import AddEmployeePage from "./pages/EmployeeManagement/AddEmployee/AddEmployeePage.tsx";
+import AllEmployeePage from "./pages/EmployeeManagement/AllEmployee/AllEmployeePage.tsx";
+import ScheduleManagementPage from "./pages/EmployeeManagement/ScheduleEmployee/ScheduleManagementPage.tsx";
 
 function App() {
     return (
         <Router>
             <Routes>
                 {/* Redirect the root route to /login */}
-                <Route path="/" element={<Navigate to="/login" />} />
+                <Route path="/" element={<Navigate to="/login"/>}/>
 
-                <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-                <Route path="/registration" element={<PublicRoute><Signup /></PublicRoute>} />
+                <Route path="/login" element={<PublicRoute><Login/></PublicRoute>}/>
+                <Route path="/registration" element={<PublicRoute><Signup/></PublicRoute>}/>
 
                 {/* Private Routes */}
-                <Route path="/restaurant-info" element={<PrivateRoute><RestaurantInfo /></PrivateRoute>} />
-                <Route path="/" element={<PrivateRoute><MainLayout /></PrivateRoute>}>
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path={"/table-reservation"} element={<Reservation/>} />
-                    <Route path={"/hall-reservation"} element={<HallReservation/>} />
-                    <Route path={"/food-order"} element={<FoodOrder/>} />
-                    <Route path="/menu" element={<Menu />} />
-                    <Route path="/special-menu" element={<SpecialMenu />} />
-                    <Route path="/discount-menu" element={<DiscountMenu />} />
-                    <Route path="/buffet-menu" element={<BuffetMenu />} />
-                    <Route path="/reviews" element={<ReviewPage/>} />
-                    <Route path="/video" element={<ImageSlider />} />
-                    <Route path="/accounts" element={<Accounts />} />
-                    <Route path="/information" element={<Information />} />
-                    <Route path="/settings" element={<Settings/>} />
-                    <Route path="/profile" element={<MyProfile />} />
+                <Route path="/restaurant-info" element={<PrivateRoute><RestaurantInfo/></PrivateRoute>}/>
+                <Route path="/" element={<PrivateRoute><MainLayout/></PrivateRoute>}>
+                    <Route path="/dashboard" element={<Dashboard/>}/>
+                    <Route path={"/table-reservation"} element={<Reservation/>}/>
+                    <Route path={"/hall-reservation"} element={<HallReservation/>}/>
+                    <Route path={"/food-order"} element={<FoodOrder/>}/>
+                    <Route path="/menu" element={<Menu/>}/>
+                    <Route path="/special-menu" element={<SpecialMenu/>}/>
+                    <Route path="/discount-menu" element={<DiscountMenu/>}/>
+                    <Route path="/buffet-menu" element={<BuffetMenu/>}/>
+                    <Route path="/reviews" element={<ReviewPage/>}/>
+                    <Route path="/video" element={<ImageSlider/>}/>
+                    <Route path="/accounts" element={<Accounts/>}/>
+                    <Route path="/information" element={<Information/>}/>
+                    <Route path="/settings" element={<Settings/>}/>
+                    <Route path="/add-employee" element={<AddEmployeePage/>}/>
+                    <Route path="/all-employee" element={<AllEmployeePage/>}/>
+                    <Route path="/schedule-management" element={<ScheduleManagementPage/>}/>
+                    <Route path="/profile" element={<MyProfile/>}/>
                 </Route>
             </Routes>
         </Router>
